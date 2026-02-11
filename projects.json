@@ -12,7 +12,7 @@
       "fullDescription": [
         "Pacework Crew is a Pune-based fitness club built by three enthusiasts on a mission to pull you out of unhealthy habits. A community where consistency becomes your lifestyle."
       ],
-    "imageFolder": "/Projects/Pacework Crew/",
+      "imageFolder": "/Projects/Pacework Crew/",
       "imageCount": 12
     },
     {
@@ -25,9 +25,9 @@
       "location": "India",
       "scope": "Brand Identity, Visual System, Guidelines",
       "fullDescription": [
-         "This logo was designed to capture the essence of Trishakti Homestay — a space built and run by three remarkable women: a mother and her two daughters. The name “Trishakti” reflects their unity, confidence, and the deep bond they share. The warm, welcoming colors mirror the atmosphere they’ve created — a home that’s inviting, full of character, and rooted in Assam’s charm. More than just a design, this logo tells their story of family, dedication, and heartfelt hospitality."
+        "This logo was designed to capture the essence of Trishakti Homestay — a space built and run by three remarkable women: a mother and her two daughters. The name "Trishakti" reflects their unity, confidence, and the deep bond they share. The warm, welcoming colors mirror the atmosphere they've created — a home that's inviting, full of character, and rooted in Assam's charm. More than just a design, this logo tells their story of family, dedication, and heartfelt hospitality."
       ],
-   "imageFolder": "/Projects/Trishakti Homestay/",
+      "imageFolder": "/Projects/Trishakti Homestay/",
       "imageCount": 10
     },
     {
@@ -44,13 +44,8 @@
         "Add paragraph 2 here",
         "Add paragraph 3 here"
       ],
-      "mainImage": "/Projects/Project3/01.png",
-      "galleryImages": [
-        "/Projects/Project3/02.png",
-        "/Projects/Project3/03.png",
-        "/Projects/Project3/04.png",
-        "/Projects/Project3/05.png"
-      ]
+      "imageFolder": "/Projects/Project3/",
+      "imageCount": 5
     },
     {
       "id": 4,
@@ -66,13 +61,8 @@
         "Add paragraph 2 here",
         "Add paragraph 3 here"
       ],
-      "mainImage": "/Projects/Project4/01.png",
-      "galleryImages": [
-        "/Projects/Project4/02.png",
-        "/Projects/Project4/03.png",
-        "/Projects/Project4/04.png",
-        "/Projects/Project4/05.png"
-      ]
+      "imageFolder": "/Projects/Project4/",
+      "imageCount": 5
     },
     {
       "id": 5,
@@ -88,13 +78,8 @@
         "Add paragraph 2 here",
         "Add paragraph 3 here"
       ],
-      "mainImage": "/Projects/Project5/01.png",
-      "galleryImages": [
-        "/Projects/Project5/02.png",
-        "/Projects/Project5/03.png",
-        "/Projects/Project5/04.png",
-        "/Projects/Project5/05.png"
-      ]
+      "imageFolder": "/Projects/Project5/",
+      "imageCount": 5
     },
     {
       "id": 6,
@@ -110,13 +95,8 @@
         "Add paragraph 2 here",
         "Add paragraph 3 here"
       ],
-      "mainImage": "/Projects/Project6/01.png",
-      "galleryImages": [
-        "/Projects/Project6/02.png",
-        "/Projects/Project6/03.png",
-        "/Projects/Project6/04.png",
-        "/Projects/Project6/05.png"
-      ]
+      "imageFolder": "/Projects/Project6/",
+      "imageCount": 5
     }
   ]
 }
