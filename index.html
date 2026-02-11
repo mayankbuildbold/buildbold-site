@@ -953,13 +953,13 @@
 
         <div class="project-large" data-project="2">
           <div class="project-large-image">
-            <img src="/Projects/Project2/01.png" alt="Project 2" />
+            <img src="/Projects/Trishakti Homestay/01.png" alt="Project 2" />
           </div>
           <div class="project-large-info">
-            <div class="project-large-category">Design System</div>
-            <div class="project-large-title">Project 2</div>
+            <div class="project-large-category">Branding</div>
+            <div class="project-large-title">Trishakti Homestay</div>
             <div class="project-large-description">
-              Add your project description here.
+              Guwahati based homestay run by three dynamic women
             </div>
           </div>
         </div>
@@ -970,9 +970,9 @@
           </div>
           <div class="project-large-info">
             <div class="project-large-category">Architecture</div>
-            <div class="project-large-title">Project 3</div>
+            <div class="project-large-title">Old Age Oasis</div>
             <div class="project-large-description">
-              Add your project description here.
+              Communal living for the elderly at Rourkela
             </div>
           </div>
         </div>
@@ -1089,7 +1089,7 @@
   </div>
 
   <script>
-    // Global project data - loads from projects.json
+    // Global project data
     let projectData = {};
 
     const cursor = document.querySelector('.custom-cursor');
@@ -1101,7 +1101,6 @@
     const projectDetailOverlay = document.getElementById('projectDetailOverlay');
     const projectDetailClose = document.getElementById('projectDetailClose');
     const projectDetailContent = document.getElementById('projectDetailContent');
-    const projectCards = document.querySelectorAll('.project-large');
 
     // Custom Cursor (desktop only)
     if (window.innerWidth > 900) {
@@ -1116,7 +1115,7 @@
       });
     }
 
-    // Generate gallery image paths from imageCount
+    // Generate gallery image paths
     function generateImagePaths(imageFolder, imageCount) {
       const images = [];
       for (let i = 2; i <= imageCount; i++) {
@@ -1126,14 +1125,23 @@
       return images;
     }
 
-    // Load projects from JSON
+    function getCategoryColor(category) {
+      const colors = {
+        'Branding': 'var(--red)',
+        'Design System': 'var(--yellow)',
+        'Architecture': 'var(--blue)',
+        'Execution': 'var(--blue)'
+      };
+      return colors[category] || 'var(--yellow)';
+    }
+
+    // Load projects and set up click handlers
     async function loadProjects() {
       try {
         const response = await fetch('/projects.json');
         const data = await response.json();
 
         data.projects.forEach(project => {
-          // Generate gallery images from imageFolder + imageCount
           const galleryImages = generateImagePaths(project.imageFolder, project.imageCount);
 
           projectData[project.id] = {
@@ -1146,26 +1154,18 @@
             location: project.location,
             scope: project.scope,
             description: project.fullDescription,
-            mainImage: `${project.imageFolder}01.png`,  // Always 01.png
-            galleryImages: galleryImages  // Auto-generated from imageCount
+            mainImage: `${project.imageFolder}01.png`,
+            galleryImages: galleryImages
           };
         });
 
         updateProjectCards(data.projects);
+        setupProjectClickHandlers(); // ✅ MOVED HERE - After data loads!
+
         console.log('✅ Loaded', data.projects.length, 'projects');
       } catch (error) {
         console.error('❌ Error loading projects:', error);
       }
-    }
-
-    function getCategoryColor(category) {
-      const colors = {
-        'Branding': 'var(--red)',
-        'Design System': 'var(--yellow)',
-        'Architecture': 'var(--blue)',
-        'Execution': 'var(--blue)'
-      };
-      return colors[category] || 'var(--yellow)';
     }
 
     function updateProjectCards(projects) {
@@ -1187,12 +1187,31 @@
       });
     }
 
-    // Project Detail - UPDATED to show ALL images in original ratio
+    // ✅ NEW FUNCTION - Set up click handlers AFTER data loads
+    function setupProjectClickHandlers() {
+      const projectCards = document.querySelectorAll('.project-large');
+
+      projectCards.forEach(card => {
+        card.addEventListener('click', () => {
+          const projectId = card.getAttribute('data-project');
+          console.log('🎯 Clicked project:', projectId); // Debug log
+          openProjectDetail(projectId);
+        });
+      });
+
+      console.log('✅ Click handlers attached to', projectCards.length, 'cards');
+    }
+
+    // Open project detail overlay
     function openProjectDetail(projectId) {
       const project = projectData[projectId];
-      if (!project) return;
+      if (!project) {
+        console.error('❌ Project not found:', projectId);
+        return;
+      }
 
-      // Generate ALL gallery images (no limit)
+      console.log('✅ Opening project:', project.title);
+
       const galleryHTML = project.galleryImages.map(img => 
         `<div class="project-gallery-item">
           <img src="${img}" alt="Gallery image" loading="lazy" />
@@ -1251,13 +1270,6 @@
       projectDetailOverlay.classList.remove('active');
       document.body.style.overflow = '';
     }
-
-    projectCards.forEach(card => {
-      card.addEventListener('click', () => {
-        const projectId = card.getAttribute('data-project');
-        openProjectDetail(projectId);
-      });
-    });
 
     projectDetailClose.addEventListener('click', closeProjectDetail);
 
@@ -1320,7 +1332,7 @@
       }
     });
 
-    // FIXED: Vertical wheel scroll -> Horizontal navigation
+    // Vertical wheel scroll -> Horizontal navigation
     let isScrolling = false;
 
     window.addEventListener('wheel', (e) => {
