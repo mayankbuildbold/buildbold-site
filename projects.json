@@ -7,7 +7,7 @@
       "description": "Pune-based fitness club",
       "client": "Pacework Crew",
       "year": "2025",
-      "location": "India",
+      "location": "Pune,India",
       "scope": "Brand Identity, Visual System, Guidelines",
       "fullDescription": [
         "Pacework Crew is a Pune-based fitness club built by three enthusiasts on a mission to pull you out of unhealthy habits. A community where consistency becomes your lifestyle."
@@ -22,7 +22,7 @@
       "description": "Guwahati based homestay run by three dynamic women",
       "client": "Anubhuti And Anashuiya Bhattacharya",
       "year": "2025",
-      "location": "India",
+      "location": "Guwahati,India",
       "scope": "Brand Identity, Visual System, Guidelines",
       "fullDescription": [
         "This logo was designed to capture the essence of Trishakti Homestay - a space built and run by three remarkable women: a mother and her two daughters. The name Trishakti reflects their unity, confidence, and the deep bond they share. The warm, welcoming colors mirror the atmosphere they have created - a home that is inviting, full of character, and rooted in Assam's charm. More than just a design, this logo tells their story of family, dedication, and heartfelt hospitality."
@@ -37,32 +37,30 @@
       "description": "Communal living for the elderly at Rourkela",
       "client": "Client Name",
       "year": "2026",
-      "location": "India",
+      "location": "Rourkela,Odisha,India",
       "scope": "Architectural Consultancy And Elevation Design",
       "fullDescription": [
         "Add paragraph 1 here",
         "Add paragraph 2 here",
         "Add paragraph 3 here"
       ],
-      "imageFolder": "/Projects/Project3/",
+      "imageFolder": "/Projects/Old Age/",
       "imageCount": 5
     },
     {
       "id": 4,
-      "title": "Project 4",
+      "title": "Arch-Veda",
       "category": "Branding",
-      "description": "Add your project description here",
-      "client": "Client Name",
-      "year": "2026",
-      "location": "India",
-      "scope": "Scope of work",
+      "description": " A venture that explores the dynamic worlds of art, architecture, and culture.",
+      "client": "Artifex Architecture Studio",
+      "year": "2025",
+      "location": "Bhubaneswar,Odisha,India",
+      "scope": "Brand Identity, Visual System, Guidelines",
       "fullDescription": [
-        "Add paragraph 1 here",
-        "Add paragraph 2 here",
-        "Add paragraph 3 here"
+    The logo merges the letter ‘a’ with the Hindi alphabet ‘वे,’ representing the fusion of modern and traditional influences. Additionally, the design has been transformed into a repeating pattern, symbolizing the continuous dialogue between these creative disciplines.
       ],
-      "imageFolder": "/Projects/Project4/",
-      "imageCount": 5
+      "imageFolder": "/Projects/Arch Veda/",
+      "imageCount": 9
     },
     {
       "id": 5,
