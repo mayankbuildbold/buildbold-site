@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>BOLD</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="icon" type="image/png" href="/Favicon.png" />
+
+  <style>
+    @font-face {
+      font-family: 'Code Pro';
+      src: url('/fonts/Code-Pro.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Code Pro';
+      src: url('/fonts/Code-Pro-Bold.ttf') format('truetype');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Code Pro';
+      src: url('/fonts/Code-Pro-Black.ttf') format('truetype');
+      font-weight: 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --black: #000000;
+      --white: #FFFFFF;
+      --red: #E30613;
+      --yellow: #FDB913;
+      --blue: #005CAB;
+      --muted: rgba(255,255,255,0.65);
+      --border: rgba(255,255,255,0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      cursor: none;
+    }
+
+    .custom-cursor {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--yellow);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: none;
+      mix-blend-mode: difference;
+      will-change: left, top;
+    }
+
+    .custom-cursor.hover {
+      background: var(--white);
+      transform: translate(-50%, -50%) scale(1.5);
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    html, body {
+      height: 100vh;
+      overflow: hidden;
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Code Pro', monospace;
+    }
+
+    /* HEADER - SOLID BACKGROUND */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
+      background: var(--black);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 48px;
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo img {
+      height: 48px;
+      width: auto;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .logo:hover img {
+      transform: scale(1.05);
+    }
+
+    .status {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    .scroll-container {
+      display: flex;
+      height: 100vh;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-behavior: smooth;
+      scroll-snap-type: x mandatory;
+      padding-top: 80px;
+    }
+
+    .scroll-container::-webkit-scrollbar {
+      display: none;
+    }
+    .scroll-container {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    section {
+      min-width: 100vw;
+      height: calc(100vh - 80px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 64px;
+      position: relative;
+      background: var(--black);
+      color: var(--white);
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    .nav-dots {
+      position: fixed;
+      right: 48px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .nav-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--border);
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 0;
+    }
+
+    /* Bauhaus colors for nav dots */
+    .nav-dot.active:nth-child(1) { background: var(--red); height: 32px; }
+    .nav-dot.active:nth-child(2) { background: var(--yellow); height: 32px; }
+    .nav-dot.active:nth-child(3) { background: var(--blue); height: 32px; }
+    .nav-dot.active:nth-child(4) { background: var(--red); height: 32px; }
+    .nav-dot.active:nth-child(5) { background: var(--yellow); height: 32px; }
+    .nav-dot.active:nth-child(6) { background: var(--blue); height: 32px; }
+
+    .nav-dot:hover {
+      background: var(--muted);
+    }
+
+    .scroll-hint {
+      position: fixed;
+      bottom: 48px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      animation: fadeInOut 2s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 50;
+    }
+
+    .scroll-hint::after {
+      content: '→';
+      font-size: 16px;
+    }
+
+    @keyframes fadeInOut {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+
+    .hero-section {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: 72px;
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    h1 {
+      font-size: clamp(48px, 6vw, 92px);
+      font-weight: 900;
+      line-height: 1.05;
+      margin: 0 0 36px 0;
+    }
+
+    .accent {
+      color: var(--red);
+    }
+
+    .sub {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--muted);
+      max-width: 500px;
+    }
+
+    .face {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .face img {
+      max-width: 100%;
+      height: auto;
+      max-height: 500px;
+      object-fit: contain;
+      opacity: 0.9;
+      transition: all 0.5s ease;
+      animation: breathe 4s ease-in-out infinite;
+      cursor: pointer;
+    }
+
+    @keyframes breathe {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+    }
+
+    .face img:hover {
+      transform: scale(1.05);
+      opacity: 1;
+      animation: none;
+    }
+
+    .meta {
+      margin-top: 64px;
+      display: flex;
+      gap: 32px;
+      flex-wrap: wrap;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .meta span {
+      position: relative;
+      padding-left: 12px;
+      transition: color 0.3s ease;
+      cursor: pointer;
+    }
+
+    /* Bauhaus colored dots for meta */
+    .meta span:nth-child(1)::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 6px;
+      background: var(--red);
+    }
+
+    .meta span:nth-child(2)::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 6px;
+      background: var(--yellow);
+    }
+
+    .meta span:nth-child(3)::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 6px;
+      background: var(--blue);
+    }
+
+    .meta span:hover {
+      color: var(--white);
+    }
+
+    .about-content {
+      max-width: 700px;
+      text-align: left;
+    }
+
+    /* Bauhaus colors for section labels */
+    .section-label {
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      margin-bottom: 24px;
+    }
+
+    #section-1 .section-label { color: var(--yellow); }
+    #section-2 .section-label { color: var(--blue); }
+    #section-3 .section-label { color: var(--red); }
+    #section-4 .section-label { color: var(--yellow); }
+    #section-5 .section-label { color: var(--blue); }
+
+    h2 {
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 900;
+      line-height: 1.1;
+      margin: 0 0 32px 0;
+    }
+
+    .about-text {
+      font-size: 15px;
+      line-height: 1.9;
+      color: var(--muted);
+      margin-bottom: 48px;
+    }
+
+    .about-text p {
+      margin: 0 0 20px 0;
+    }
+
+    /* PROJECTS SECTIONS - 3 PROJECTS PER SECTION */
+    .projects-section-1,
+    .projects-section-2 {
+      padding: 64px 96px;
+      justify-content: flex-start;
+      overflow: hidden;
+    }
+
+    .projects-intro {
+      max-width: 1400px;
+      width: 100%;
+      margin-bottom: 48px;
+    }
+
+    .projects-container {
+      display: flex;
+      align-items: stretch;
+      gap: 24px;
+      width: 100%;
+      max-width: 1400px;
+      height: calc(100% - 160px);
+    }
+
+    .project-large {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      min-height: 500px;
+    }
+
+    .project-large-image {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .project-large-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s ease;
+    }
+
+    .project-large:hover .project-large-image img {
+      transform: scale(1.1);
+    }
+
+    .project-large-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 32px;
+      background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.7) 70%, transparent 100%);
+      transform: translateY(100%);
+      transition: transform 0.4s ease;
+    }
+
+    .project-large:hover .project-large-info {
+      transform: translateY(0);
+    }
+
+    /* Bauhaus colors for project categories */
+    .project-large:nth-child(1) .project-large-category { color: var(--red); }
+    .project-large:nth-child(2) .project-large-category { color: var(--yellow); }
+    .project-large:nth-child(3) .project-large-category { color: var(--blue); }
+
+    .project-large-category {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .project-large-title {
+      font-size: 24px;
+      font-weight: 900;
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+
+    .project-large-description {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    /* VERTICAL VIEW MORE BUTTON - Using Yellow Bauhaus color */
+    .view-more-vertical {
+      width: 80px;
+      height: 100%;
+      min-height: 500px;
+      background: var(--yellow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .view-more-vertical:hover {
+      background: var(--blue);
+    }
+
+    .view-more-vertical::before {
+      content: 'VIEW MORE';
+      position: absolute;
+      font-family: 'Code Pro', monospace;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.15em;
+      color: var(--black);
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      transform: rotate(180deg);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .approach-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 280px);
+      gap: 32px;
+    }
+
+    .approach-card {
+      padding: 32px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .approach-card:hover {
+      background: rgba(255,255,255,0.04);
+      transform: translateY(-4px);
+    }
+
+    /* Bauhaus borders on hover for approach cards */
+    .approach-card:nth-child(1):hover { border-color: var(--red); }
+    .approach-card:nth-child(2):hover { border-color: var(--yellow); }
+    .approach-card:nth-child(3):hover { border-color: var(--blue); }
+
+    /* Bauhaus colors for approach numbers */
+    .approach-card:nth-child(1) .approach-number { color: var(--red); }
+    .approach-card:nth-child(2) .approach-number { color: var(--yellow); }
+    .approach-card:nth-child(3) .approach-number { color: var(--blue); }
+
+    .approach-number {
+      font-size: 12px;
+      margin-bottom: 16px;
+      letter-spacing: 0.1em;
+    }
+
+    .approach-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .approach-desc {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    .contact-content {
+      max-width: 600px;
+      text-align: center;
+    }
+
+    .contact-email {
+      display: inline-block;
+      font-size: clamp(24px, 3vw, 42px);
+      font-weight: 700;
+      color: var(--blue);
+      text-decoration: none;
+      margin: 32px 0;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .contact-email:hover {
+      color: var(--yellow);
+      transform: scale(1.02);
+    }
+
+    .contact-sub {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .footer-text {
+      margin-top: 64px;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    /* MOBILE STYLES */
+    @media (max-width: 900px) {
+      .header {
+        position: relative;
+        padding: 0 24px;
+        height: 70px;
+      }
+
+      .logo img {
+        height: 36px;
+      }
+
+      .scroll-container {
+        padding-top: 0;
+        flex-direction: column;
+        overflow-y: auto;
+        overflow-x: hidden;
+        scroll-snap-type: y mandatory;
+      }
+
+      section {
+        padding: 32px 24px;
+        min-width: 100vw;
+        min-height: 100vh;
+        height: auto;
+      }
+
+      .hero-section {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+
+      .face img {
+        max-height: 300px;
+      }
+
+      .projects-section-1,
+      .projects-section-2 {
+        padding: 32px 24px;
+      }
+
+      .projects-container {
+        flex-direction: column;
+        height: auto;
+      }
+
+      .project-large {
+        min-height: 400px;
+      }
+
+      .view-more-vertical {
+        width: 100%;
+        height: 80px;
+        min-height: 80px;
+      }
+
+      .view-more-vertical::before {
+        writing-mode: horizontal-tb;
+        transform: rotate(0deg);
+      }
+
+      .approach-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .nav-dots {
+        flex-direction: row;
+        right: 50%;
+        top: auto;
+        bottom: 24px;
+        transform: translateX(50%);
+      }
+
+      .nav-dot.active {
+        height: 8px;
+        width: 32px;
+      }
+
+      .scroll-hint {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="custom-cursor"></div>
+
+  <!-- HEADER - SOLID BACKGROUND -->
+  <div class="header">
+    <div class="logo">
+      <img src="/logo.png" alt="BOLD logo" />
+    </div>
+    <div class="status">EST. 2026</div>
+  </div>
+
+  <div class="nav-dots">
+    <button class="nav-dot active" data-section="0" aria-label="Hero"></button>
+    <button class="nav-dot" data-section="1" aria-label="About"></button>
+    <button class="nav-dot" data-section="2" aria-label="Projects 1"></button>
+    <button class="nav-dot" data-section="3" aria-label="Projects 2"></button>
+    <button class="nav-dot" data-section="4" aria-label="Approach"></button>
+    <button class="nav-dot" data-section="5" aria-label="Contact"></button>
+  </div>
+
+  <div class="scroll-hint">SCROLL</div>
+
+  <div class="scroll-container" id="scrollContainer">
+
+    <!-- HERO SECTION -->
+    <section id="section-0">
+      <div class="hero-section">
+        <div>
+          <h1>
+            <span class="accent">BOLD</span> THINKING.<br>
+            PRECISE<br>
+            EXECUTION.
+          </h1>
+
+          <p class="sub">
+            BOLD is a practice built on clarity, structure, and intent.
+            We approach design and execution as disciplined systems —
+            deliberate, efficient, and uncompromising.
+          </p>
+
+          <div class="meta">
+            <span>Architecture</span>
+            <span>Design Systems</span>
+            <span>Execution Strategy</span>
+          </div>
+        </div>
+
+        <div class="face">
+          <img src="/Face.png" alt="Abstract face graphic" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section id="section-1">
+      <div class="about-content">
+        <div class="section-label">ABOUT</div>
+
+        <h2>We build with intention.</h2>
+
+        <div class="about-text">
+          <p>
+            BOLD is a new design practice focused on creating work that matters. 
+            We're just getting started, but our standards aren't.
+          </p>
+          <p>
+            Every project is an opportunity to prove that discipline, 
+            clarity, and honest execution never go out of style.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS SECTION 1 - 3 PROJECTS -->
+    <section id="section-2" class="projects-section-1">
+      <div class="projects-intro">
+        <div class="section-label">PROJECTS</div>
+        <h2>Work that speaks.</h2>
+      </div>
+
+      <div class="projects-container">
+        <!-- Project 1 -->
+        <div class="project-large">
+          <div class="project-large-image">
+            <img src="/projects/project-1.jpg" alt="Project 1" />
+          </div>
+          <div class="project-large-info">
+            <div class="project-large-category">Architecture</div>
+            <div class="project-large-title">Modern Living Spaces</div>
+            <div class="project-large-description">
+              A bold approach to residential design combining minimalism with warmth.
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-large">
+          <div class="project-large-image">
+            <img src="/projects/project-2.jpg" alt="Project 2" />
+          </div>
+          <div class="project-large-info">
+            <div class="project-large-category">Design System</div>
+            <div class="project-large-title">Brand Framework</div>
+            <div class="project-large-description">
+              Comprehensive design system built for scale and consistency.
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 3 -->
+        <div class="project-large">
+          <div class="project-large-image">
+            <img src="/projects/project-3.jpg" alt="Project 3" />
+          </div>
+          <div class="project-large-info">
+            <div class="project-large-category">Execution</div>
+            <div class="project-large-title">Strategic Vision</div>
+            <div class="project-large-description">
+              Transforming ambitious concepts into tangible results.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS SECTION 2 - 3 PROJECTS + VIEW MORE -->
+    <section id="section-3" class="projects-section-2">
+      <div class="projects-intro">
+        <div class="section-label">PROJECTS</div>
+        <h2>Work that speaks.</h2>
+      </div>
+
+      <div class="projects-container">
+        <!-- Project 4 -->
+        <div class="project-large">
+          <div class="project-large-image">
+            <img src="/projects/project-4.jpg" alt="Project 4" />
+          </div>
+          <div class="project-large-info">
+            <div class="project-large-category">Architecture</div>
+            <div class="project-large-title">Commercial Excellence</div>
+            <div class="project-large-description">
+              Workspace design that inspires productivity and creativity.
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 5 -->
+        <div class="project-large">
+          <div class="project-large-image">
+            <img src="/projects/project-5.jpg" alt="Project 5" />
+          </div>
+          <div class="project-large-info">
+            <div class="project-large-category">Design System</div>
+            <div class="project-large-title">Digital Presence</div>
+            <div class="project-large-description">
+              Clean interfaces and systematic design principles that scale.
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 6 -->
+        <div class="project-large">
+          <div class="project-large-image">
+            <img src="/projects/project-6.jpg" alt="Project 6" />
+          </div>
+          <div class="project-large-info">
+            <div class="project-large-category">Execution</div>
+            <div class="project-large-title">Integrated Solutions</div>
+            <div class="project-large-description">
+              Disciplined execution meeting ambitious vision with standards.
+            </div>
+          </div>
+        </div>
+
+        <!-- VERTICAL VIEW MORE BUTTON - BAUHAUS YELLOW -->
+        <div class="view-more-vertical" id="viewMoreBtn"></div>
+      </div>
+    </section>
+
+    <!-- APPROACH SECTION -->
+    <section id="section-4">
+      <div class="about-content">
+        <div class="section-label">APPROACH</div>
+        <h2>How we work.</h2>
+      </div>
+
+      <div class="approach-grid">
+        <div class="approach-card">
+          <div class="approach-number">01</div>
+          <div class="approach-title">Clarity</div>
+          <div class="approach-desc">
+            Strip away the unnecessary. Focus on what matters. Every decision serves a purpose.
+          </div>
+        </div>
+
+        <div class="approach-card">
+          <div class="approach-number">02</div>
+          <div class="approach-title">Structure</div>
+          <div class="approach-desc">
+            Systems that scale. Process that delivers. Consistency in execution.
+          </div>
+        </div>
+
+        <div class="approach-card">
+          <div class="approach-number">03</div>
+          <div class="approach-title">Intent</div>
+          <div class="approach-desc">
+            Every choice serves a purpose. No exceptions. No compromises.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="section-5">
+      <div class="contact-content">
+        <div class="section-label">GET IN TOUCH</div>
+
+        <h2>Let's build something bold.</h2>
+
+        <a href="mailto:info@buildbold.in" class="contact-email">
+          info@buildbold.in
+        </a>
+
+        <p class="contact-sub">
+          Whether you're starting fresh or refining what exists,<br>
+          we're here to help you build with purpose.
+        </p>
+
+        <div class="footer-text">
+          © 2026 BOLD. All rights reserved.
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    const cursor = document.querySelector('.custom-cursor');
+    const scrollContainer = document.getElementById('scrollContainer');
+    const navDots = document.querySelectorAll('.nav-dot');
+    const scrollHint = document.querySelector('.scroll-hint');
+    const sections = document.querySelectorAll('section');
+    const viewMoreBtn = document.getElementById('viewMoreBtn');
+
+    // Custom Cursor
+    document.addEventListener('mousemove', (e) => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+
+    // Cursor hover effects
+    document.querySelectorAll('a, button, .logo, .face img, .approach-card, .meta span, .nav-dot, .project-large, .view-more-vertical').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+    });
+
+    // View More Button
+    viewMoreBtn.addEventListener('click', () => {
+      scrollContainer.scrollTo({ 
+        left: sections[4].offsetLeft, 
+        behavior: 'smooth' 
+      });
+    });
+
+    // Navigation dots
+    navDots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const idx = parseInt(dot.dataset.section);
+        const target = sections[idx];
+
+        if (window.innerWidth > 900) {
+          scrollContainer.scrollTo({ left: target.offsetLeft, behavior: 'smooth' });
+        } else {
+          scrollContainer.scrollTo({ top: target.offsetTop, behavior: 'smooth' });
+        }
+      });
+    });
+
+    // Update active dot
+    scrollContainer.addEventListener('scroll', () => {
+      if (scrollContainer.scrollLeft > 50 || scrollContainer.scrollTop > 50) {
+        scrollHint.style.opacity = '0';
+      } else {
+        scrollHint.style.opacity = '1';
+      }
+
+      let current = 0;
+
+      if (window.innerWidth > 900) {
+        const pos = scrollContainer.scrollLeft + window.innerWidth / 2;
+        sections.forEach((sec, i) => {
+          if (sec.offsetLeft <= pos) current = i;
+        });
+      } else {
+        const pos = scrollContainer.scrollTop + window.innerHeight / 2;
+        sections.forEach((sec, i) => {
+          if (sec.offsetTop <= pos) current = i;
+        });
+      }
+
+      navDots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === current);
+      });
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp'].includes(e.key)) {
+        e.preventDefault();
+        const isDesktop = window.innerWidth > 900;
+        const currentSection = Math.round(scrollContainer.scrollLeft / window.innerWidth);
+
+        if (isDesktop) {
+          const direction = (e.key === 'ArrowRight' || e.key === 'ArrowDown') ? 1 : -1;
+          const targetSection = Math.max(0, Math.min(sections.length - 1, currentSection + direction));
+          scrollContainer.scrollTo({ left: sections[targetSection].offsetLeft, behavior: 'smooth' });
+        }
+      }
+    });
+
+    // Snap scrolling
+    let isScrolling = false;
+
+    document.addEventListener('wheel', (e) => {
+      if (window.innerWidth > 900) {
+        e.preventDefault();
+
+        if (!isScrolling && Math.abs(e.deltaY) > 10) {
+          isScrolling = true;
+          const currentSection = Math.round(scrollContainer.scrollLeft / window.innerWidth);
+          const direction = e.deltaY > 0 ? 1 : -1;
+          const targetSection = Math.max(0, Math.min(sections.length - 1, currentSection + direction));
+
+          scrollContainer.scrollTo({ 
+            left: sections[targetSection].offsetLeft, 
+            behavior: 'smooth' 
+          });
+
+          setTimeout(() => { isScrolling = false; }, 800);
+        }
+      }
+    }, { passive: false });
+
+  </script>
+</body>
+</html>
