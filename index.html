@@ -1,3 +1,5 @@
+
+Made with Perplexity
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -223,8 +225,8 @@
     }
 
     .project-detail-gallery {
-     display: grid;
-  grid-template-columns: repeat(3, 1fr);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 24px;
       margin-bottom: 64px;
     }
@@ -1116,6 +1118,16 @@
       });
     }
 
+    // Generate gallery image paths from imageCount
+    function generateImagePaths(imageFolder, imageCount) {
+      const images = [];
+      for (let i = 2; i <= imageCount; i++) {
+        const num = i.toString().padStart(2, '0');
+        images.push(`${imageFolder}${num}.png`);
+      }
+      return images;
+    }
+
     // Load projects from JSON
     async function loadProjects() {
       try {
@@ -1123,6 +1135,9 @@
         const data = await response.json();
 
         data.projects.forEach(project => {
+          // Generate gallery images from imageFolder + imageCount
+          const galleryImages = generateImagePaths(project.imageFolder, project.imageCount);
+
           projectData[project.id] = {
             category: project.category,
             categoryColor: getCategoryColor(project.category),
@@ -1133,8 +1148,8 @@
             location: project.location,
             scope: project.scope,
             description: project.fullDescription,
-            mainImage: project.mainImage,
-            galleryImages: project.galleryImages
+            mainImage: `${project.imageFolder}01.png`,  // Always 01.png
+            galleryImages: galleryImages  // Auto-generated from imageCount
           };
         });
 
@@ -1166,7 +1181,7 @@
           const title = card.querySelector('.project-large-title');
           const description = card.querySelector('.project-large-description');
 
-          if (img) img.src = project.mainImage;
+          if (img) img.src = `${project.imageFolder}01.png`;
           if (category) category.textContent = project.category;
           if (title) title.textContent = project.title;
           if (description) description.textContent = project.description;
