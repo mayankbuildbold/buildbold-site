@@ -223,8 +223,8 @@
     }
 
     .project-detail-gallery {
-      display: flex;
-      flex-direction: column;
+     display: grid;
+  grid-template-columns: repeat(3, 1fr);
       gap: 24px;
       margin-bottom: 64px;
     }
@@ -748,6 +748,7 @@
       }
 
       .project-detail-gallery {
+        grid-template-columns: 1fr;
         gap: 16px;
       }
 
