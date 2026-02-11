@@ -1,0 +1,136 @@
+{
+  "projects": [
+    {
+      "id": 1,
+      "title": "Pacework Crew",
+      "category": "Branding",
+      "description": "Brand identity for a modern creative collective.",
+      "client": "Pacework Crew",
+      "year": "2025",
+      "location": "India",
+      "scope": "Brand Identity, Visual System, Guidelines",
+      "fullDescription": [
+        "Pacework Crew represents a new generation of creative professionals who value both speed and quality. The brand identity needed to reflect their bold, disciplined approach.",
+        "We developed a comprehensive visual system that balances energy with structure—bold enough to stand out, systematic enough to scale.",
+        "Every element of the identity was designed to be recognizable, adaptable, and distinctly Pacework."
+      ],
+      "mainImage": "/Projects/Pacework Crew/01.png",
+      "galleryImages": [
+        "/Projects/Pacework Crew/02.png",
+        "/Projects/Pacework Crew/03.png",
+        "/Projects/Pacework Crew/04.png",
+        "/Projects/Pacework Crew/05.png"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Project 2",
+      "category": "Design System",
+      "description": "Add your project description here",
+      "client": "Client Name",
+      "year": "2026",
+      "location": "India",
+      "scope": "Scope of work",
+      "fullDescription": [
+        "Add paragraph 1 here",
+        "Add paragraph 2 here",
+        "Add paragraph 3 here"
+      ],
+      "mainImage": "/Projects/Project2/01.png",
+      "galleryImages": [
+        "/Projects/Project2/02.png",
+        "/Projects/Project2/03.png",
+        "/Projects/Project2/04.png",
+        "/Projects/Project2/05.png"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Project 3",
+      "category": "Architecture",
+      "description": "Add your project description here",
+      "client": "Client Name",
+      "year": "2026",
+      "location": "India",
+      "scope": "Scope of work",
+      "fullDescription": [
+        "Add paragraph 1 here",
+        "Add paragraph 2 here",
+        "Add paragraph 3 here"
+      ],
+      "mainImage": "/Projects/Project3/01.png",
+      "galleryImages": [
+        "/Projects/Project3/02.png",
+        "/Projects/Project3/03.png",
+        "/Projects/Project3/04.png",
+        "/Projects/Project3/05.png"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Project 4",
+      "category": "Branding",
+      "description": "Add your project description here",
+      "client": "Client Name",
+      "year": "2026",
+      "location": "India",
+      "scope": "Scope of work",
+      "fullDescription": [
+        "Add paragraph 1 here",
+        "Add paragraph 2 here",
+        "Add paragraph 3 here"
+      ],
+      "mainImage": "/Projects/Project4/01.png",
+      "galleryImages": [
+        "/Projects/Project4/02.png",
+        "/Projects/Project4/03.png",
+        "/Projects/Project4/04.png",
+        "/Projects/Project4/05.png"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Project 5",
+      "category": "Design System",
+      "description": "Add your project description here",
+      "client": "Client Name",
+      "year": "2026",
+      "location": "India",
+      "scope": "Scope of work",
+      "fullDescription": [
+        "Add paragraph 1 here",
+        "Add paragraph 2 here",
+        "Add paragraph 3 here"
+      ],
+      "mainImage": "/Projects/Project5/01.png",
+      "galleryImages": [
+        "/Projects/Project5/02.png",
+        "/Projects/Project5/03.png",
+        "/Projects/Project5/04.png",
+        "/Projects/Project5/05.png"
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Project 6",
+      "category": "Execution",
+      "description": "Add your project description here",
+      "client": "Client Name",
+      "year": "2026",
+      "location": "India",
+      "scope": "Scope of work",
+      "fullDescription": [
+        "Add paragraph 1 here",
+        "Add paragraph 2 here",
+        "Add paragraph 3 here"
+      ],
+      "mainImage": "/Projects/Project6/01.png",
+      "galleryImages": [
+        "/Projects/Project6/02.png",
+        "/Projects/Project6/03.png",
+        "/Projects/Project6/04.png",
+        "/Projects/Project6/05.png"
+      ]
+    }
+  ]
+}
