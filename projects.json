@@ -12,13 +12,8 @@
       "fullDescription": [
         "Pacework Crew is a Pune-based fitness club built by three enthusiasts on a mission to pull you out of unhealthy habits. A community where consistency becomes your lifestyle."
       ],
-      "mainImage": "/Projects/Pacework Crew/01.png",
-      "galleryImages": [
-        "/Projects/Pacework Crew/02.png",
-        "/Projects/Pacework Crew/03.png",
-        "/Projects/Pacework Crew/04.png",
-        "/Projects/Pacework Crew/05.png"
-      ]
+    "imageFolder": "/Projects/Pacework Crew/",
+      "imageCount": 12
     },
     {
       "id": 2,
@@ -32,13 +27,8 @@
       "fullDescription": [
          "This logo was designed to capture the essence of Trishakti Homestay — a space built and run by three remarkable women: a mother and her two daughters. The name “Trishakti” reflects their unity, confidence, and the deep bond they share. The warm, welcoming colors mirror the atmosphere they’ve created — a home that’s inviting, full of character, and rooted in Assam’s charm. More than just a design, this logo tells their story of family, dedication, and heartfelt hospitality."
       ],
-      "mainImage": "/Projects/Project2/01.png",
-      "galleryImages": [
-        "/Projects/Project2/02.png",
-        "/Projects/Project2/03.png",
-        "/Projects/Project2/04.png",
-        "/Projects/Project2/05.png"
-      ]
+   "imageFolder": "/Projects/Trishakti Homestay/",
+      "imageCount": 10
     },
     {
       "id": 3,
