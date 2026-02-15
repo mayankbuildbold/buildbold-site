@@ -268,6 +268,25 @@
       transform: scale(1.05);
     }
 
+    .header-nav {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .nav-link {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.3s ease;
+      cursor: pointer;
+    }
+
+    .nav-link:hover {
+      color: var(--yellow);
+    }
+
     .status {
       font-size: 12px;
       letter-spacing: 0.08em;
@@ -442,7 +461,17 @@
       cursor: pointer;
     }
 
-    .meta span:nth-child(1)::before {
+    .meta a {
+      position: relative;
+      padding-left: 12px;
+      transition: color 0.3s ease;
+      cursor: pointer;
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .meta span:nth-child(1)::before,
+    .meta a:nth-child(1)::before {
       content: '';
       position: absolute;
       left: 0;
@@ -453,7 +482,8 @@
       background: var(--red);
     }
 
-    .meta span:nth-child(2)::before {
+    .meta span:nth-child(2)::before,
+    .meta a:nth-child(2)::before {
       content: '';
       position: absolute;
       left: 0;
@@ -464,7 +494,8 @@
       background: var(--yellow);
     }
 
-    .meta span:nth-child(3)::before {
+    .meta span:nth-child(3)::before,
+    .meta a:nth-child(3)::before {
       content: '';
       position: absolute;
       left: 0;
@@ -475,7 +506,20 @@
       background: var(--blue);
     }
 
-    .meta span:hover {
+    .meta span:nth-child(4)::before,
+    .meta a:nth-child(4)::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 6px;
+      background: var(--red);
+    }
+
+    .meta span:hover,
+    .meta a:hover {
       color: var(--white);
     }
 
@@ -729,6 +773,18 @@
         height: 36px;
       }
 
+      .header-nav {
+        gap: 16px;
+      }
+
+      .nav-link {
+        font-size: 11px;
+      }
+
+      .status {
+        display: none;
+      }
+
       .project-detail-close {
         right: 24px;
         width: 40px;
@@ -858,7 +914,10 @@
     <div class="logo">
       <img src="/logo.png" alt="BOLD logo" />
     </div>
-    <div class="status">EST. 2026</div>
+    <div class="header-nav">
+      <a href="/merch.html" class="nav-link">MERCH</a>
+      <div class="status">EST. 2026</div>
+    </div>
   </div>
 
   <div class="nav-dots">
@@ -891,8 +950,9 @@
 
           <div class="meta">
             <span>Architecture</span>
-            <span>Design Systems</span>
+            <span>Branding</span>
             <span>Execution Strategy</span>
+            <a href="/merch.html">Merch</a>
           </div>
         </div>
 
@@ -984,7 +1044,7 @@
             <img src="/Projects/Project5/01.png" alt="Project 5" />
           </div>
           <div class="project-large-info">
-            <div class="project-large-category">Design System</div>
+            <div class="project-large-category">Architecture</div>
             <div class="project-large-title">Project 5</div>
             <div class="project-large-description">Add your project description here.</div>
           </div>
@@ -995,7 +1055,7 @@
             <img src="/Projects/Project6/01.png" alt="Project 6" />
           </div>
           <div class="project-large-info">
-            <div class="project-large-category">Execution</div>
+            <div class="project-large-category">Branding</div>
             <div class="project-large-title">Project 6</div>
             <div class="project-large-description">Add your project description here.</div>
           </div>
@@ -1073,7 +1133,7 @@
         cursor.style.top = e.clientY + 'px';
       });
 
-      document.querySelectorAll('a, button, .logo, .face img, .approach-card, .meta span, .nav-dot, .project-large, .view-more-vertical').forEach(el => {
+      document.querySelectorAll('a, button, .logo, .face img, .approach-card, .meta span, .meta a, .nav-dot, .project-large, .view-more-vertical, .nav-link').forEach(el => {
         el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
         el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
       });
@@ -1092,9 +1152,7 @@
     function getCategoryColor(category) {
       const colors = {
         'Branding': 'var(--red)',
-        'Design System': 'var(--yellow)',
-        'Architecture': 'var(--blue)',
-        'Execution': 'var(--blue)'
+        'Architecture': 'var(--blue)'
       };
       return colors[category] || 'var(--yellow)';
     }
