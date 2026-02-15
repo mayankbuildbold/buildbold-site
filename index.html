@@ -928,7 +928,7 @@
       <div class="projects-container">
         <div class="project-large" data-project="1">
           <div class="project-large-image">
-            <img src="/Projects/Pacework Crew/01.png" alt="Project 1" />
+            <img src="/Projects/Pacework Crew/01.png" alt="Pacework Crew" />
           </div>
           <div class="project-large-info">
             <div class="project-large-category">Branding</div>
@@ -939,7 +939,7 @@
 
         <div class="project-large" data-project="2">
           <div class="project-large-image">
-            <img src="/Projects/Trishakti Homestay/01.png" alt="Project 2" />
+            <img src="/Projects/Trishakti Homestay/01.png" alt="Trishakti Homestay" />
           </div>
           <div class="project-large-info">
             <div class="project-large-category">Branding</div>
@@ -950,7 +950,7 @@
 
         <div class="project-large" data-project="3">
           <div class="project-large-image">
-            <img src="/Projects/Project3/01.png" alt="Project 3" />
+            <img src="/Projects/Old Age/01.png" alt="Old Age Oasis" />
           </div>
           <div class="project-large-info">
             <div class="project-large-category">Architecture</div>
@@ -970,12 +970,12 @@
       <div class="projects-container">
         <div class="project-large" data-project="4">
           <div class="project-large-image">
-            <img src="/Projects/Project4/01.png" alt="Project 4" />
+            <img src="/Projects/Arch veda/01.png" alt="Arch-Veda" />
           </div>
           <div class="project-large-info">
             <div class="project-large-category">Branding</div>
-            <div class="project-large-title">Project 4</div>
-            <div class="project-large-description">Add your project description here.</div>
+            <div class="project-large-title">Arch-Veda</div>
+            <div class="project-large-description">Art, architecture, and culture venture</div>
           </div>
         </div>
 
@@ -1054,8 +1054,6 @@
   </div>
 
   <script>
-    // ✅ OPTION A: ALL JavaScript in ONE place - index.html
-
     let projectData = {};
 
     const cursor = document.querySelector('.custom-cursor');
@@ -1101,7 +1099,7 @@
       return colors[category] || 'var(--yellow)';
     }
 
-    // ✅ LOAD PROJECTS AND SET UP CLICKS
+    // Load projects
     async function loadProjects() {
       try {
         const response = await fetch('/projects.json');
@@ -1126,7 +1124,7 @@
         });
 
         updateProjectCards(data.projects);
-        setupClickHandlers(); // ✅ Set up clicks AFTER data loads
+        setupClickHandlers();
 
         console.log('✅ Loaded', data.projects.length, 'projects');
       } catch (error) {
@@ -1153,7 +1151,6 @@
       });
     }
 
-    // ✅ SET UP CLICK HANDLERS
     function setupClickHandlers() {
       const projectCards = document.querySelectorAll('.project-large');
 
@@ -1168,7 +1165,6 @@
       console.log('✅ Click handlers attached to', projectCards.length, 'cards');
     }
 
-    // ✅ OPEN PROJECT OVERLAY
     function openProjectDetail(projectId) {
       const project = projectData[projectId];
 
@@ -1328,7 +1324,6 @@
 
     }, { passive: false });
 
-    // ✅ LOAD PROJECTS ON PAGE LOAD
     loadProjects();
 
   </script>
