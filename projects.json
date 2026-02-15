@@ -65,7 +65,7 @@
     {
       "id": 5,
       "title": "Project 5",
-      "category": "Design System",
+      "category": "Architecture",
       "description": "Add your project description here",
       "client": "Client Name",
       "year": "2026",
@@ -82,7 +82,7 @@
     {
       "id": 6,
       "title": "Project 6",
-      "category": "Execution",
+      "category": "Branding",
       "description": "Add your project description here",
       "client": "Client Name",
       "year": "2026",
