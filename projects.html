@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Projects - BOLD</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Browse all projects by BOLD - Architecture, Branding, and Design Systems." />
+
+  <link rel="icon" type="image/png" href="/Favicon.png" />
+
+  <style>
+    @font-face {
+      font-family: 'Code Pro';
+      src: url('/fonts/Code-Pro.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Code Pro';
+      src: url('/fonts/Code-Pro-Bold.ttf') format('truetype');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Code Pro';
+      src: url('/fonts/Code-Pro-Black.ttf') format('truetype');
+      font-weight: 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --black: #000000;
+      --white: #FFFFFF;
+      --red: #E30613;
+      --yellow: #FDB913;
+      --blue: #005CAB;
+      --muted: rgba(255,255,255,0.65);
+      --border: rgba(255,255,255,0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Code Pro', monospace;
+      overflow-x: hidden;
+    }
+
+    body {
+      cursor: auto;
+    }
+
+    .custom-cursor {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--yellow);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      mix-blend-mode: difference;
+      will-change: left, top;
+      display: none;
+    }
+
+    @media (min-width: 900px) {
+      body {
+        cursor: none;
+      }
+      .custom-cursor {
+        display: block;
+      }
+    }
+
+    .custom-cursor.hover {
+      background: var(--white);
+      transform: translate(-50%, -50%) scale(1.5);
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .project-detail-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--black);
+      z-index: 9998;
+      display: none;
+      overflow-y: auto;
+      padding: 80px 0 0 0;
+    }
+
+    .project-detail-overlay.active {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .project-detail-close {
+      position: fixed;
+      top: 24px;
+      right: 48px;
+      width: 48px;
+      height: 48px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--white);
+      font-size: 24px;
+      cursor: pointer;
+      z-index: 10000;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .project-detail-close:hover {
+      background: var(--red);
+      border-color: var(--red);
+      transform: rotate(90deg);
+    }
+
+    .project-detail-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 64px 96px;
+    }
+
+    .project-detail-header {
+      margin-bottom: 64px;
+    }
+
+    .project-detail-category {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+
+    .project-detail-title {
+      font-size: clamp(42px, 5vw, 72px);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+
+    .project-detail-subtitle {
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--muted);
+      max-width: 800px;
+    }
+
+    .project-detail-image {
+      width: 100%;
+      height: auto;
+      margin-bottom: 64px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .project-detail-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .project-detail-info {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 64px;
+      margin-bottom: 64px;
+    }
+
+    .project-detail-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .project-meta-item h3 {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .project-meta-item p {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .project-detail-description h3 {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+
+    .project-detail-description p {
+      font-size: 16px;
+      line-height: 1.9;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .project-detail-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 64px;
+    }
+
+    .project-gallery-item {
+      width: 100%;
+      height: auto;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .project-gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
+      background: var(--black);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 48px;
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo img {
+      height: 48px;
+      width: auto;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .logo:hover img {
+      transform: scale(1.05);
+    }
+
+    .back-home {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 12px 24px;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .back-home:hover {
+      background: var(--yellow);
+      border-color: var(--yellow);
+      color: var(--black);
+    }
+
+    .main-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 96px 48px;
+    }
+
+    .page-header {
+      margin-bottom: 64px;
+    }
+
+    .page-label {
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      color: var(--yellow);
+      margin-bottom: 24px;
+    }
+
+    .page-title {
+      font-size: clamp(42px, 5vw, 72px);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+
+    .page-subtitle {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--muted);
+      max-width: 600px;
+    }
+
+    .filter-tabs {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+    }
+
+    .filter-tab {
+      font-family: 'Code Pro', monospace;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 12px 24px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--white);
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+    }
+
+    .filter-tab:hover {
+      background: rgba(255,255,255,0.05);
+    }
+
+    .filter-tab.active {
+      background: var(--yellow);
+      border-color: var(--yellow);
+      color: var(--black);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+      gap: 32px;
+      margin-bottom: 96px;
+    }
+
+    .project-card {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+      background: rgba(255,255,255,0.02);
+    }
+
+    .project-card:hover {
+      border-color: var(--yellow);
+      transform: translateY(-4px);
+    }
+
+    .project-card-image {
+      width: 100%;
+      height: 320px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .project-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .project-card:hover .project-card-image img {
+      transform: scale(1.08);
+    }
+
+    .project-card-info {
+      padding: 24px;
+    }
+
+    .project-card-category {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .project-card-category.branding { color: var(--red); }
+    .project-card-category.design { color: var(--yellow); }
+    .project-card-category.architecture { color: var(--blue); }
+    .project-card-category.execution { color: var(--blue); }
+
+    .project-card-title {
+      font-size: 22px;
+      font-weight: 900;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .project-card-description {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .project-card-meta {
+      display: flex;
+      gap: 16px;
+      margin-top: 16px;
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 48px 24px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 900px) {
+      .header {
+        padding: 0 24px;
+        height: 70px;
+      }
+
+      .logo img {
+        height: 36px;
+      }
+
+      .back-home {
+        font-size: 11px;
+        padding: 10px 16px;
+      }
+
+      .main-container {
+        padding: 64px 24px;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .project-card-image {
+        height: 240px;
+      }
+
+      .project-detail-close {
+        right: 24px;
+        width: 40px;
+        height: 40px;
+        font-size: 20px;
+      }
+
+      .project-detail-content {
+        padding: 48px 24px;
+      }
+
+      .project-detail-info {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .project-detail-gallery {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="custom-cursor"></div>
+
+  <div class="project-detail-overlay" id="projectDetailOverlay">
+    <button class="project-detail-close" id="projectDetailClose">×</button>
+    <div class="project-detail-content" id="projectDetailContent"></div>
+  </div>
+
+  <div class="header">
+    <div class="logo">
+      <a href="/index.html">
+        <img src="/logo.png" alt="BOLD logo" />
+      </a>
+    </div>
+    <a href="/index.html" class="back-home">← BACK HOME</a>
+  </div>
+
+  <div class="main-container">
+    <div class="page-header">
+      <div class="page-label">ALL PROJECTS</div>
+      <h1 class="page-title">Our Work.</h1>
+      <p class="page-subtitle">
+        A collection of work that reflects clarity, structure, and intent.
+        Each project is a deliberate exercise in disciplined execution.
+      </p>
+    </div>
+
+    <div class="filter-tabs">
+      <button class="filter-tab active" data-filter="all">All</button>
+      <button class="filter-tab" data-filter="Branding">Branding</button>
+      <button class="filter-tab" data-filter="Architecture">Architecture</button>
+      <button class="filter-tab" data-filter="Design System">Design System</button>
+      <button class="filter-tab" data-filter="Execution">Execution</button>
+    </div>
+
+    <div class="projects-grid" id="projectsGrid">
+      <!-- Projects will be loaded here via JS -->
+    </div>
+  </div>
+
+  <div class="footer">
+    © 2026 BOLD. All rights reserved.
+  </div>
+
+  <script>
+    let projectData = {};
+    let allProjects = [];
+    let currentFilter = 'all';
+
+    const cursor = document.querySelector('.custom-cursor');
+    const projectsGrid = document.getElementById('projectsGrid');
+    const filterTabs = document.querySelectorAll('.filter-tab');
+    const projectDetailOverlay = document.getElementById('projectDetailOverlay');
+    const projectDetailClose = document.getElementById('projectDetailClose');
+    const projectDetailContent = document.getElementById('projectDetailContent');
+
+    // Custom Cursor
+    if (window.innerWidth > 900) {
+      document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+      });
+    }
+
+    function addCursorHover() {
+      document.querySelectorAll('a, button, .logo, .project-card').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+      });
+    }
+
+    function generateImagePaths(imageFolder, imageCount) {
+      const images = [];
+      for (let i = 2; i <= imageCount; i++) {
+        const num = i.toString().padStart(2, '0');
+        images.push(`${imageFolder}${num}.png`);
+      }
+      return images;
+    }
+
+    function getCategoryColor(category) {
+      const colors = {
+        'Branding': 'var(--red)',
+        'Design System': 'var(--yellow)',
+        'Architecture': 'var(--blue)',
+        'Execution': 'var(--blue)'
+      };
+      return colors[category] || 'var(--yellow)';
+    }
+
+    function getCategoryClass(category) {
+      const classes = {
+        'Branding': 'branding',
+        'Design System': 'design',
+        'Architecture': 'architecture',
+        'Execution': 'execution'
+      };
+      return classes[category] || 'design';
+    }
+
+    async function loadProjects() {
+      try {
+        const response = await fetch('/projects.json');
+        const data = await response.json();
+
+        data.projects.forEach(project => {
+          const galleryImages = generateImagePaths(project.imageFolder, project.imageCount);
+
+          projectData[project.id] = {
+            category: project.category,
+            categoryColor: getCategoryColor(project.category),
+            title: project.title,
+            subtitle: project.description,
+            client: project.client,
+            year: project.year,
+            location: project.location,
+            scope: project.scope,
+            description: project.fullDescription,
+            mainImage: `${project.imageFolder}01.png`,
+            galleryImages: galleryImages
+          };
+
+          allProjects.push({
+            id: project.id,
+            category: project.category,
+            title: project.title,
+            description: project.description,
+            location: project.location,
+            year: project.year,
+            mainImage: `${project.imageFolder}01.png`
+          });
+        });
+
+        renderProjects(allProjects);
+        addCursorHover();
+
+        console.log('✅ Loaded', data.projects.length, 'projects');
+      } catch (error) {
+        console.error('❌ Error loading projects:', error);
+      }
+    }
+
+    function renderProjects(projects) {
+      projectsGrid.innerHTML = projects.map(project => `
+        <div class="project-card" data-project="${project.id}">
+          <div class="project-card-image">
+            <img src="${project.mainImage}" alt="${project.title}" loading="lazy" />
+          </div>
+          <div class="project-card-info">
+            <div class="project-card-category ${getCategoryClass(project.category)}">${project.category}</div>
+            <div class="project-card-title">${project.title}</div>
+            <div class="project-card-description">${project.description}</div>
+            <div class="project-card-meta">
+              <span>${project.location}</span>
+              <span>${project.year}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      setupProjectCardClicks();
+      addCursorHover();
+    }
+
+    function setupProjectCardClicks() {
+      document.querySelectorAll('.project-card').forEach(card => {
+        card.addEventListener('click', () => {
+          const projectId = card.getAttribute('data-project');
+          openProjectDetail(projectId);
+        });
+      });
+    }
+
+    function openProjectDetail(projectId) {
+      const project = projectData[projectId];
+
+      if (!project) {
+        console.error('❌ Project not found:', projectId);
+        return;
+      }
+
+      const galleryHTML = project.galleryImages.map(img => 
+        `<div class="project-gallery-item">
+          <img src="${img}" alt="Gallery image" loading="lazy" />
+        </div>`
+      ).join('');
+
+      const descriptionHTML = project.description.map(p => `<p>${p}</p>`).join('');
+
+      projectDetailContent.innerHTML = `
+        <div class="project-detail-header">
+          <div class="project-detail-category" style="color: ${project.categoryColor}">${project.category}</div>
+          <h1 class="project-detail-title">${project.title}</h1>
+          <p class="project-detail-subtitle">${project.subtitle}</p>
+        </div>
+
+        <div class="project-detail-image">
+          <img src="${project.mainImage}" alt="${project.title}" />
+        </div>
+
+        <div class="project-detail-info">
+          <div class="project-detail-meta">
+            <div class="project-meta-item">
+              <h3>Client</h3>
+              <p>${project.client}</p>
+            </div>
+            <div class="project-meta-item">
+              <h3>Year</h3>
+              <p>${project.year}</p>
+            </div>
+            <div class="project-meta-item">
+              <h3>Location</h3>
+              <p>${project.location}</p>
+            </div>
+            <div class="project-meta-item">
+              <h3>Scope</h3>
+              <p>${project.scope}</p>
+            </div>
+          </div>
+
+          <div class="project-detail-description">
+            <h3>About the Project</h3>
+            ${descriptionHTML}
+          </div>
+        </div>
+
+        <div class="project-detail-gallery">
+          ${galleryHTML}
+        </div>
+      `;
+
+      projectDetailOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeProjectDetail() {
+      projectDetailOverlay.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    projectDetailClose.addEventListener('click', closeProjectDetail);
+
+    projectDetailOverlay.addEventListener('click', (e) => {
+      if (e.target === projectDetailOverlay) {
+        closeProjectDetail();
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (projectDetailOverlay.classList.contains('active') && e.key === 'Escape') {
+        closeProjectDetail();
+      }
+    });
+
+    // Filter functionality
+    filterTabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const filter = tab.getAttribute('data-filter');
+
+        filterTabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+
+        if (filter === 'all') {
+          renderProjects(allProjects);
+        } else {
+          const filtered = allProjects.filter(p => p.category === filter);
+          renderProjects(filtered);
+        }
+
+        currentFilter = filter;
+      });
+    });
+
+    loadProjects();
+  </script>
+</body>
+</html>
