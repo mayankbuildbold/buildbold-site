@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Merch - BOLD</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Shop BOLD merch - Quality apparel from Teescales." />
+
+  <link rel="icon" type="image/png" href="/Favicon.png" />
+
+  <style>
+    @font-face {
+      font-family: 'Code Pro';
+      src: url('/fonts/Code-Pro.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Code Pro';
+      src: url('/fonts/Code-Pro-Bold.ttf') format('truetype');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'Code Pro';
+      src: url('/fonts/Code-Pro-Black.ttf') format('truetype');
+      font-weight: 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --black: #000000;
+      --white: #FFFFFF;
+      --red: #E30613;
+      --yellow: #FDB913;
+      --blue: #005CAB;
+      --muted: rgba(255,255,255,0.65);
+      --border: rgba(255,255,255,0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Code Pro', monospace;
+      overflow-x: hidden;
+    }
+
+    body {
+      cursor: auto;
+    }
+
+    .custom-cursor {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--yellow);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      mix-blend-mode: difference;
+      will-change: left, top;
+      display: none;
+    }
+
+    @media (min-width: 900px) {
+      body {
+        cursor: none;
+      }
+      .custom-cursor {
+        display: block;
+      }
+    }
+
+    .custom-cursor.hover {
+      background: var(--white);
+      transform: translate(-50%, -50%) scale(1.5);
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .header {
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
+      background: var(--black);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 48px;
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo img {
+      height: 48px;
+      width: auto;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .logo:hover img {
+      transform: scale(1.05);
+    }
+
+    .back-home {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 12px 24px;
+      border: 1px solid var(--border);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .back-home:hover {
+      background: var(--yellow);
+      border-color: var(--yellow);
+      color: var(--black);
+    }
+
+    .main-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 96px 48px;
+    }
+
+    .page-header {
+      margin-bottom: 64px;
+      text-align: center;
+    }
+
+    .page-label {
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      color: var(--yellow);
+      margin-bottom: 24px;
+    }
+
+    .page-title {
+      font-size: clamp(42px, 5vw, 72px);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+
+    .page-subtitle {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .merch-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 32px;
+      margin-bottom: 64px;
+    }
+
+    .merch-item {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.02);
+      transition: all 0.3s ease;
+    }
+
+    .merch-item:hover {
+      border-color: var(--yellow);
+      transform: translateY(-4px);
+    }
+
+    .merch-image {
+      width: 100%;
+      height: 400px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .merch-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .merch-item:hover .merch-image img {
+      transform: scale(1.05);
+    }
+
+    .merch-info {
+      padding: 24px;
+      text-align: center;
+    }
+
+    .merch-name {
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .merch-description {
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .cta-section {
+      text-align: center;
+      padding: 96px 48px;
+      border-top: 1px solid var(--border);
+    }
+
+    .cta-label {
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      color: var(--red);
+      margin-bottom: 24px;
+    }
+
+    .cta-title {
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 32px;
+    }
+
+    .cta-description {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--muted);
+      max-width: 600px;
+      margin: 0 auto 48px auto;
+    }
+
+    .shop-button {
+      display: inline-block;
+      font-family: 'Code Pro', monospace;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 20px 48px;
+      background: var(--yellow);
+      color: var(--black);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-transform: uppercase;
+      border: 2px solid var(--yellow);
+    }
+
+    .shop-button:hover {
+      background: transparent;
+      color: var(--yellow);
+      transform: scale(1.05);
+    }
+
+    .footer {
+      text-align: center;
+      padding: 48px 24px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 900px) {
+      .header {
+        padding: 0 24px;
+        height: 70px;
+      }
+
+      .logo img {
+        height: 36px;
+      }
+
+      .back-home {
+        font-size: 11px;
+        padding: 10px 16px;
+      }
+
+      .main-container {
+        padding: 64px 24px;
+      }
+
+      .merch-grid {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+
+      .merch-image {
+        height: 320px;
+      }
+
+      .cta-section {
+        padding: 64px 24px;
+      }
+
+      .shop-button {
+        padding: 16px 32px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="custom-cursor"></div>
+
+  <div class="header">
+    <div class="logo">
+      <a href="/index.html">
+        <img src="/logo.png" alt="BOLD logo" />
+      </a>
+    </div>
+    <a href="/index.html" class="back-home">← BACK HOME</a>
+  </div>
+
+  <div class="main-container">
+    <div class="page-header">
+      <div class="page-label">SHOP</div>
+      <h1 class="page-title">Bold Merch.</h1>
+      <p class="page-subtitle">
+        Quality apparel that speaks to clarity, structure, and intent.
+        Designed for those who build with purpose.
+      </p>
+    </div>
+
+    <div class="merch-grid" id="merchGrid">
+      <!-- Add your merch items here -->
+      <!-- Example structure:
+      <div class="merch-item">
+        <div class="merch-image">
+          <img src="/Merch/item1.jpg" alt="Product Name" />
+        </div>
+        <div class="merch-info">
+          <div class="merch-name">Product Name</div>
+          <div class="merch-description">Product description goes here</div>
+        </div>
+      </div>
+      -->
+    </div>
+  </div>
+
+  <div class="cta-section">
+    <div class="cta-label">POWERED BY TEESCALES</div>
+    <h2 class="cta-title">Ready to shop?</h2>
+    <p class="cta-description">
+      Visit our Swiggy Minis store to browse the full collection
+      and place your order.
+    </p>
+    <a href="#" class="shop-button" id="shopButton">Shop Now on Swiggy Minis</a>
+  </div>
+
+  <div class="footer">
+    © 2026 BOLD. All rights reserved.
+  </div>
+
+  <script>
+    const cursor = document.querySelector('.custom-cursor');
+    const shopButton = document.getElementById('shopButton');
+
+    // Custom Cursor
+    if (window.innerWidth > 900) {
+      document.addEventListener('mousemove', (e) => {
+        cursor.style.left = e.clientX + 'px';
+        cursor.style.top = e.clientY + 'px';
+      });
+
+      document.querySelectorAll('a, button, .logo, .merch-item, .shop-button').forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+      });
+    }
+
+    // Update this with your actual Swiggy Minis store URL
+    shopButton.addEventListener('click', (e) => {
+      e.preventDefault();
+      // Replace with your actual Swiggy Minis store URL
+      window.open('YOUR_SWIGGY_MINIS_STORE_URL', '_blank');
+    });
+  </script>
+</body>
+</html>
