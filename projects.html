@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Projects - BOLD</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Browse all projects by BOLD - Architecture, Branding, and Design Systems." />
+  <meta name="description" content="Browse all projects by BOLD - Architecture and Branding." />
 
   <link rel="icon" type="image/png" href="/Favicon.png" />
 
@@ -396,9 +396,7 @@
     }
 
     .project-card-category.branding { color: var(--red); }
-    .project-card-category.design { color: var(--yellow); }
     .project-card-category.architecture { color: var(--blue); }
-    .project-card-category.execution { color: var(--blue); }
 
     .project-card-title {
       font-size: 22px;
@@ -514,8 +512,6 @@
       <button class="filter-tab active" data-filter="all">All</button>
       <button class="filter-tab" data-filter="Branding">Branding</button>
       <button class="filter-tab" data-filter="Architecture">Architecture</button>
-      <button class="filter-tab" data-filter="Design System">Design System</button>
-      <button class="filter-tab" data-filter="Execution">Execution</button>
     </div>
 
     <div class="projects-grid" id="projectsGrid">
@@ -566,9 +562,7 @@
     function getCategoryColor(category) {
       const colors = {
         'Branding': 'var(--red)',
-        'Design System': 'var(--yellow)',
-        'Architecture': 'var(--blue)',
-        'Execution': 'var(--blue)'
+        'Architecture': 'var(--blue)'
       };
       return colors[category] || 'var(--yellow)';
     }
@@ -576,11 +570,9 @@
     function getCategoryClass(category) {
       const classes = {
         'Branding': 'branding',
-        'Design System': 'design',
-        'Architecture': 'architecture',
-        'Execution': 'execution'
+        'Architecture': 'architecture'
       };
-      return classes[category] || 'design';
+      return classes[category] || 'branding';
     }
 
     async function loadProjects() {
