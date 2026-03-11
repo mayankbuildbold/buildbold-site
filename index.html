@@ -1114,276 +1114,201 @@
   </div>
 
   <script>
-    let projectData = {};
+  let projectData = {};
+  let allProjects = [];
 
-    const cursor = document.querySelector('.custom-cursor');
-    const scrollContainer = document.getElementById('scrollContainer');
-    const navDots = document.querySelectorAll('.nav-dot');
-    const scrollHint = document.querySelector('.scroll-hint');
-    const sections = document.querySelectorAll('section');
-    const viewMoreBtn = document.getElementById('viewMoreBtn');
-    const projectDetailOverlay = document.getElementById('projectDetailOverlay');
-    const projectDetailClose = document.getElementById('projectDetailClose');
-    const projectDetailContent = document.getElementById('projectDetailContent');
+  const cursor = document.querySelector('.custom-cursor');
+  const scrollContainer = document.getElementById('scrollContainer');
+  const navDots = document.querySelectorAll('.nav-dot');
+  const scrollHint = document.querySelector('.scroll-hint');
+  const sections = document.querySelectorAll('section');
+  const viewMoreBtn = document.getElementById('viewMoreBtn');
+  const projectDetailOverlay = document.getElementById('projectDetailOverlay');
+  const projectDetailClose = document.getElementById('projectDetailClose');
+  const projectDetailContent = document.getElementById('projectDetailContent');
 
-    // Custom Cursor
+  if (window.innerWidth > 900) {
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top = e.clientY + 'px';
+    });
+  }
+
+  document.querySelectorAll('a, button, .logo, .face img, .approach-card, .meta span, .meta a, .nav-dot, .project-large, .view-more-vertical, .nav-link').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+  });
+
+  function getCategoryColor(category) {
+    const colors = { 'Branding': 'var(--red)', 'Architecture': 'var(--blue)' };
+    return colors[category] || 'var(--yellow)';
+  }
+
+  async function loadProjects() {
+    try {
+      const response = await fetch('/api/projects');
+      const data = await response.json();
+
+      await Promise.all(data.projects.map(async project => {
+        let images = [];
+        if (project.driveFolderId) {
+          try {
+            const folderRes = await fetch('/api/folder?id=' + project.driveFolderId);
+            const folderData = await folderRes.json();
+            images = folderData.images || [];
+          } catch (e) {
+            console.warn('Could not load images for', project.title);
+          }
+        }
+
+        const paragraphs = project.fullDescription
+          ? project.fullDescription.split('|').map(p => p.trim()).filter(Boolean)
+          : ['No description available.'];
+
+        projectData[project.id] = {
+          category: project.category,
+          categoryColor: getCategoryColor(project.category),
+          title: project.title,
+          subtitle: project.description,
+          client: project.client,
+          year: project.year,
+          location: project.location,
+          scope: project.scope,
+          description: paragraphs,
+          mainImage: images.length > 0 ? images[0].url : '',
+          galleryImages: images.slice(1).map(img => img.url)
+        };
+
+        allProjects.push({
+          id: parseInt(project.id),
+          category: project.category,
+          title: project.title,
+          description: project.description,
+          location: project.location,
+          year: project.year,
+          mainImage: images.length > 0 ? images[0].url : ''
+        });
+      }));
+
+      allProjects.sort((a, b) => a.id - b.id);
+      updateProjectCards(allProjects);
+      setupClickHandlers();
+    } catch (error) {
+      console.error('Error loading projects:', error);
+    }
+  }
+
+  function updateProjectCards(projects) {
+    const projectCards = document.querySelectorAll('.project-large');
+    projectCards.forEach((card, index) => {
+      if (projects[index]) {
+        const project = projects[index];
+        const img = card.querySelector('.project-large-image img');
+        const category = card.querySelector('.project-large-category');
+        const title = card.querySelector('.project-large-title');
+        const description = card.querySelector('.project-large-description');
+        if (img) img.src = project.mainImage;
+        if (category) category.textContent = project.category;
+        if (title) title.textContent = project.title;
+        if (description) description.textContent = project.description;
+      }
+    });
+  }
+
+  function setupClickHandlers() {
+    document.querySelectorAll('.project-large').forEach(card => {
+      card.addEventListener('click', () => {
+        openProjectDetail(card.getAttribute('data-project'));
+      });
+    });
+  }
+
+  function openProjectDetail(projectId) {
+    const project = projectData[projectId];
+    if (!project) return;
+    const galleryHTML = project.galleryImages.map(img =>
+      '<div class="project-gallery-item"><img src="' + img + '" alt="Gallery image" loading="lazy"></div>'
+    ).join('');
+    const descriptionHTML = project.description.map(p => '<p>' + p + '</p>').join('');
+    projectDetailContent.innerHTML =
+      '<div class="project-detail-header">' +
+        '<div class="project-detail-category" style="color:' + project.categoryColor + '">' + project.category + '</div>' +
+        '<h1 class="project-detail-title">' + project.title + '</h1>' +
+        '<p class="project-detail-subtitle">' + project.subtitle + '</p>' +
+      '</div>' +
+      '<div class="project-detail-image"><img src="' + project.mainImage + '" alt="' + project.title + '"></div>' +
+      '<div class="project-detail-info">' +
+        '<div class="project-detail-meta">' +
+          '<div class="project-meta-item"><h3>Client</h3><p>' + project.client + '</p></div>' +
+          '<div class="project-meta-item"><h3>Year</h3><p>' + project.year + '</p></div>' +
+          '<div class="project-meta-item"><h3>Location</h3><p>' + project.location + '</p></div>' +
+          '<div class="project-meta-item"><h3>Scope</h3><p>' + project.scope + '</p></div>' +
+        '</div>' +
+        '<div class="project-detail-description"><h3>About the Project</h3>' + descriptionHTML + '</div>' +
+      '</div>' +
+      '<div class="project-detail-gallery">' + galleryHTML + '</div>';
+    projectDetailOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeProjectDetail() {
+    projectDetailOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  projectDetailClose.addEventListener('click', closeProjectDetail);
+  projectDetailOverlay.addEventListener('click', e => {
+    if (e.target === projectDetailOverlay) closeProjectDetail();
+  });
+
+  viewMoreBtn.addEventListener('click', () => { window.location.href = 'projects.html'; });
+
+  navDots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      scrollContainer.scrollTo({ left: parseInt(dot.dataset.section) * window.innerWidth, behavior: 'smooth' });
+    });
+  });
+
+  scrollContainer.addEventListener('scroll', () => {
+    scrollHint.style.opacity = scrollContainer.scrollLeft > 50 ? '0' : '1';
+    const currentSection = Math.round(scrollContainer.scrollLeft / window.innerWidth);
+    navDots.forEach((dot, i) => dot.classList.toggle('active', i === currentSection));
+  });
+
+  document.addEventListener('keydown', e => {
+    if (projectDetailOverlay.classList.contains('active')) {
+      if (e.key === 'Escape') closeProjectDetail();
+      return;
+    }
     if (window.innerWidth > 900) {
-      document.addEventListener('mousemove', (e) => {
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-      });
-
-      document.querySelectorAll('a, button, .logo, .face img, .approach-card, .meta span, .meta a, .nav-dot, .project-large, .view-more-vertical, .nav-link').forEach(el => {
-        el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-        el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-      });
-    }
-
-    // Generate gallery image paths
-    function generateImagePaths(imageFolder, imageCount) {
-      const images = [];
-      for (let i = 2; i <= imageCount; i++) {
-        const num = i.toString().padStart(2, '0');
-        images.push(`${imageFolder}${num}.png`);
+      if (['ArrowRight', 'ArrowDown'].includes(e.key)) {
+        e.preventDefault();
+        const cur = Math.round(scrollContainer.scrollLeft / window.innerWidth);
+        scrollContainer.scrollTo({ left: Math.min(sections.length - 1, cur + 1) * window.innerWidth, behavior: 'smooth' });
       }
-      return images;
-    }
-
-    function getCategoryColor(category) {
-      const colors = {
-        'Branding': 'var(--red)',
-        'Architecture': 'var(--blue)'
-      };
-      return colors[category] || 'var(--yellow)';
-    }
-
-    // Load projects
-    async function loadProjects() {
-      try {
-        const response = await fetch('/projects.json');
-        const data = await response.json();
-
-        data.projects.forEach(project => {
-          const galleryImages = generateImagePaths(project.imageFolder, project.imageCount);
-
-          projectData[project.id] = {
-            category: project.category,
-            categoryColor: getCategoryColor(project.category),
-            title: project.title,
-            subtitle: project.description,
-            client: project.client,
-            year: project.year,
-            location: project.location,
-            scope: project.scope,
-            description: project.fullDescription,
-            mainImage: `${project.imageFolder}01.png`,
-            galleryImages: galleryImages
-          };
-        });
-
-        updateProjectCards(data.projects);
-        setupClickHandlers();
-
-        console.log('✅ Loaded', data.projects.length, 'projects');
-      } catch (error) {
-        console.error('❌ Error loading projects:', error);
+      if (['ArrowLeft', 'ArrowUp'].includes(e.key)) {
+        e.preventDefault();
+        const cur = Math.round(scrollContainer.scrollLeft / window.innerWidth);
+        scrollContainer.scrollTo({ left: Math.max(0, cur - 1) * window.innerWidth, behavior: 'smooth' });
       }
     }
+  });
 
-    function updateProjectCards(projects) {
-      const projectCards = document.querySelectorAll('.project-large');
-
-      projectCards.forEach((card, index) => {
-        if (projects[index]) {
-          const project = projects[index];
-          const img = card.querySelector('.project-large-image img');
-          const category = card.querySelector('.project-large-category');
-          const title = card.querySelector('.project-large-title');
-          const description = card.querySelector('.project-large-description');
-
-          if (img) img.src = `${project.imageFolder}01.png`;
-          if (category) category.textContent = project.category;
-          if (title) title.textContent = project.title;
-          if (description) description.textContent = project.description;
-        }
-      });
-    }
-
-    function setupClickHandlers() {
-      const projectCards = document.querySelectorAll('.project-large');
-
-      projectCards.forEach(card => {
-        card.addEventListener('click', () => {
-          const projectId = card.getAttribute('data-project');
-          console.log('🎯 Clicked project:', projectId);
-          openProjectDetail(projectId);
-        });
-      });
-
-      console.log('✅ Click handlers attached to', projectCards.length, 'cards');
-    }
-
-    function openProjectDetail(projectId) {
-      const project = projectData[projectId];
-
-      if (!project) {
-        console.error('❌ Project not found:', projectId);
-        return;
-      }
-
-      console.log('✅ Opening project:', project.title);
-
-      const galleryHTML = project.galleryImages.map(img => 
-        `<div class="project-gallery-item">
-          <img src="${img}" alt="Gallery image" loading="lazy" />
-        </div>`
-      ).join('');
-
-      const descriptionHTML = project.description.map(p => `<p>${p}</p>`).join('');
-
-      projectDetailContent.innerHTML = `
-        <div class="project-detail-header">
-          <div class="project-detail-category" style="color: ${project.categoryColor}">${project.category}</div>
-          <h1 class="project-detail-title">${project.title}</h1>
-          <p class="project-detail-subtitle">${project.subtitle}</p>
-        </div>
-
-        <div class="project-detail-image">
-          <img src="${project.mainImage}" alt="${project.title}" />
-        </div>
-
-        <div class="project-detail-info">
-          <div class="project-detail-meta">
-            <div class="project-meta-item">
-              <h3>Client</h3>
-              <p>${project.client}</p>
-            </div>
-            <div class="project-meta-item">
-              <h3>Year</h3>
-              <p>${project.year}</p>
-            </div>
-            <div class="project-meta-item">
-              <h3>Location</h3>
-              <p>${project.location}</p>
-            </div>
-            <div class="project-meta-item">
-              <h3>Scope</h3>
-              <p>${project.scope}</p>
-            </div>
-          </div>
-
-          <div class="project-detail-description">
-            <h3>About the Project</h3>
-            ${descriptionHTML}
-          </div>
-        </div>
-
-        <div class="project-detail-gallery">
-          ${galleryHTML}
-        </div>
-      `;
-
-      projectDetailOverlay.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeProjectDetail() {
-      projectDetailOverlay.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    projectDetailClose.addEventListener('click', closeProjectDetail);
-
-    projectDetailOverlay.addEventListener('click', (e) => {
-      if (e.target === projectDetailOverlay) {
-        closeProjectDetail();
-      }
+  let isScrolling = false;
+  window.addEventListener('wheel', e => {
+    if (window.innerWidth <= 900 || projectDetailOverlay.classList.contains('active')) return;
+    e.preventDefault();
+    if (isScrolling || Math.abs(e.deltaY) < 10) return;
+    isScrolling = true;
+    const cur = Math.round(scrollContainer.scrollLeft / window.innerWidth);
+    scrollContainer.scrollTo({
+      left: Math.max(0, Math.min(sections.length - 1, cur + (e.deltaY > 0 ? 1 : -1))) * window.innerWidth,
+      behavior: 'smooth'
     });
+    setTimeout(() => isScrolling = false, 1000);
+  }, { passive: false });
 
-    viewMoreBtn.addEventListener('click', () => {
-      window.location.href = '/projects.html';
-    });
-
-    // Navigation dots
-    navDots.forEach(dot => {
-      dot.addEventListener('click', () => {
-        const idx = parseInt(dot.dataset.section);
-        const targetLeft = idx * window.innerWidth;
-        scrollContainer.scrollTo({ left: targetLeft, behavior: 'smooth' });
-      });
-    });
-
-    scrollContainer.addEventListener('scroll', () => {
-      const scrollLeft = scrollContainer.scrollLeft;
-      if (scrollLeft > 50) {
-        scrollHint.style.opacity = '0';
-      } else {
-        scrollHint.style.opacity = '1';
-      }
-
-      const currentSection = Math.round(scrollLeft / window.innerWidth);
-
-      navDots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === currentSection);
-      });
-    });
-
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-      if (projectDetailOverlay.classList.contains('active') && e.key === 'Escape') {
-        closeProjectDetail();
-        return;
-      }
-
-      if (window.innerWidth > 900) {
-        if (['ArrowRight', 'ArrowDown'].includes(e.key)) {
-          e.preventDefault();
-          const currentSection = Math.round(scrollContainer.scrollLeft / window.innerWidth);
-          const targetSection = Math.min(sections.length - 1, currentSection + 1);
-          scrollContainer.scrollTo({ left: targetSection * window.innerWidth, behavior: 'smooth' });
-        }
-
-        if (['ArrowLeft', 'ArrowUp'].includes(e.key)) {
-          e.preventDefault();
-          const currentSection = Math.round(scrollContainer.scrollLeft / window.innerWidth);
-          const targetSection = Math.max(0, currentSection - 1);
-          scrollContainer.scrollTo({ left: targetSection * window.innerWidth, behavior: 'smooth' });
-        }
-      }
-    });
-
-    // Wheel scroll
-    let isScrolling = false;
-
-    window.addEventListener('wheel', (e) => {
-      if (window.innerWidth <= 900 || projectDetailOverlay.classList.contains('active')) {
-        return;
-      }
-
-      e.preventDefault();
-
-      if (isScrolling) return;
-      if (Math.abs(e.deltaY) < 10) return;
-
-      isScrolling = true;
-
-      const currentSection = Math.round(scrollContainer.scrollLeft / window.innerWidth);
-      const direction = e.deltaY > 0 ? 1 : -1;
-      const targetSection = Math.max(0, Math.min(sections.length - 1, currentSection + direction));
-
-      scrollContainer.scrollTo({ 
-        left: targetSection * window.innerWidth, 
-        behavior: 'smooth' 
-      });
-
-      setTimeout(() => {
-        isScrolling = false;
-      }, 1000);
-
-    }, { passive: false });
-
-    loadProjects();
-
-  </script>
+  loadProjects();
+</script>
 </body>
 </html>
