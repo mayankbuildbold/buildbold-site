@@ -83,30 +83,3 @@ document.querySelectorAll('.panel').forEach((panel) => {
     reveal.observe(el);
   });
 });
-
-// Services: point at a line to read what it covers.
-const desc = document.querySelector('.svc-desc');
-const lines = document.querySelectorAll('.svc li');
-const show = (li) => {
-  lines.forEach((l) => l.classList.toggle('is-on', l === li));
-  desc.textContent = li.dataset.desc;
-};
-if (lines.length) show(lines[0]);
-lines.forEach((li) => {
-  li.addEventListener('mouseenter', () => show(li));
-  li.addEventListener('focus', () => show(li));
-  li.addEventListener('click', () => show(li));
-});
-
-// Work: show one discipline at a time.
-const chips = document.querySelectorAll('.chip');
-const tiles = document.querySelectorAll('.work .tile');
-chips.forEach((chip) => chip.addEventListener('click', () => {
-  const pick = chip.dataset.filter;
-  chips.forEach((c) => {
-    const on = c === chip;
-    c.classList.toggle('is-on', on);
-    c.setAttribute('aria-pressed', on);
-  });
-  tiles.forEach((t) => t.classList.toggle('is-dim', pick !== 'all' && t.dataset.discipline !== pick));
-}));
