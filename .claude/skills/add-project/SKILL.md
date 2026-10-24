@@ -1,6 +1,6 @@
 ---
 name: add-project
-description: Add a new project from "Project Inbox" to the BOLD website (v2) — look at the pictures, write the copy, build the panel, preview, and publish only on the owner's yes. Use when the user says they put a new project in the inbox, or types /add-project.
+description: Add a new project from "Project Inbox" to the BOLD website — look at the pictures, write the copy, build the panel, preview, and publish only on the owner's yes. Use when the user says they put a new project in the inbox, or types /add-project.
 ---
 
 # Add a project to the BOLD site
@@ -25,7 +25,7 @@ published as is. Only the pictures and words the owner approves go on the site.
 scripts/prep-images.sh "Project Inbox/<Project name>" <slug>
 ```
 
-Writes `v2/img/<slug>-NN.jpg` (1400px, JPEG 82) and prints each size for `width`/`height`.
+Writes `img/<slug>-NN.jpg` (1400px, JPEG 82) and prints each size for `width`/`height`.
 Delete any outputs you decided not to use.
 
 ## 3. Write the copy (house voice)
@@ -40,7 +40,7 @@ real need, one idea per project, plain words, captions that work as tiny ads.
 - No praise words ("stunning", "beautiful"), no invented quotes, numbers or clients.
 - Show the owner the copy deck in chat before building if anything was guessed.
 
-## 4. Build it into `v2/index.html`
+## 4. Build it into `index.html`
 
 - Add a `<section class="panel project p-<slug>" id="p-<slug>">` after the last project panel and
   before `<!-- 7. Approach -->`. Copy the structure of an existing panel:
@@ -58,9 +58,9 @@ real need, one idea per project, plain words, captions that work as tiny ads.
 
 ## 5. Check it
 
-Preview with the `bold-site` launch config (`.claude/launch.json`, http://localhost:4173/v2/).
+Preview with the `bold-site` launch config (`.claude/launch.json`, http://localhost:4173/).
 Check the new panel at 1440×900, 1180×820, 820×1180 and 375×812: pictures fill the height, nothing
-overflows, captions readable, index link scrolls to the panel. No console errors from `v2/`.
+overflows, captions readable, index link scrolls to the panel. No console errors from the homepage.
 
 ## 6. Publish only on a yes
 

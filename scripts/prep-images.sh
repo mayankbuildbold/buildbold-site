@@ -1,14 +1,14 @@
 #!/bin/zsh
-# Turn a project folder from "Project Inbox" into web-ready pictures for v2.
+# Turn a project folder from "Project Inbox" into web-ready pictures for the site.
 #   scripts/prep-images.sh "Project Inbox/Kutumbh Old Age Oasis" kutumbh
-# Writes v2/img/<slug>-01.jpg, -02.jpg ... (longest side 1400px, JPEG 82)
+# Writes img/<slug>-01.jpg, -02.jpg ... (longest side 1400px, JPEG 82)
 # and prints each file's size so the page can set width and height.
 set -euo pipefail
 
 src="$1"
 slug="$2"
 root="${0:A:h:h}"
-out="$root/v2/img"
+out="$root/img"
 
 [[ -d "$src" ]] || { echo "No folder: $src" >&2; exit 1; }
 [[ "$slug" =~ ^[a-z0-9-]+$ ]] || { echo "Slug must be lowercase letters, numbers, dashes: $slug" >&2; exit 1; }

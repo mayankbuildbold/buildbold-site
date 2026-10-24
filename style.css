@@ -1,9 +1,9 @@
 /* BOLD v2 — horizontal on iPad and laptop, vertical on phones. */
 
-@font-face { font-family: 'Code Pro'; src: url('../fonts/Code-Pro-Black.ttf') format('truetype'); font-weight: 900; font-display: swap; }
-@font-face { font-family: 'Code Pro'; src: url('../fonts/Code-Pro-Bold.ttf') format('truetype'); font-weight: 700; font-display: swap; }
-@font-face { font-family: 'Code Pro LC'; src: url('../fonts/Code-Pro-LC.ttf') format('truetype'); font-weight: 400; font-display: swap; }
-@font-face { font-family: 'Code Pro LC'; src: url('../fonts/Code-Pro-Bold-LC.ttf') format('truetype'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'Code Pro'; src: url('fonts/Code-Pro-Black.ttf') format('truetype'); font-weight: 900; font-display: swap; }
+@font-face { font-family: 'Code Pro'; src: url('fonts/Code-Pro-Bold.ttf') format('truetype'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'Code Pro LC'; src: url('fonts/Code-Pro-LC.ttf') format('truetype'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Code Pro LC'; src: url('fonts/Code-Pro-Bold-LC.ttf') format('truetype'); font-weight: 700; font-display: swap; }
 
 :root {
   --black: #000;
