@@ -45,7 +45,7 @@ document.addEventListener('click', (e) => {
     const left = target.getBoundingClientRect().left + track.scrollLeft;
     track.scrollTo({ left, behavior });
   } else {
-    const top = target.getBoundingClientRect().top + window.scrollY - 64;
+    const top = target.getBoundingClientRect().top + window.scrollY - 80;
     window.scrollTo({ top, behavior });
   }
   history.replaceState(null, '', a.getAttribute('href'));

@@ -11,207 +11,238 @@
 </head>
 <body>
   <a class="skip" href="#work">Skip to the work</a>
+  <div class="frame" aria-hidden="true"></div>
 
-  <a class="logo" href="#top" aria-label="BOLD, back to start"><img src="../logo.png" alt="BOLD." width="102" height="38"></a>
-  <a class="btn cta" href="#contact">Start a project</a>
+  <!-- Top banner: black strip, wordmark, tagline, sticker, red callout -->
+  <header class="banner">
+    <a class="banner-logo" href="#top" aria-label="BOLD, back to start"><img src="../logo.png" alt="BOLD." width="102" height="38"></a>
+    <p class="banner-tag">Spaces &amp; brands. One studio.<span>Architecture · Interiors · Landscape · Brand identity</span></p>
+    <a class="sticker" href="#contact">Start a <b>BOLD</b> project</a>
+    <a class="callout" href="mailto:info@buildbold.in">info@buildbold.in</a>
+  </header>
 
   <main class="track" id="track" tabindex="-1">
 
-    <!-- ============ HERO ============ -->
-    <section class="panel hero" id="top" aria-labelledby="hero-title">
-      <div class="labels">
-        <p>Spaces &amp; brands<br>Design studio</p>
-        <p>Based in<br>India</p>
-        <nav aria-label="Sections"><a href="#work">Work</a> <a href="#services">Services</a> <a href="#contact">Contact</a></nav>
+    <!-- ============ HOME: left rail + right column ============ -->
+    <section class="panel home" id="top" aria-labelledby="home-title">
+      <div class="rail">
+        <nav class="icon-grid" aria-label="Sections">
+          <a href="#work"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="6" width="24" height="18"/><path d="M4 20l7-6 6 5 4-3 7 6"/><circle cx="21" cy="11" r="2"/></svg>Work</a>
+          <a href="#services"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 28V12l12-8 12 8v16z"/><path d="M12 28v-9h8v9"/></svg>Services</a>
+          <a href="#approach"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M6 26l20-20M6 6h8M6 6v8"/><rect x="18" y="18" width="8" height="8"/></svg>Approach</a>
+          <a href="#contact"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="8" width="24" height="17"/><path d="M4 9l12 9 12-9"/></svg>Contact</a>
+          <a href="../merch.html"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M10 5l-6 5 3 4 3-2v15h12V12l3 2 3-4-6-5c-1 3-3 4-6 4s-5-1-6-4z"/></svg>Merch</a>
+          <a href="#p-pacework"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="11"/><path d="M16 9v7l5 3"/></svg>Latest</a>
+        </nav>
+        <div class="cta-red">
+          <p>At BOLD, we'll plan your space, design your brand and stay until both are built: homes, interiors, landscapes, logos and print.</p>
+          <a class="btn-secondary" href="mailto:info@buildbold.in?subject=New%20project%20for%20BOLD&amp;body=The%20space%20or%20brand%3A%0ALocation%20or%20plot%20size%3A%0ABusiness%20name%3A%0AWhen%20we%20need%20it%3A">Tell us about your project</a>
+        </div>
       </div>
 
-      <h1 id="hero-title" class="hero-title">
-        <span class="line"><span>Build</span></span>
-        <span class="line"><span>it</span></span>
-        <span class="line accent"><span>bold<i class="sq" aria-hidden="true"></i></span></span>
-      </h1>
-
-      <figure class="hero-photo">
-        <span class="block" aria-hidden="true"></span>
-        <img src="img/pacework-01.jpg" alt="A runner in a Pacework Crew hoodie, a brand identity by BOLD" width="1119" height="1400" fetchpriority="high">
-        <svg class="crosshair" viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="13"/><circle cx="30" cy="30" r="4"/><path d="M30 0v20M30 40v20M0 30h20M40 30h20"/></svg>
-        <figcaption class="tag"><span>Pacework Crew</span><span class="red">Brand identity</span></figcaption>
-      </figure>
-
-      <div class="about">
-        <h2 class="h-cond">About BOLD <span class="dash" aria-hidden="true"></span></h2>
-        <p>We design spaces and the brands that live in them: buildings, interiors and landscapes, and the logo, print and signage that go on the door.</p>
-        <p>One studio. One brief.<br>Nothing lost in between.</p>
-      </div>
-      <div class="avail">
-        <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="21"/><ellipse cx="24" cy="24" rx="9" ry="21"/><path d="M3 24h42M6 13h36M6 35h36"/></svg>
-        <p>Working across India<br>Homes, interiors, landscapes<br>&amp; brand identities</p>
+      <div class="main-col">
+        <h1 id="home-title" class="eyebrow tint-sky">Spaces &amp; brands</h1>
+        <div class="intro">
+          <div class="intro-copy">
+            <h2 class="h2">One studio for the building, the rooms, the garden and the name on the gate.</h2>
+            <p>Most projects need a space and a brand. Hire two firms and you get two briefs, two sets of meetings and a sign that doesn't match the door. BOLD designs both at the same table.</p>
+            <p>Since 2024 we've built identities in Pune, Guwahati and Bhubaneswar, and we're drawing homes and a care home in Odisha.</p>
+            <a class="link" href="#work">See six projects</a>
+          </div>
+          <figure class="intro-photo">
+            <img class="bevel" src="img/pacework-01.jpg" alt="A runner in a Pacework Crew hoodie, a brand identity by BOLD" width="1119" height="1400" fetchpriority="high">
+            <figcaption>Pacework Crew, Pune. Mark, kit and merch by BOLD.</figcaption>
+            <span class="burst" aria-hidden="true">New!</span>
+          </figure>
+        </div>
+        <p class="new-line"><span class="burst small">New!</span> Kutumbh Old Age Oasis, Rourkela, is on the drawing board.</p>
       </div>
     </section>
 
-    <!-- ============ SELECTED WORK ============ -->
+    <!-- ============ SELECTED WORK: ribbon cards ============ -->
     <section class="panel work" id="work" aria-labelledby="work-title">
-      <h2 id="work-title" class="side-label">Selected work <span aria-hidden="true">—</span></h2>
-      <ol class="cards">
-        <li class="card" data-reveal>
-          <a href="#p-pacework">
-            <span class="num">01/</span>
-            <span class="thumb"><img src="img/pacework-06.jpg" alt="Pacework Crew mark on blue, yellow and orange" loading="lazy" width="1120" height="1400"><i class="arrow" aria-hidden="true"></i></span>
-            <span class="c-title">Pacework Crew</span>
-            <span class="c-meta">Brand identity · Pune · 2025</span>
-          </a>
-        </li>
-        <li class="card" data-reveal>
-          <a href="#p-trishakti">
-            <span class="num">02/</span>
-            <span class="thumb"><img src="img/trishakti-02.jpg" alt="Trishakti Homestay business cards" loading="lazy" width="1400" height="932"><i class="arrow" aria-hidden="true"></i></span>
-            <span class="c-title">Trishakti Homestay</span>
-            <span class="c-meta">Logo &amp; stationery · Guwahati · 2025</span>
-          </a>
-        </li>
-        <li class="card" data-reveal>
-          <a href="#p-archveda">
-            <span class="num">03/</span>
-            <span class="thumb"><img src="img/archveda-04.jpg" alt="Arch Veda logo lock-up" loading="lazy" width="1400" height="1398"><i class="arrow" aria-hidden="true"></i></span>
-            <span class="c-title">Arch Veda</span>
-            <span class="c-meta">Logo &amp; stationery · Bhubaneswar · 2024</span>
-          </a>
-        </li>
-        <li class="card soon s-red" data-reveal>
-          <span class="num">04/</span>
-          <span class="thumb"><span class="soon-name">Chutneys<br>By Neel</span><span class="soon-note">Photographs soon</span></span>
-          <span class="c-title">Chutneys By Neel</span>
-          <span class="c-meta">Brand identity · 2026</span>
-        </li>
-        <li class="card soon s-blue" data-reveal>
-          <span class="num">05/</span>
-          <span class="thumb"><span class="soon-name">Kutumbh<br>Old Age Oasis</span><span class="soon-note">In design</span></span>
-          <span class="c-title">Kutumbh Old Age Oasis</span>
-          <span class="c-meta">Architecture · Rourkela · 2026</span>
-        </li>
-        <li class="card soon s-yellow" data-reveal>
-          <span class="num">06/</span>
-          <span class="thumb"><span class="soon-name">Farmhouse for<br>Anup Sharma</span><span class="soon-note">In design</span></span>
-          <span class="c-title">Farmhouse for Anup Sharma</span>
-          <span class="c-meta">Architecture · 2026</span>
-        </li>
-      </ol>
-    </section>
-
-    <!-- ============ SERVICES / MANIFESTO / DELIVERABLES ============ -->
-    <section class="panel services" id="services" aria-labelledby="services-title">
-      <div class="svc" data-reveal>
-        <h2 id="services-title" class="h-cond big">Services <span class="dash" aria-hidden="true"></span></h2>
-        <ol class="svc-list">
-          <li><details><summary><span class="n">01</span>Architecture<i aria-hidden="true">+</i></summary><p>Homes, farmhouses and care homes: the plan, the form and how the building sits on its land.</p></details></li>
-          <li><details><summary><span class="n">02</span>Interior design<i aria-hidden="true">+</i></summary><p>Rooms, light, materials and the furniture that fits them.</p></details></li>
-          <li><details><summary><span class="n">03</span>Landscape design<i aria-hidden="true">+</i></summary><p>The ground around the building: paths, planting, shade and water.</p></details></li>
-          <li><details><summary><span class="n">04</span>Brand identity<i aria-hidden="true">+</i></summary><p>A logo with a reason behind every line, and the colours and type that make everything look like one family.</p></details></li>
-          <li><details><summary><span class="n">05</span>Print, signage &amp; merch<i aria-hidden="true">+</i></summary><p>Cards, signs, packaging, tees and totes, checked against the design before the full run.</p></details></li>
-          <li><details><summary><span class="n">06</span>Execution &amp; site visits<i aria-hidden="true">+</i></summary><p>We pick the vendors, check the samples and visit the site until what's built matches the drawing.</p></details></li>
-        </ol>
-      </div>
-
-      <div class="manifesto" id="approach" data-reveal>
-        <h2 class="h-cond">Studio<br>manifesto <span class="dash" aria-hidden="true"></span></h2>
-        <p>Good design isn't just how it looks. It's how it works, who it serves, and what it stands for.</p>
-        <p>We write the brief before we draw a line.<br>We leave drawings a contractor can price.<br>We explain every line in one sentence.</p>
-        <p class="em">No trends.<br>Only reasons.</p>
-        <span class="corner" aria-hidden="true"></span>
-      </div>
-
-      <div class="deliver" data-reveal>
-        <h2 class="h-cond big">You get <span class="dash" aria-hidden="true"></span></h2>
-        <ul>
-          <li>Site plans &amp; drawings</li>
-          <li>Elevations</li>
-          <li>Interior layouts</li>
-          <li>Logo files</li>
-          <li>Brand guidelines</li>
-          <li>Print-ready artwork</li>
-          <li>Site visits</li>
-        </ul>
+      <h2 id="work-title" class="eyebrow tint-salmon">Selected work</h2>
+      <div class="ribbons">
+        <article class="ribbon">
+          <h3 class="r-title">Pacework Crew</h3>
+          <div class="r-body tint-peach">
+            <p>A Pune running club's mark: a ribbon around the letter P, tilted up into an arrow.</p>
+            <p class="r-meta">Brand identity · Pune · 2025</p>
+            <a class="link" href="#p-pacework">See the project</a>
+          </div>
+          <img class="r-photo bevel" src="img/pacework-06.jpg" alt="Pacework Crew mark on blue, yellow and orange" loading="lazy" width="1120" height="1400">
+        </article>
+        <article class="ribbon">
+          <h3 class="r-title">Trishakti Homestay</h3>
+          <div class="r-body tint-salmon">
+            <p>Three women, one home in Guwahati: three figures under one roof, in maroon and blush.</p>
+            <p class="r-meta">Logo &amp; stationery · Guwahati · 2025</p>
+            <a class="link" href="#p-trishakti">See the project</a>
+          </div>
+          <img class="r-photo bevel" src="img/trishakti-02.jpg" alt="Trishakti Homestay business cards" loading="lazy" width="1400" height="932">
+        </article>
+        <article class="ribbon">
+          <h3 class="r-title">Arch Veda</h3>
+          <div class="r-body tint-sage">
+            <p>An architecture studio's mark: the English a and the Hindi वे in one stroke.</p>
+            <p class="r-meta">Logo &amp; stationery · Bhubaneswar · 2024</p>
+            <a class="link" href="#p-archveda">See the project</a>
+          </div>
+          <img class="r-photo bevel" src="img/archveda-01.jpg" alt="Arch Veda mark" loading="lazy" width="1400" height="1398">
+        </article>
+        <article class="ribbon">
+          <h3 class="r-title">Chutneys By Neel</h3>
+          <div class="r-body tint-lime">
+            <p>A full brand for a chutney maker: name, label and jar. Photographs coming soon.</p>
+            <p class="r-meta">Brand identity · 2026</p>
+          </div>
+          <span class="burst on-card" aria-hidden="true">New!</span>
+        </article>
+        <article class="ribbon">
+          <h3 class="r-title">Kutumbh Old Age Oasis</h3>
+          <div class="r-body tint-sky">
+            <p>A care home in Rourkela, planned around light, shade and short walks.</p>
+            <p class="r-meta">Architecture · Rourkela · 2026 · In design</p>
+          </div>
+          <span class="burst on-card" aria-hidden="true">New!</span>
+        </article>
+        <article class="ribbon">
+          <h3 class="r-title">Farmhouse for Anup Sharma</h3>
+          <div class="r-body tint-periwinkle">
+            <p>A family farmhouse: the house, the land around it and how you arrive.</p>
+            <p class="r-meta">Architecture · 2026 · In design</p>
+          </div>
+        </article>
       </div>
     </section>
 
-    <!-- ============ PROJECT: PACEWORK ============ -->
+    <!-- ============ PACEWORK ============ -->
     <section class="panel project" id="p-pacework" aria-labelledby="pacework-title">
-      <div class="p-copy" data-reveal>
-        <p class="kicker"><span class="red">01/</span> Brand identity — Pune — 2025</p>
-        <h2 id="pacework-title" class="h-display">Pacework<br>Crew<i class="sq" aria-hidden="true"></i></h2>
-        <p>Three friends started a running club in Pune to pull people out of unhealthy habits. They needed a mark that looked like progress.</p>
-        <p>We drew a ribbon around the letter P, tilted it upward and turned its point into an arrow. Three lines run around it like lanes on a track.</p>
-      </div>
-      <div class="strip">
-        <figure data-reveal><img src="img/pacework-03.jpg" alt="Pacework mark, centred on the letter P" loading="lazy" width="1120" height="1400"><figcaption><span>A</span> The mark</figcaption></figure>
-        <figure data-reveal><img src="img/pacework-08.jpg" alt="Member in a teal Pacework tee" loading="lazy" width="1120" height="1400"><figcaption><span>B</span> Tees</figcaption></figure>
-        <figure data-reveal><img src="img/pacework-07.jpg" alt="Orange Pacework tote reading Purpose over comfort" loading="lazy" width="1120" height="1400"><figcaption><span>C</span> Totes</figcaption></figure>
-        <figure data-reveal><img src="img/pacework-11.jpg" alt="White Pacework sipper" loading="lazy" width="1120" height="1400"><figcaption><span>D</span> Sippers</figcaption></figure>
-        <figure data-reveal><img src="img/pacework-12.jpg" alt="Member in a yellow Pacework tank" loading="lazy" width="1120" height="1400"><figcaption><span>E</span> Tanks</figcaption></figure>
-      </div>
-    </section>
-
-    <!-- ============ PROJECT: TRISHAKTI ============ -->
-    <section class="panel project dark" id="p-trishakti" aria-labelledby="trishakti-title">
-      <div class="p-copy" data-reveal>
-        <p class="kicker"><span class="red">02/</span> Logo &amp; stationery — Guwahati — 2025</p>
-        <h2 id="trishakti-title" class="h-display">Trishakti<br>Homestay<i class="sq" aria-hidden="true"></i></h2>
-        <p>A mother and her two daughters run this homestay. Trishakti means three strengths, so the mark is three figures under one roof.</p>
-        <p>Maroon and blush for an Assamese home, and a hand-drawn flower on every piece a guest takes away.</p>
-      </div>
-      <div class="strip">
-        <figure data-reveal><img src="img/trishakti-01.jpg" alt="Trishakti cards in white and blush" loading="lazy" width="1400" height="933"><figcaption><span>A</span> Cards</figcaption></figure>
-        <figure data-reveal><img src="img/trishakti-03.jpg" alt="Trishakti tote with a flower drawing" loading="lazy" width="933" height="1400"><figcaption><span>B</span> Guest tote</figcaption></figure>
-        <figure data-reveal><img src="img/trishakti-05.jpg" alt="Open Trishakti welcome booklet" loading="lazy" width="1400" height="932"><figcaption><span>C</span> Welcome booklet</figcaption></figure>
+      <h2 id="pacework-title" class="eyebrow tint-peach">Pacework Crew</h2>
+      <div class="p-grid">
+        <div class="p-copy">
+          <table class="facts">
+            <tr><th>Client</th><td>Pacework Crew</td></tr>
+            <tr><th>City</th><td>Pune</td></tr>
+            <tr><th>Year</th><td>2025</td></tr>
+            <tr><th>Scope</th><td>Full brand design</td></tr>
+          </table>
+          <p>Three friends started a running club in Pune to pull people out of unhealthy habits. They needed a mark that looked like progress.</p>
+          <p>We drew a ribbon around the letter P, tilted it upward and turned its point into an arrow. Three lines run around it like lanes on a track. Then we put it on everything members wear and carry.</p>
+        </div>
+        <div class="gallery">
+          <figure><img class="bevel" src="img/pacework-03.jpg" alt="Pacework mark, centred on the letter P" loading="lazy" width="1120" height="1400"><figcaption>The mark, centred on a P.</figcaption></figure>
+          <figure><img class="bevel" src="img/pacework-08.jpg" alt="Member in a teal Pacework tee" loading="lazy" width="1120" height="1400"><figcaption>Tees for the club.</figcaption></figure>
+          <figure><img class="bevel" src="img/pacework-07.jpg" alt="Orange Pacework tote reading Purpose over comfort" loading="lazy" width="1120" height="1400"><figcaption>Totes: Purpose over comfort.</figcaption></figure>
+          <figure><img class="bevel" src="img/pacework-12.jpg" alt="Member in a yellow Pacework tank" loading="lazy" width="1120" height="1400"><figcaption>Tanks for race day.</figcaption></figure>
+        </div>
       </div>
     </section>
 
-    <!-- ============ PROJECT: ARCH VEDA ============ -->
+    <!-- ============ TRISHAKTI ============ -->
+    <section class="panel project" id="p-trishakti" aria-labelledby="trishakti-title">
+      <h2 id="trishakti-title" class="eyebrow tint-salmon">Trishakti Homestay</h2>
+      <div class="p-grid">
+        <div class="p-copy">
+          <table class="facts">
+            <tr><th>Client</th><td>Anubhuti &amp; Anashuiya Bhattacharya</td></tr>
+            <tr><th>City</th><td>Guwahati</td></tr>
+            <tr><th>Year</th><td>2025</td></tr>
+            <tr><th>Scope</th><td>Logo &amp; stationery</td></tr>
+          </table>
+          <p>A mother and her two daughters run this homestay. Trishakti means three strengths, so the mark is three figures under one roof.</p>
+          <p>Maroon and blush for the colours of an Assamese home, and a hand-drawn flower on every printed piece a guest takes away.</p>
+        </div>
+        <div class="gallery">
+          <figure><img class="bevel" src="img/trishakti-01.jpg" alt="Trishakti cards in white and blush" loading="lazy" width="1400" height="933"><figcaption>Cards in white and blush.</figcaption></figure>
+          <figure><img class="bevel" src="img/trishakti-03.jpg" alt="Trishakti tote with a flower drawing" loading="lazy" width="933" height="1400"><figcaption>The guest tote.</figcaption></figure>
+          <figure><img class="bevel" src="img/trishakti-05.jpg" alt="Open Trishakti welcome booklet" loading="lazy" width="1400" height="932"><figcaption>The welcome booklet.</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ARCH VEDA ============ -->
     <section class="panel project" id="p-archveda" aria-labelledby="archveda-title">
-      <div class="p-copy" data-reveal>
-        <p class="kicker"><span class="red">03/</span> Logo &amp; stationery — Bhubaneswar — 2024</p>
-        <h2 id="archveda-title" class="h-display">Arch<br>Veda<i class="sq" aria-hidden="true"></i></h2>
-        <p>An architecture studio between modern and traditional design. Its mark joins the English a and the Hindi वे in one stroke.</p>
-        <p>Repeat it and it becomes a pattern, so the two scripts keep talking across every surface.</p>
+      <h2 id="archveda-title" class="eyebrow tint-sage">Arch Veda</h2>
+      <div class="p-grid">
+        <div class="p-copy">
+          <table class="facts">
+            <tr><th>Client</th><td>Artifex Architecture Studio</td></tr>
+            <tr><th>City</th><td>Bhubaneswar</td></tr>
+            <tr><th>Year</th><td>2024</td></tr>
+            <tr><th>Scope</th><td>Logo &amp; stationery</td></tr>
+          </table>
+          <p>An architecture studio working between modern and traditional design. Its mark joins the English a and the Hindi वे in one stroke.</p>
+          <p>Repeat the mark and it becomes a pattern, so the two scripts keep talking across every surface.</p>
+        </div>
+        <div class="gallery">
+          <figure><img class="bevel" src="img/archveda-02.jpg" alt="Pencil sketch of the letter a on grid paper" loading="lazy" width="1400" height="1400"><figcaption>1. The sketch on grid paper.</figcaption></figure>
+          <figure><img class="bevel" src="img/archveda-01.jpg" alt="Finished Arch Veda mark" loading="lazy" width="1400" height="1398"><figcaption>2. The finished mark.</figcaption></figure>
+          <figure><img class="bevel" src="img/archveda-06.jpg" alt="Arch Veda mark repeated into a pattern" loading="lazy" width="1400" height="1398"><figcaption>3. Repeated into a pattern.</figcaption></figure>
+        </div>
       </div>
-      <ol class="strip steps">
-        <li data-reveal><figure><img src="img/archveda-02.jpg" alt="Pencil sketch of the letter a on grid paper" loading="lazy" width="1400" height="1400"><figcaption><span>01</span> Sketch</figcaption></figure></li>
-        <li data-reveal><figure><img src="img/archveda-01.jpg" alt="Finished Arch Veda mark" loading="lazy" width="1400" height="1398"><figcaption><span>02</span> Mark</figcaption></figure></li>
-        <li data-reveal><figure><img src="img/archveda-06.jpg" alt="Arch Veda mark repeated into a pattern" loading="lazy" width="1400" height="1398"><figcaption><span>03</span> Pattern</figcaption></figure></li>
-      </ol>
     </section>
 
-    <!-- ============ CONTACT / FOOTER ============ -->
+    <!-- ============ SERVICES + APPROACH ============ -->
+    <section class="panel services" id="services" aria-labelledby="services-title">
+      <h2 id="services-title" class="eyebrow tint-sky">Services</h2>
+      <div class="svc-row">
+        <article class="ribbon plain">
+          <h3 class="r-title">Spaces</h3>
+          <div class="r-body tint-sky">
+            <p>Buildings, interiors and landscapes, drawn so a contractor can price them.</p>
+            <ul><li>Architecture &amp; site planning</li><li>Interior design</li><li>Landscape design</li><li>Elevation design</li><li>Architectural consultancy</li></ul>
+          </div>
+        </article>
+        <article class="ribbon plain">
+          <h3 class="r-title">Brand identity</h3>
+          <div class="r-body tint-salmon">
+            <p>A mark with a reason behind every line, and everything it goes on.</p>
+            <ul><li>Logo &amp; mark</li><li>Stationery &amp; print</li><li>Signage &amp; packaging</li><li>Merch</li><li>Brand guidelines</li></ul>
+          </div>
+        </article>
+        <article class="ribbon plain">
+          <h3 class="r-title">Execution</h3>
+          <div class="r-body tint-lime">
+            <p>Included with every project, so what gets made matches the drawing.</p>
+            <ul><li>Vendor selection</li><li>Material samples</li><li>Print checks</li><li>Site visits</li><li>Handover files</li></ul>
+          </div>
+        </article>
+        <div class="approach" id="approach">
+          <h3 class="r-title">How a project runs</h3>
+          <table class="facts big">
+            <tr><th>Clarity</th><td>Before we draw a line, we write a one-page brief with you. You sign it.</td></tr>
+            <tr><th>Structure</th><td>Every identity leaves with a guideline; every space with drawings a contractor can price.</td></tr>
+            <tr><th>Intent</th><td>Each line in a logo and each wall in a plan has a reason we can explain in one sentence.</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT + FOOTER ============ -->
     <section class="panel contact" id="contact" aria-labelledby="contact-title">
-      <p class="side-label light" aria-hidden="true"><i class="sq red-sq"></i>Let's build something bold.</p>
-
-      <div class="ct-main" data-reveal>
-        <h2 id="contact-title" class="h-display yellow">Ready to build<br>your space<br>or brand?</h2>
-        <span class="bar-line" aria-hidden="true"></span>
-        <p>We take on homes, interiors, landscapes and brands across India. Send the site, the business name and your timeline.</p>
-        <a class="btn" href="mailto:info@buildbold.in?subject=New%20project%20for%20BOLD&amp;body=The%20space%20or%20brand%3A%0ALocation%20or%20plot%20size%3A%0ABusiness%20name%3A%0AWhen%20we%20need%20it%3A">Email us your project</a>
+      <h2 id="contact-title" class="eyebrow tint-sage">Contact BOLD</h2>
+      <div class="ct-grid">
+        <div class="ct-copy">
+          <h3 class="h2">Tell us about your space or brand.</h3>
+          <p>Send the site location or plot size, the name of the business and when you need it. We'll reply with questions and a first estimate.</p>
+          <p class="ct-mail"><a class="link" href="mailto:info@buildbold.in?subject=New%20project%20for%20BOLD&amp;body=The%20space%20or%20brand%3A%0ALocation%20or%20plot%20size%3A%0ABusiness%20name%3A%0AWhen%20we%20need%20it%3A">info@buildbold.in</a></p>
+          <a class="btn-primary" href="mailto:info@buildbold.in?subject=New%20project%20for%20BOLD">Email us your project</a>
+        </div>
+        <div class="seal" aria-hidden="true">
+          <svg viewBox="0 0 120 120"><defs><path id="ring" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"/></defs><circle cx="60" cy="60" r="58"/><circle cx="60" cy="60" r="34" class="inner"/><text><textPath href="#ring">SPACES · BRANDS · EXECUTION · INDIA ·</textPath></text></svg>
+          <span>BOLD.</span>
+        </div>
       </div>
-
-      <div class="ct-list" data-reveal>
-        <h3 class="h-cond">Contact</h3>
-        <ul>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14"/><path d="M3 6l9 7 9-7"/></svg><a href="mailto:info@buildbold.in">info@buildbold.in</a></li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg><a href="https://buildbold.in">buildbold.in</a></li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.5-7-12a7 7 0 0114 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg><span>Odisha · Assam · Maharashtra</span></li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 016 0"/></svg><a href="../merch.html">BOLD merch</a></li>
-        </ul>
-      </div>
-
-      <div class="badge-wrap" data-reveal>
-        <svg class="badge" viewBox="0 0 200 200" aria-hidden="true">
-          <defs><path id="ring" d="M100,100 m-76,0 a76,76 0 1,1 152,0 a76,76 0 1,1 -152,0"/></defs>
-          <circle cx="100" cy="100" r="96"/>
-          <text><textPath href="#ring">SPACES • BRANDS • EXECUTION • SPACES • BRANDS • EXECUTION •</textPath></text>
-        </svg>
-        <img class="badge-logo" src="../logo.png" alt="" width="102" height="38">
-        <span class="barcode" aria-hidden="true"></span>
-        <p class="legal">© 2026 BOLD. All rights reserved.</p>
-      </div>
+      <footer class="foot">
+        <nav class="foot-nav" aria-label="Footer">
+          <a href="#work"><svg viewBox="0 0 32 32" aria-hidden="true"><rect x="4" y="6" width="24" height="18"/><path d="M4 20l7-6 6 5 4-3 7 6"/></svg>Work</a>
+          <a href="#top"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M4 28V12l12-8 12 8v16z"/><path d="M12 28v-9h8v9"/></svg>Home</a>
+          <a href="../merch.html"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M10 5l-6 5 3 4 3-2v15h12V12l3 2 3-4-6-5c-1 3-3 4-6 4s-5-1-6-4z"/></svg>Merch</a>
+          <a href="#services"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M20 4a6 6 0 00-6 8L4 22l6 6 10-10a6 6 0 008-6l-4 2-4-4z"/></svg>Services</a>
+        </nav>
+        <p class="small"><a class="link" href="#top">Copyright</a> © 2026 BOLD. All rights reserved. This site is best viewed sideways on a laptop or iPad.</p>
+      </footer>
     </section>
 
   </main>
