@@ -81,3 +81,55 @@ chips.forEach((chip) => chip.addEventListener('click', () => {
   });
   rows.forEach((row) => row.classList.toggle('is-dim', pick !== 'all' && row.dataset.discipline !== pick));
 }));
+
+// Sections arrive part by part as they come into view.
+const reveal = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (!entry.isIntersecting) return;
+    entry.target.classList.add('in');
+    entry.target.addEventListener('transitionend', () => entry.target.style.setProperty('--i', 0), { once: true });
+    reveal.unobserve(entry.target);
+  });
+}, { threshold: 0.1 });
+const parts = [
+  '.services-head > *', '.service', '.index > h2', '.filter', '.index-list li',
+  '.project-copy > *', '.tile', '.approach > h2', '.principles article', '.contact-copy > *', '.foot',
+].join(', ');
+document.querySelectorAll('.panel:not(.hero)').forEach((panel) => {
+  panel.querySelectorAll(parts).forEach((el, i) => {
+    el.classList.add('rv');
+    el.style.setProperty('--i', Math.min(i, 8));
+    reveal.observe(el);
+  });
+});
+
+// Pictures fade in once loaded.
+document.querySelectorAll('img[loading="lazy"]').forEach((img) => {
+  img.decoding = 'async';
+  if (img.complete) img.classList.add('loaded');
+  else img.addEventListener('load', () => img.classList.add('loaded'), { once: true });
+});
+
+// The nav marks the section in view.
+const navLinks = [...document.querySelectorAll('.bar-nav a[href^="#"]')];
+const watched = navLinks.map((a) => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+function markCurrent() {
+  const cx = window.innerWidth / 2;
+  const cy = window.innerHeight / 2;
+  const here = watched.find((s) => {
+    const r = s.getBoundingClientRect();
+    return r.left <= cx && r.right >= cx && r.top <= cy && r.bottom >= cy;
+  });
+  navLinks.forEach((a) => a.setAttribute('aria-current', String(!!here && a.getAttribute('href') === `#${here.id}`)));
+}
+track.addEventListener('scroll', markCurrent, { passive: true });
+window.addEventListener('scroll', markCurrent, { passive: true });
+markCurrent();
+
+// The sideways hint leaves after the first scroll.
+const hint = document.querySelector('.hint');
+const dropHint = () => {
+  if (track.scrollLeft > 40 || window.scrollY > 40) hint && hint.classList.add('gone');
+};
+track.addEventListener('scroll', dropHint, { passive: true });
+window.addEventListener('scroll', dropHint, { passive: true });

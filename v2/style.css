@@ -322,6 +322,59 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
 .js .hero-actions { animation: rise .8s .22s var(--ease) both; }
 .js .hero-figure img { animation: wipe 1.1s .1s var(--ease) both; }
 
+/* ---------- Micro-interactions ---------- */
+:root { --fast: .2s; --mid: .35s; }
+
+/* Sections arrive part by part as they come into view (classes added by main.js) */
+.js .rv { opacity: 0; transform: translateY(18px); transition: opacity .7s var(--ease), transform .7s var(--ease); transition-delay: calc(var(--i, 0) * 70ms); }
+.js .rv.in { opacity: 1; transform: none; }
+
+/* Pictures fade in once loaded instead of popping */
+.js img[loading="lazy"] { opacity: 0; transition: opacity .6s var(--ease); }
+.js img[loading="lazy"].loaded { opacity: 1; }
+
+/* Nav: an underline grows on hover and marks the section in view */
+.bar-nav a { background: linear-gradient(currentColor, currentColor) 0 100% / 0 2px no-repeat; transition: background-size var(--mid) var(--ease), color var(--fast); }
+.bar-nav a:hover, .bar-nav a[aria-current="true"] { background-size: 100% 2px; }
+.bar-nav a[aria-current="true"] { color: var(--yellow); }
+.bar-logo img { transition: opacity var(--fast); }
+.bar-logo:hover img { opacity: .75; }
+
+/* Buttons lift a little; the press stays */
+.btn { transition: background var(--fast), color var(--fast), transform var(--mid) var(--ease); }
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0) scale(.97); }
+.link { transition: color var(--fast), text-underline-offset var(--mid) var(--ease); }
+.link:hover { text-underline-offset: 9px; }
+
+/* Services: list items step in, their squares turn */
+.service li { transition: transform var(--mid) var(--ease); }
+.service li::before { transition: transform var(--mid) var(--ease); }
+.service li:hover { transform: translateX(6px); }
+.service li:hover::before { transform: rotate(45deg); }
+
+/* Work index: names step right, the red square turns */
+.index-list a .ix-name { transition: color var(--fast), transform var(--mid) var(--ease); }
+.index-list a:hover .ix-name, .index-list a:focus-visible .ix-name { transform: translateX(10px); }
+.index-list a .ix-name::after { transition: transform var(--mid) var(--ease); }
+.index-list a:hover .ix-name::after { transform: rotate(90deg) scale(1.3); }
+
+/* Project pictures lift on hover, captions brighten */
+.tile { transition: transform .5s var(--ease); }
+.tile figcaption { transition: color var(--fast); }
+.tile:hover, .js .tile.rv.in:hover { transform: translateY(-6px); }
+.tile:hover figcaption { color: var(--white); }
+.p-archveda .tile:hover figcaption { color: var(--black); }
+
+/* The sideways hint leaves once the visitor has scrolled */
+.hint { transition: opacity .5s var(--ease); }
+.hint.gone { opacity: 0; }
+
+@media (hover: none) {
+  .tile:hover, .js .tile.rv.in:hover, .btn:hover, .service li:hover { transform: none; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  .js .rv, .js img[loading="lazy"] { opacity: 1; transform: none; }
 }
