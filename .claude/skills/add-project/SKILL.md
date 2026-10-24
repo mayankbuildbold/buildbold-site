@@ -40,27 +40,36 @@ real need, one idea per project, plain words, captions that work as tiny ads.
 - No praise words ("stunning", "beautiful"), no invented quotes, numbers or clients.
 - Show the owner the copy deck in chat before building if anything was guessed.
 
-## 4. Build it into `index.html`
+## 4. Build it into the site
 
-- Add a `<section class="panel project p-<slug>" id="p-<slug>">` after the last project panel and
-  before `<!-- 7. Approach -->`. Copy the structure of an existing panel:
+Two pages share `style.css` and `main.js`:
+
+- **`projects.html` (the Work page) holds every project.** Always add the new panel there, just before
+  `<!-- projects:end -->`, and add its row to that page's `.index-list` with `href="#p-<slug>"`.
+- **`index.html` (the homepage) features at most four projects**, between `<!-- featured:start -->` and
+  `<!-- featured:end -->`. Ask the owner whether the new project should be featured. If yes, copy the
+  same panel there and ask which featured project it replaces; remove that one from the homepage (it
+  stays on the Work page). Homepage index rows link to `#p-<slug>` when featured, otherwise to
+  `projects.html#p-<slug>`.
+
+Panel markup — `<section class="panel project p-<slug>" id="p-<slug>">`, copied from an existing panel:
   - mostly portrait pictures → `.strip` with `.tile.tall` (4:5)
   - landscape pictures → `.mosaic` with `.tile.wide` (3:2), one `.tile.portrait` allowed
-  - a real sequence (sketch → final) → `ol.sequence` with `.tile.sq`
-- First picture `loading="lazy"` like the others; every `img` has `alt`, `width`, `height`.
+  - a real sequence (sketch → final) → `ol.sequence` with `.tile.sq`; more than four squares → also add
+    a two-row rule like `.p-kaafi .sequence` in `style.css`
+- Every `img` has `alt`, `width`, `height` and `loading="lazy"`.
 - Optional panel ground from the project's own colours (as Trishakti uses its maroon); keep text
   contrast ≥ 4.5:1. Otherwise keep the black ground.
-- Add the project to the work index list (`.index-list`) with the right `data-discipline`
-  (`branding` or `architecture`) and an `href="#p-<slug>"`. If it was already listed without
-  pictures (e.g. "Photographs soon" / "In design"), turn that row into a link instead of adding one.
-- Update counts that the new project changes: the index heading ("Six projects. Four cities.
-  Three years."), the hero link ("See six projects"), and the service proof lines.
+- `data-discipline` on index rows: `branding` or `architecture`. If the project was already listed
+  without pictures ("Photographs soon" / "In design"), turn that row into a link instead of adding one.
+- Update counts on both pages: homepage index heading ("Seven projects. Four cities. Three years."),
+  hero link ("See seven projects"), the Brand identity proof line, and the Work page `h1`.
 
 ## 5. Check it
 
-Preview with the `bold-site` launch config (`.claude/launch.json`, http://localhost:4173/).
-Check the new panel at 1440×900, 1180×820, 820×1180 and 375×812: pictures fill the height, nothing
-overflows, captions readable, index link scrolls to the panel. No console errors from the homepage.
+Preview with the `bold-site` launch config (`.claude/launch.json`): http://localhost:4173/ and
+http://localhost:4173/projects.html. Check the new panel at 1440×900, 1180×820, 820×1180 and 375×812: pictures fill the height, nothing
+overflows, captions readable, index link scrolls to the panel. No console errors on either page.
 
 ## 6. Publish only on a yes
 

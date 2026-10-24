@@ -110,7 +110,8 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
 .s-red { background: var(--red); }
 .s-yellow { background: var(--yellow); color: var(--black); }
 
-.index h2 { font-size: clamp(40px, 11vw, 64px); }
+.index .display { font-size: clamp(40px, 11vw, 64px); }
+.work-all { display: inline-block; margin-top: 28px; }
 .filter { display: flex; flex-wrap: wrap; gap: 10px; margin: 32px 0 28px; }
 .chip {
   min-height: 44px; padding: 0 18px;
@@ -247,10 +248,11 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
   .service h3 { font-size: min(3.2vw, 6vh); }
 
   /* Work index */
-  .index { width: clamp(560px, 64vw, 1040px); display: flex; flex-direction: column; }
-  .index h2 { font-size: min(4vw, 7vh); max-width: 22ch; }
+  .index { width: clamp(900px, 92vw, 1480px); display: flex; flex-direction: column; }
+  .index .display { font-size: min(4vw, 7vh); max-width: 22ch; }
   .filter { margin: clamp(16px, 3.5vh, 36px) 0 clamp(16px, 3vh, 32px); }
-  .index-list { gap: clamp(6px, 1.3vh, 16px); }
+  .index-list { grid-template-columns: 1fr 1fr; gap: clamp(10px, 2vh, 22px) 4vw; align-content: start; }
+  .work-all { margin-top: auto; padding-top: 12px; }
   .ix-name { font-size: min(2.7vw, 4.6vh); }
 
   /* Kaafi: seven squares in two rows, read top to bottom, left to right */
