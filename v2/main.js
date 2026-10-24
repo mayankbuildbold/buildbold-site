@@ -1,9 +1,9 @@
-// BOLD v2: sideways walk on iPad and laptop, plain vertical page on phones.
+// BOLD v2: sideways walk on landscape iPad and laptop, plain vertical page on phones and upright iPads.
 document.documentElement.classList.add('js');
 
 const track = document.getElementById('track');
 const fill = document.getElementById('progress-fill');
-const wide = window.matchMedia('(min-width: 768px)');
+const wide = window.matchMedia('(min-width: 768px) and (min-height: 500px) and (orientation: landscape)');
 const calm = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 const isSideways = () => wide.matches;
@@ -45,7 +45,7 @@ document.addEventListener('click', (e) => {
     const left = target.getBoundingClientRect().left + track.scrollLeft;
     track.scrollTo({ left, behavior });
   } else {
-    const top = target.getBoundingClientRect().top + window.scrollY - 72;
+    const top = target.getBoundingClientRect().top + window.scrollY - 64;
     window.scrollTo({ top, behavior });
   }
   history.replaceState(null, '', a.getAttribute('href'));
@@ -69,9 +69,38 @@ window.addEventListener('resize', progress);
 wide.addEventListener('change', () => { track.scrollLeft = 0; progress(); });
 progress();
 
-// Work index: show one discipline at a time.
+// Sections arrive part by part as they come into view.
+const reveal = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (!entry.isIntersecting) return;
+    entry.target.classList.add('in');
+    reveal.unobserve(entry.target);
+  });
+}, { threshold: 0.12 });
+document.querySelectorAll('.panel').forEach((panel) => {
+  panel.querySelectorAll('[data-reveal]').forEach((el, i) => {
+    el.style.setProperty('--i', i);
+    reveal.observe(el);
+  });
+});
+
+// Services: point at a line to read what it covers.
+const desc = document.querySelector('.svc-desc');
+const lines = document.querySelectorAll('.svc li');
+const show = (li) => {
+  lines.forEach((l) => l.classList.toggle('is-on', l === li));
+  desc.textContent = li.dataset.desc;
+};
+if (lines.length) show(lines[0]);
+lines.forEach((li) => {
+  li.addEventListener('mouseenter', () => show(li));
+  li.addEventListener('focus', () => show(li));
+  li.addEventListener('click', () => show(li));
+});
+
+// Work: show one discipline at a time.
 const chips = document.querySelectorAll('.chip');
-const rows = document.querySelectorAll('.index-list li');
+const tiles = document.querySelectorAll('.work .tile');
 chips.forEach((chip) => chip.addEventListener('click', () => {
   const pick = chip.dataset.filter;
   chips.forEach((c) => {
@@ -79,5 +108,5 @@ chips.forEach((chip) => chip.addEventListener('click', () => {
     c.classList.toggle('is-on', on);
     c.setAttribute('aria-pressed', on);
   });
-  rows.forEach((row) => row.classList.toggle('is-dim', pick !== 'all' && row.dataset.discipline !== pick));
+  tiles.forEach((t) => t.classList.toggle('is-dim', pick !== 'all' && t.dataset.discipline !== pick));
 }));
