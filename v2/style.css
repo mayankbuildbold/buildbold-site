@@ -44,13 +44,14 @@ ul, ol { padding: 0; list-style: none; }
 
 /* ---------- Type ---------- */
 .display {
-  font-family: var(--display);
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: -0.02em;
-  line-height: 0.92;
+  font-family: var(--text);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  text-wrap: balance;
 }
-h3 { font: 900 clamp(28px, 2.6vw, 40px)/1 var(--display); text-transform: uppercase; letter-spacing: -0.01em; }
+h3 { font: 700 clamp(22px, 1.9vw, 28px)/1.15 var(--text); letter-spacing: -0.02em; }
+.dot { display: inline-block; width: .42em; height: .42em; margin-left: .08em; background: var(--red); vertical-align: baseline; }
 
 /* ---------- Header ---------- */
 .bar {
@@ -63,14 +64,15 @@ h3 { font: 900 clamp(28px, 2.6vw, 40px)/1 var(--display); text-transform: upperc
 .bar-logo img { width: 92px; height: auto; }
 .bar-nav { display: flex; gap: 28px; margin-left: auto; }
 .bar-nav a { text-decoration: none; font-size: 16px; padding: 6px 0; }
-.bar-nav a:hover { color: var(--yellow); }
+.bar-nav a:hover { color: var(--muted); }
+.bar-nav a { color: #d9d9d9; }
 
 /* ---------- Buttons and links ---------- */
 .btn {
   display: inline-flex; align-items: center;
-  min-height: 52px; padding: 0 26px;
+  min-height: 48px; padding: 0 22px;
   background: var(--red); color: var(--white);
-  font: 700 17px/1 var(--text);
+  font: 700 16px/1 var(--text);
   text-decoration: none;
   transition: background .2s, color .2s, transform .15s var(--ease);
 }
@@ -78,7 +80,7 @@ h3 { font: 900 clamp(28px, 2.6vw, 40px)/1 var(--display); text-transform: upperc
 .btn:active { transform: scale(.97); }
 .btn-small { min-height: 42px; padding: 0 18px; font-size: 15px; }
 .link { font-weight: 700; text-underline-offset: 6px; text-decoration-thickness: 2px; }
-.link:hover { color: var(--yellow); }
+.link:hover { color: var(--muted); }
 
 /* ---------- Pictures ---------- */
 .tile img { width: 100%; height: 100%; object-fit: cover; background: var(--step); }
@@ -92,25 +94,28 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
 .hint-desk { display: none; }
 
 .hero { display: grid; gap: 40px; padding-top: 40px; }
-.hero h1 { font-size: clamp(44px, 13vw, 72px); }
+.hero h1 { font-size: clamp(38px, 10.5vw, 56px); }
 .lede { font-size: 19px; margin-top: 24px; max-width: 34em; }
 .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 24px; margin-top: 32px; }
 .hero-figure img { aspect-ratio: 4 / 5; object-fit: cover; width: 100%; }
 .hint { display: none; }
 
-.services { display: grid; gap: 0; padding-left: 0; padding-right: 0; padding-bottom: 0; }
+.services { display: grid; gap: 2px; padding-left: 0; padding-right: 0; padding-bottom: 0; }
 .services-head { padding: 0 var(--m) 48px; }
-.services-head h2 { font-size: clamp(40px, 11vw, 64px); }
+.services-head h2 { font-size: clamp(32px, 8.6vw, 44px); }
 .services-head p { margin-top: 20px; max-width: 32em; }
 .service { padding: 48px var(--m) 56px; display: flex; flex-direction: column; gap: 18px; }
 .service ul { display: grid; gap: 6px; font-weight: 700; }
 .service ul li::before { content: ''; display: inline-block; width: 10px; height: 10px; margin-right: 12px; background: currentColor; vertical-align: 1px; }
 .service-proof { margin-top: auto; padding-top: 12px; font-size: 15px; }
-.s-blue { background: var(--blue); }
-.s-red { background: var(--red); }
-.s-yellow { background: var(--yellow); color: var(--black); }
+.service { background: var(--step); border-top: 6px solid var(--c); }
+.service ul li::before { background: var(--c); }
+.service-proof { color: var(--muted); }
+.s-blue { --c: #3d8bd9; }
+.s-red { --c: var(--red); }
+.s-yellow { --c: var(--yellow); }
 
-.index h2 { font-size: clamp(40px, 11vw, 64px); }
+.index h2 { font-size: clamp(32px, 8.6vw, 44px); }
 .filter { display: flex; flex-wrap: wrap; gap: 10px; margin: 32px 0 28px; }
 .chip {
   min-height: 44px; padding: 0 18px;
@@ -121,27 +126,26 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
 .chip:hover { background: #2a2a2a; }
 .chip:active { transform: scale(.96); }
 .chip.is-on { background: var(--white); color: var(--black); }
-.chip-red.is-on { background: var(--red); color: var(--white); }
-.chip-blue.is-on { background: var(--blue); color: var(--white); }
+
 .index-list { display: grid; gap: 22px; }
 .index-list li { transition: opacity .3s var(--ease), transform .3s var(--ease); }
 .index-list li.is-dim { opacity: .18; }
 .index-list a { text-decoration: none; display: block; }
-.ix-name { display: block; font: 900 clamp(28px, 7.5vw, 40px)/1 var(--display); text-transform: uppercase; letter-spacing: -0.01em; }
+.ix-name { display: block; font: 700 clamp(22px, 6vw, 28px)/1.1 var(--text); letter-spacing: -0.02em; }
 .index-list a .ix-name { transition: color .2s; }
-.index-list a:hover .ix-name { color: var(--yellow); }
-.index-list a .ix-name::after { content: ''; display: inline-block; width: .32em; height: .32em; margin-left: .25em; background: var(--red); vertical-align: .1em; }
+.index-list a:hover .ix-name { color: var(--muted); }
+.index-list a .ix-name::after { content: ''; display: inline-block; width: 7px; height: 7px; margin-left: 10px; background: var(--red); vertical-align: middle; }
 .ix-meta { display: block; margin-top: 6px; color: var(--muted); font-size: 15px; }
 
 .project { display: grid; gap: 32px; }
-.project h2 { font-size: clamp(40px, 11vw, 64px); }
+.project h2 { font-size: clamp(32px, 8.6vw, 44px); }
 .project-meta { font-weight: 700; margin: 14px 0 18px; }
 .project-copy p + p { margin-top: 14px; }
-.p-pacework .project-meta { color: var(--red); }
+.project-meta { font-size: 15px; color: var(--muted); }
 .p-trishakti { background: #3a1e22; }      /* Trishakti maroon, from its own stationery */
 .p-trishakti .project-meta { color: #f2b8a8; }
-.p-archveda { background: var(--white); color: var(--black); }
-.p-archveda .project-meta { color: var(--blue); }
+.p-archveda { background: #f2f2f2; color: var(--black); }
+.p-archveda .project-meta { color: #555; }
 .p-archveda figcaption { color: #555; }
 .p-trishakti figcaption { color: #e3c8c2; }
 
@@ -163,28 +167,30 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
 .sequence li { flex: none; }
 
 .approach { background: var(--white); color: var(--black); }
-.approach h2 { font-size: clamp(40px, 11vw, 64px); }
+.approach h2 { font-size: clamp(32px, 8.6vw, 44px); }
 .principles { display: grid; gap: 40px; margin-top: 40px; }
-.principles h3 { font-size: clamp(36px, 10vw, 56px); margin-bottom: 12px; }
-.principles article:nth-child(1) h3 { color: var(--red); }
-.principles article:nth-child(2) h3 { color: var(--blue); }
-.principles article:nth-child(3) h3 { color: var(--black); box-shadow: inset 0 -0.18em 0 var(--yellow); display: inline-block; }
+.principles h3 { font-size: clamp(24px, 6.4vw, 30px); margin-bottom: 12px; }
+.principles h3::before { content: ''; display: block; width: 28px; height: 28px; margin-bottom: 20px; background: var(--c); }
+.principles article:nth-child(1) { --c: var(--red); }
+.principles article:nth-child(2) { --c: var(--blue); }
+.principles article:nth-child(3) { --c: var(--yellow); }
+.approach { background: #f2f2f2; }
 
-.contact { background: var(--red); display: flex; flex-direction: column; gap: 64px; padding-bottom: 32px; }
-.contact h2 { font-size: clamp(44px, 12vw, 72px); }
+.contact { background: var(--black); display: flex; flex-direction: column; gap: 64px; padding-bottom: 32px; }
+.contact h2 { font-size: clamp(34px, 9.4vw, 52px); }
 .contact-copy p { margin-top: 20px; max-width: 30em; font-size: 19px; }
 .mail {
   display: inline-block; margin-top: 28px;
-  font: 900 clamp(20px, 6.2vw, 44px)/1 var(--display); text-transform: uppercase; max-width: 100%; overflow-wrap: anywhere;
-  text-decoration: none; background: var(--black); padding: 14px 18px;
+  font: 700 clamp(22px, 6.4vw, 34px)/1.1 var(--text); letter-spacing: -0.02em; max-width: 100%; overflow-wrap: anywhere;
+  text-decoration: underline; text-decoration-color: var(--red); text-decoration-thickness: 3px; text-underline-offset: 8px; padding: 0;
   transition: background .2s, color .2s;
 }
-.mail:hover { background: var(--white); color: var(--black); }
-.foot-word { font: 900 30vw/0.8 var(--display); letter-spacing: -0.04em; margin-left: -0.04em; }
+.mail:hover { color: var(--red); }
+.foot-word { font: 900 22vw/0.8 var(--display); letter-spacing: -0.03em; margin-left: -0.04em; color: #2a2a2a; }
 .foot-row { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 20px; font-size: 15px; }
 
-.progress { position: fixed; left: 0; right: 0; bottom: 0; height: 5px; z-index: 30; pointer-events: none; }
-.progress span { display: block; height: 100%; background: var(--yellow); transform-origin: 0 50%; transform: scaleX(0); }
+.progress { position: fixed; left: 0; right: 0; bottom: 0; height: 3px; z-index: 30; pointer-events: none; }
+.progress span { display: block; height: 100%; background: var(--red); transform-origin: 0 50%; transform: scaleX(0); }
 
 @media (max-width: 767px) {
   .bar { gap: 16px; }
@@ -223,41 +229,41 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
     padding-top: calc(var(--bar) + 8px);
   }
   .hero-copy { align-self: center; max-width: 60vw; }
-  .hero h1 { font-size: min(6.2vw, 11.5vh); }
+  .hero h1 { font-size: min(5vw, 9.5vh); max-width: 15ch; }
   .lede { font-size: clamp(17px, 1.4vw, 21px); max-width: 36em; }
   .hero-figure { grid-row: 1 / 3; grid-column: 2; height: 100%; display: flex; flex-direction: column; }
   .hero-figure img { height: calc(100dvh - var(--bar) - 8px - var(--foot) - 72px); width: auto; aspect-ratio: 4 / 5; }
-  .hint { grid-row: 2; grid-column: 1; font-weight: 700; color: var(--yellow); }
-  .hint span::after { content: ''; display: inline-block; width: 40px; height: 4px; margin-left: 14px; background: currentColor; vertical-align: middle; animation: nudge 1.6s var(--ease) infinite; }
+  .hint { grid-row: 2; grid-column: 1; font-size: 15px; color: var(--muted); }
+  .hint span::after { content: ''; display: inline-block; width: 28px; height: 2px; margin-left: 12px; background: currentColor; vertical-align: middle; animation: nudge 1.6s var(--ease) infinite; }
 
   /* Services: one black column, then three full colour fields */
-  .services { display: flex; padding: 0; }
+  .services { display: flex; padding: 0; gap: 2px; }
   .services-head {
     width: clamp(340px, 34vw, 560px);
     padding: calc(var(--bar) + clamp(16px, 4vh, 48px)) var(--m) var(--foot);
     display: flex; flex-direction: column; justify-content: center;
   }
-  .services-head h2 { font-size: min(4.6vw, 9vh); }
+  .services-head h2 { font-size: min(3.4vw, 6.4vh); }
   .service {
     width: clamp(320px, 31vw, 500px);
     padding: calc(var(--bar) + clamp(16px, 6vh, 72px)) clamp(24px, 2.6vw, 44px) var(--foot);
     gap: clamp(12px, 2.2vh, 22px);
     font-size: clamp(16px, 1.2vw, 18px);
   }
-  .service h3 { font-size: min(3.2vw, 6vh); }
+  .service h3 { font-size: min(2.2vw, 4.2vh); }
 
   /* Work index */
   .index { width: clamp(560px, 64vw, 1040px); display: flex; flex-direction: column; }
-  .index h2 { font-size: min(4.6vw, 8.5vh); max-width: 14ch; }
+  .index h2 { font-size: min(3.4vw, 6.4vh); max-width: 16ch; }
   .filter { margin: clamp(16px, 3.5vh, 36px) 0 clamp(16px, 3vh, 32px); }
   .index-list { gap: clamp(8px, 1.8vh, 20px); }
-  .ix-name { font-size: min(3vw, 5.4vh); }
+  .ix-name { font-size: min(2.1vw, 3.8vh); }
   .ix-meta { margin-top: 2px; }
 
   /* Project panels: copy column, then a strip of pictures at full height */
   .project { display: flex; gap: clamp(28px, 3vw, 56px); align-items: stretch; }
   .project-copy { width: clamp(300px, 28vw, 440px); flex: none; align-self: center; font-size: clamp(16px, 1.2vw, 18px); }
-  .project h2 { font-size: min(4.4vw, 8.5vh); }
+  .project h2 { font-size: min(3.2vw, 6vh); }
   .strip, .mosaic, .sequence {
     margin: 0; padding: 0; overflow: visible;
     gap: clamp(12px, 1.4vw, 24px);
@@ -274,18 +280,18 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
 
   /* Approach */
   .approach { width: 100vw; display: flex; flex-direction: column; justify-content: center; }
-  .approach h2 { font-size: min(5.6vw, 10vh); }
+  .approach h2 { font-size: min(3.6vw, 6.6vh); }
   .principles { grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 4vw, 72px); margin-top: clamp(24px, 6vh, 72px); }
-  .principles h3 { font-size: min(4.2vw, 8vh); }
+  .principles h3 { font-size: min(2.4vw, 4.6vh); }
   .principles p { font-size: clamp(16px, 1.25vw, 19px); max-width: 30em; }
 
   /* Contact */
   .contact { width: 100vw; justify-content: space-between; padding-bottom: calc(var(--foot) - 24px); gap: 24px; }
-  .contact h2 { font-size: min(6vw, 10.5vh); max-width: 14ch; }
+  .contact h2 { font-size: min(4.6vw, 8.4vh); max-width: 14ch; }
   .contact-copy p { font-size: clamp(17px, 1.4vw, 21px); }
-  .mail { font-size: min(3.6vw, 6.4vh); }
+  .mail { font-size: min(2.6vw, 4.6vh); }
   .foot { display: flex; align-items: flex-end; justify-content: space-between; gap: 32px; }
-  .foot-word { font-size: min(15vw, 26vh); }
+  .foot-word { font-size: min(11vw, 19vh); }
   .foot-row { flex-direction: column; align-items: flex-end; text-align: right; margin: 0 0 1.2vh; }
 }
 
@@ -299,15 +305,15 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
 @media (min-width: 768px) and (orientation: portrait) {
   .hero { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr) auto; padding-top: calc(var(--bar) + 32px); }
   .hero-copy { max-width: none; align-self: end; }
-  .hero h1 { font-size: 9.6vw; }
+  .hero h1 { font-size: 7.4vw; max-width: 15ch; }
   .hero-figure { grid-row: 2; grid-column: 1; height: auto; min-height: 0; margin-top: 32px; overflow: hidden; }
   .hero-figure img { width: 100%; height: auto; flex: 1 1 0; min-height: 0; aspect-ratio: auto; object-fit: cover; object-position: 50% 20%; }
   .hint { grid-row: 3; margin-top: 16px; }
   .approach { width: 100vw; }
   .principles { grid-template-columns: 1fr; }
-  .principles h3 { font-size: 7vw; }
-  .contact h2 { font-size: 10vw; }
-  .mail { font-size: 5.4vw; }
+  .principles h3 { font-size: 4.2vw; }
+  .contact h2 { font-size: 7.4vw; }
+  .mail { font-size: 4.2vw; }
   .foot { flex-direction: column; align-items: flex-start; }
   .foot-row { align-items: flex-start; text-align: left; }
 }
