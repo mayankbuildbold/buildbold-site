@@ -171,33 +171,32 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
 .approach { background: var(--white); color: var(--black); }
 .approach h2 { font-size: clamp(40px, 11vw, 64px); }
 .principles { display: grid; gap: 40px; margin-top: 40px; }
-.principles h3 { font-size: clamp(44px, 13vw, 72px); line-height: .95; margin-bottom: 10px; }
-.principles p { font-size: 18px; max-width: 26ch; }
-.principles article:nth-child(1) h3 { color: var(--red); }
-.principles article:nth-child(2) h3 { color: var(--blue); }
-.principles article:nth-child(3) h3 { color: var(--black); }
-.principles h3 { position: relative; display: inline-block; }
-.principles article:nth-child(3) h3::after { content: ''; position: absolute; left: 0; right: 0; bottom: -.14em; height: .11em; background: var(--yellow); transform-origin: 0 50%; transition: transform .7s .45s var(--ease); }
-.approach-foot { margin-top: 32px; display: grid; gap: 14px; justify-items: start; }
+.principles article { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
+.pr-num { display: inline-block; font: 900 clamp(72px, 24vw, 120px)/.82 var(--display); letter-spacing: 0; padding: .06em .08em; margin: -.06em -.08em; }
+.principles h3 { font-size: 22px; line-height: 1.1; margin-top: 8px; }
+.principles p { font-size: 18px; max-width: 30ch; }
+.principles article:nth-child(1) .pr-num { color: var(--red); }
+.principles article:nth-child(2) .pr-num { color: var(--blue); }
+.principles article:nth-child(3) .pr-num { color: var(--yellow); }
+.approach-foot { margin-top: 48px; display: grid; gap: 14px; justify-items: start; }
 .approach-foot p { max-width: 34ch; }
 /* Micro-motion: each word wipes in from the left, the Intent underline draws itself, hover nudges the word */
-.js .principles article h3 { clip-path: inset(-.25em 100% -.35em 0); transition: clip-path .9s var(--ease), transform .35s var(--ease); }
-.js .principles article.in h3 { clip-path: inset(-.25em -.2em -.35em 0); }
-.js .principles article:not(.in) h3::after { transform: scaleX(0); }
-.principles article:hover h3 { transform: translateX(8px); }
+/* No clip-path here: Safari cuts the round digits even with negative insets */
+.principles article .pr-num { transition: transform .35s var(--ease); }
+.principles article:hover .pr-num { transform: translateX(8px); }
 .principles article p { transition: color .2s; }
 
-.contact { background: var(--red); display: flex; flex-direction: column; gap: 64px; padding-bottom: 32px; }
-.contact h2 { font-size: clamp(44px, 12vw, 72px); }
+.contact { background: var(--black); display: flex; flex-direction: column; gap: 64px; padding-bottom: 32px; }
+.contact h2 { font-size: clamp(44px, 12vw, 72px); color: var(--blue); }
 .contact-copy p { margin-top: 24px; max-width: 30em; font-size: 19px; }
 .mail {
   display: inline-block; margin-top: 28px;
   font: 900 clamp(20px, 6.2vw, 44px)/1 var(--display); text-transform: uppercase; max-width: 100%; overflow-wrap: anywhere;
-  text-decoration: none; background: var(--black); padding: 14px 18px;
+  text-decoration: none; color: var(--yellow);
   transition: background .2s, color .2s;
 }
-.mail:hover { background: var(--white); color: var(--black); }
-.foot-word { font: 900 30vw/0.92 var(--display); letter-spacing: -0.01em; margin-left: -0.04em; }
+.mail:hover { color: var(--white); }
+.foot-word { color: var(--red); font: 900 30vw/0.92 var(--display); letter-spacing: -0.01em; margin-left: -0.04em; }
 .foot-row { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 20px; font-size: 15px; }
 
 .progress { position: fixed; left: 0; right: 0; bottom: 0; height: 5px; z-index: 30; pointer-events: none; }
@@ -308,15 +307,16 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
 
   /* Approach */
   /* Approach: heading left; three huge words with their one-line reason, filling the height */
-  .approach { width: clamp(960px, 80vw, 1360px); display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 9fr); column-gap: clamp(40px, 5vw, 96px); align-items: stretch; }
-  .approach-head { display: flex; flex-direction: column; min-height: 0; }
-  .approach-foot { margin-top: auto; }
-  .approach-foot p { font-size: clamp(16px, 1.2vw, 19px); }
-  .approach h2 { font-size: min(4.4vw, 8vh); align-self: start; }
-  .principles { margin: 0; display: grid; grid-template-rows: repeat(3, auto); grid-template-columns: none; row-gap: clamp(32px, 6vh, 80px); align-content: start; padding-top: .2em; }
-  .principles article { display: flex; flex-direction: column; justify-content: center; gap: 1.4vh; }
-  .principles h3 { font-size: min(5vw, 8.4vh); margin: 0; line-height: .9; align-self: flex-start; }
-  .principles p { font-size: clamp(17px, 1.35vw, 21px); max-width: 34ch; }
+  /* Heading across the top, then the three rules side by side */
+  .approach { width: clamp(960px, 80vw, 1360px); display: flex; flex-direction: column; justify-content: space-between; gap: clamp(24px, 5vh, 64px); }
+  .approach h2 { font-size: min(4vw, 7.4vh); white-space: nowrap; }
+  .principles { margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: clamp(32px, 4vw, 80px); }
+  .principles article { gap: 1.2vh; }
+  .pr-num { font-size: min(10vw, 24vh); }
+  .principles h3 { font-size: clamp(20px, 1.7vw, 30px); margin-top: 1.4vh; }
+  .principles p { font-size: clamp(16px, 1.25vw, 20px); max-width: 30ch; }
+  .approach-foot { margin: 0; display: flex; align-items: baseline; gap: 16px 40px; flex-wrap: wrap; }
+  .approach-foot p { font-size: clamp(16px, 1.2vw, 19px); max-width: 60ch; }
 
   /* Contact */
   .contact { width: 100vw; justify-content: space-between; padding-bottom: calc(var(--foot) - 24px); gap: 24px; }
@@ -330,7 +330,7 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
 
 /* Touch screens in horizontal mode settle on a panel */
 @media (min-width: 768px) and (orientation: landscape) and (pointer: coarse) {
-  .track { scroll-snap-type: x proximity; }
+  .track { scroll-snap-type: none; }
   .panel, .service, .services-head, .tile { scroll-snap-align: start; }
 }
 
@@ -382,8 +382,6 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
 :root { --fast: .2s; --mid: .35s; }
 
 /* Sections arrive part by part as they come into view (classes added by main.js) */
-.js .rv { opacity: 0; transform: translateY(18px); transition: opacity .7s var(--ease), transform .7s var(--ease); transition-delay: calc(var(--i, 0) * 70ms); }
-.js .rv.in { opacity: 1; transform: none; }
 
 /* Pictures fade in once loaded instead of popping */
 .js img[loading="lazy"] { opacity: 0; transition: opacity .6s var(--ease); }
@@ -433,4 +431,76 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   .js .rv, .js img[loading="lazy"] { opacity: 1; transform: none; }
+}
+
+/* Cursor from the old site: a yellow dot that inverts what it passes over and grows on links */
+.cursor { display: none; }
+@media (hover: hover) and (pointer: fine) {
+  .has-cursor, .has-cursor a, .has-cursor button { cursor: none; }
+  .cursor {
+    display: block; position: fixed; left: 0; top: 0; z-index: 9999; pointer-events: none;
+    width: 20px; height: 20px; margin: -10px 0 0 -10px; border-radius: 50%;
+    background: var(--yellow); mix-blend-mode: difference;
+    transition: width .2s var(--ease), height .2s var(--ease), margin .2s var(--ease), background .2s, opacity .2s;
+    opacity: 0;
+  }
+  .cursor.on { opacity: 1; }
+  .cursor.hover { width: 30px; height: 30px; margin: -15px 0 0 -15px; background: var(--white); }
+}
+
+/* ---------- Motion pass ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  /* Big headings arrive word by word */
+  /* Words are moved by the scroll loop; the hero heading, already on screen, rises in once on load */
+  .js .w { display: inline-block; transform-origin: 0 100%; }
+  .js .hero h1 { animation: none; }
+  .js .hero .w { animation: rise .8s var(--ease) both; animation-delay: calc(var(--w, 0) * 70ms); }
+
+  /* Footer letters: their scroll offset comes from --p (see the scroll-linked block) */
+  .js .foot-word .l { display: inline-block; }
+  .foot-word:hover .l { animation: hop .5s var(--ease) both; animation-delay: calc(var(--l) * 40ms); }
+
+  /* Hero picture drifts as the page moves away from it */
+  .hero-figure img { will-change: transform; }
+}
+@keyframes hop { 40% { transform: translateY(-.12em); } 100% { transform: none; } }
+
+/* ---------- Interactive motion (mouse and trackpad only) ---------- */
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  /* Cursor turns into a "View" disc over project pictures */
+  .cursor::after { content: 'View'; position: absolute; inset: 0; display: grid; place-items: center;
+    font: 700 13px/1 var(--text, inherit); color: var(--black); opacity: 0; transition: opacity .2s; }
+  .cursor.view { width: 84px; height: 84px; margin: -42px 0 0 -42px; background: var(--yellow); mix-blend-mode: normal; }
+  .cursor.view::after { opacity: 1; }
+
+  /* Buttons and the email lean towards the pointer */
+  .magnet { transition: transform .35s var(--ease); }
+
+  /* Hero picture tilts with the pointer */
+  .hero-figure { perspective: 900px; }
+  .hero-figure img { transition: rotate .5s var(--ease); }
+
+  /* Colour fields: a soft light follows the pointer */
+  .service { position: relative; }
+  .service::before { content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .4s;
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,.18), transparent 60%); }
+  .service:hover::before { opacity: 1; }
+
+  /* Work tiles tilt, and the picture inside shifts the other way */
+  .wp-tiles a { display: block; transform-style: preserve-3d; transition: transform .4s var(--ease); }
+  .wp-tiles a:hover .wp-frame img { transition: scale .6s var(--ease); }
+  .wp-tiles a:hover .wp-frame img { scale: 1.1; }
+
+  /* Footer word: each letter jumps when the pointer reaches it */
+  .foot-word .l { transition: transform .45s cubic-bezier(.3, 1.6, .5, 1), color .2s; }
+  .foot-word .l:hover { transform: translateY(-.14em) rotate(-4deg); color: var(--yellow); }
+
+  /* The big numbers follow the pointer a little */
+}
+
+/* ---------- Scroll-linked motion: positions come from main.js; only the footer word uses CSS ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .scroll-motion .foot-word .l { translate: 0 calc(var(--p, 0) * (var(--l) + 1) * 0.1em); }
+  .scroll-motion .panel .display, .scroll-motion .service h3, .scroll-motion .service ul, .scroll-motion .tile,
+  .scroll-motion .pr-num, .scroll-motion .wp-frame img { will-change: translate; }
 }
