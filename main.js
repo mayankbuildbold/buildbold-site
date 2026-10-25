@@ -133,3 +133,16 @@ const dropHint = () => {
 };
 track.addEventListener('scroll', dropHint, { passive: true });
 window.addEventListener('scroll', dropHint, { passive: true });
+
+// Safety net: a big heading whose longest word is wider than its box shrinks until it fits.
+function fitHeadings() {
+  document.querySelectorAll('.panel h1, .panel h2, .panel h3, .ix-name').forEach((h) => {
+    h.style.fontSize = '';
+    let guard = 30;
+    while (guard-- && h.scrollWidth > h.clientWidth + 1) {
+      h.style.fontSize = `${parseFloat(getComputedStyle(h).fontSize) * 0.95}px`;
+    }
+  });
+}
+document.fonts.ready.then(fitHeadings);
+window.addEventListener('resize', fitHeadings);
