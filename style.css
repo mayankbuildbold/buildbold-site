@@ -105,7 +105,7 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
 .service { padding: 48px var(--m) 56px; display: flex; flex-direction: column; gap: 18px; }
 .service ul { display: grid; gap: 6px; font-weight: 700; }
 .service ul li::before { content: ''; display: inline-block; width: 10px; height: 10px; margin-right: 12px; background: currentColor; vertical-align: 1px; }
-.service-proof { margin-top: auto; padding-top: 12px; font-size: 15px; }
+.service-proof { margin-top: 12px; padding-top: 12px; font-size: 15px; }
 .s-blue { background: var(--blue); }
 .s-red { background: var(--red); }
 .s-yellow { background: var(--yellow); color: var(--black); }
@@ -187,7 +187,7 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
   transition: background .2s, color .2s;
 }
 .mail:hover { background: var(--white); color: var(--black); }
-.foot-word { font: 900 30vw/0.8 var(--display); letter-spacing: -0.01em; margin-left: -0.04em; }
+.foot-word { font: 900 30vw/0.92 var(--display); letter-spacing: -0.01em; margin-left: -0.04em; }
 .foot-row { display: flex; flex-wrap: wrap; gap: 8px 24px; margin-top: 20px; font-size: 15px; }
 
 .progress { position: fixed; left: 0; right: 0; bottom: 0; height: 5px; z-index: 30; pointer-events: none; }
@@ -254,6 +254,8 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
     font-size: clamp(16px, 1.2vw, 18px);
   }
   .service h3 { font-size: min(2.6vw, 5.4vh, 52px); }
+  .service { justify-content: center; }
+  .service-proof { margin-top: 2vh; }
 
   /* Work index */
   .index { width: clamp(900px, 92vw, 1480px); display: flex; flex-direction: column; }
@@ -350,10 +352,12 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
 
 @media (min-width: 768px) and (orientation: landscape) {
   .wp {
-    --tile: calc((100dvh - var(--bar) - clamp(16px, 4vh, 48px) - var(--foot) - 168px) / 2);
+    --tile: min(320px, calc((100dvh - var(--bar) - clamp(16px, 4vh, 48px) - var(--foot) - 168px) / 2));
     display: flex; align-items: center; gap: clamp(32px, 4vw, 72px);
   }
-  .wp-intro { width: clamp(300px, 26vw, 440px); flex: none; }
+  /* The intro spans the tile block: heading level with the tile tops, button level with the last captions */
+  .wp-intro { width: clamp(300px, 26vw, 440px); flex: none; align-self: center; height: calc(var(--tile) * 2 + 168px - 40px); display: flex; flex-direction: column; padding-top: 40px; }
+  .wp-intro .btn { margin-top: auto; align-self: flex-start; }
   .wp .display { font-size: min(3.4vw, 6.6vh, 64px); }
   .wp-group { margin: 0; flex: none; }
   .wp-tiles { grid-template-columns: none; grid-auto-flow: column; grid-template-rows: repeat(2, auto); grid-auto-columns: var(--tile); gap: 24px 20px; }
