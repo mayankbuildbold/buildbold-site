@@ -151,6 +151,7 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
   display: flex; gap: 12px;
   overflow-x: auto; scroll-snap-type: x mandatory;
   margin: 0 calc(var(--m) * -1); padding: 0 var(--m) 8px;
+  scroll-padding-inline: var(--m);
   scrollbar-width: none;
 }
 .strip::-webkit-scrollbar, .mosaic::-webkit-scrollbar, .sequence::-webkit-scrollbar { display: none; }
@@ -162,6 +163,10 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
 .tile.sq { width: 72vw; }
 .tile.sq img { aspect-ratio: 1; }
 .sequence li { flex: none; }
+@media (min-width: 600px) {
+  .tile.tall, .tile.portrait, .tile.sq { width: 40vw; }
+  .tile.wide { width: 56vw; }
+}
 
 .approach { background: var(--white); color: var(--black); }
 .approach h2 { font-size: clamp(40px, 11vw, 64px); }
@@ -197,7 +202,7 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
 /* =========================================================
    iPad and laptop: one long horizontal walk
    ========================================================= */
-@media (min-width: 768px) {
+@media (min-width: 768px) and (orientation: landscape) {
   html, body { height: 100%; overflow: hidden; }
   .track {
     position: fixed; inset: 0;
@@ -214,7 +219,7 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
     padding: calc(var(--bar) + clamp(16px, 4vh, 48px)) var(--m) var(--foot);
   }
   /* Sections sit well apart: the margin plus a section gap before each one */
-  .panel + .panel { padding-left: calc(var(--m) + clamp(56px, 6vw, 112px)); }
+  .panel + .panel { margin-left: clamp(56px, 6vw, 112px); }
   .hint, .hint-desk { display: block; }
   .hint-phone { display: none; }
 
@@ -231,7 +236,7 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
   .lede { font-size: clamp(17px, 1.4vw, 21px); max-width: 36em; }
   .hero-figure { grid-row: 1 / 3; grid-column: 2; height: 100%; display: flex; flex-direction: column; }
   .hero-figure img { height: calc(100dvh - var(--bar) - clamp(16px, 4vh, 48px) - var(--foot) - 72px); width: auto; aspect-ratio: 4 / 5; }
-  .hint { grid-row: 2; grid-column: 1; font-weight: 700; color: var(--yellow); }
+  .hint { grid-row: 2; grid-column: 1; align-self: end; padding-top: 16px; font-weight: 700; color: var(--yellow); }
   .hint span::after { content: ''; display: inline-block; width: 40px; height: 4px; margin-left: 14px; background: currentColor; vertical-align: middle; animation: nudge 1.6s var(--ease) infinite; }
 
   /* Services: one black column, then three full colour fields */
@@ -241,7 +246,7 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
     padding: calc(var(--bar) + clamp(16px, 4vh, 48px)) var(--m) var(--foot);
     display: flex; flex-direction: column; justify-content: center;
   }
-  .services-head h2 { font-size: min(4.6vw, 9vh); }
+  .services-head h2 { font-size: min(3.6vw, 6.6vh); }
   .service {
     width: clamp(320px, 31vw, 500px);
     padding: calc(var(--bar) + clamp(16px, 6vh, 72px)) clamp(24px, 2.6vw, 44px) var(--foot);
@@ -307,27 +312,12 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
 }
 
 /* Touch screens in horizontal mode settle on a panel */
-@media (min-width: 768px) and (pointer: coarse) {
+@media (min-width: 768px) and (orientation: landscape) and (pointer: coarse) {
   .track { scroll-snap-type: x proximity; }
   .panel, .service, .services-head, .tile { scroll-snap-align: start; }
 }
 
 /* iPad portrait: taller than wide, give the hero picture less room */
-@media (min-width: 768px) and (orientation: portrait) {
-  .hero { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr) auto; padding-top: calc(var(--bar) + 32px); }
-  .hero-copy { max-width: none; align-self: end; }
-  .hero h1 { font-size: 9.6vw; }
-  .hero-figure { grid-row: 2; grid-column: 1; height: auto; min-height: 0; margin-top: 32px; overflow: hidden; }
-  .hero-figure img { width: 100%; height: auto; flex: 1 1 0; min-height: 0; aspect-ratio: auto; object-fit: cover; object-position: 50% 20%; }
-  .hint { grid-row: 3; margin-top: 16px; }
-  .approach { width: 100vw; grid-template-columns: 1fr; grid-template-rows: auto 1fr; row-gap: 4vh; }
-  .principles h3 { font-size: 11vw; }
-  .contact h2 { font-size: 10vw; }
-  .mail { font-size: 5.4vw; }
-  .foot { flex-direction: column; align-items: flex-start; }
-  .foot-row { align-items: flex-start; text-align: left; }
-}
-
 /* ---------- Opening sequence ---------- */
 @keyframes rise { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
 @keyframes wipe { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0); } }
@@ -356,8 +346,9 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
 .wp-meta { display: block; margin-top: 2px; font-size: 13px; color: var(--muted); }
 .wp-pending .wp-frame { display: flex; align-items: flex-end; padding: 14px; background: var(--blue); }
 .wp-pending .wp-frame span { font: 900 14px/1 var(--display); text-transform: uppercase; }
+@media (min-width: 600px) { .wp-tiles { grid-template-columns: repeat(3, 1fr); gap: 28px 16px; } }
 
-@media (min-width: 768px) {
+@media (min-width: 768px) and (orientation: landscape) {
   .wp {
     --tile: calc((100dvh - var(--bar) - clamp(16px, 4vh, 48px) - var(--foot) - 168px) / 2);
     display: flex; align-items: center; gap: clamp(32px, 4vw, 72px);

@@ -3,7 +3,7 @@ document.documentElement.classList.add('js');
 
 const track = document.getElementById('track');
 const fill = document.getElementById('progress-fill');
-const wide = window.matchMedia('(min-width: 768px)');
+const wide = window.matchMedia('(min-width: 768px) and (orientation: landscape)');
 const calm = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 const isSideways = () => wide.matches;
