@@ -334,6 +334,36 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
 .js .hero-actions { animation: rise .8s .22s var(--ease) both; }
 .js .hero-figure img { animation: wipe 1.1s .1s var(--ease) both; }
 
+/* ---------- Homepage work preview: one picture per project ---------- */
+.wp .display { font-size: clamp(40px, 11vw, 64px); }
+.wp-intro p { margin: 18px 0 24px; max-width: 32em; }
+.wp-group { margin-top: 48px; }
+.wp-group h3 { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; font: 900 22px/1 var(--display); text-transform: uppercase; }
+.wp-mark { display: inline-block; width: 14px; height: 14px; }
+.wp-spaces .wp-mark { background: var(--blue); }
+.wp-brands .wp-mark { background: var(--red); }
+.wp-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 22px 12px; }
+.wp-tiles a { display: block; text-decoration: none; }
+.wp-frame { display: block; aspect-ratio: 1; overflow: hidden; background: var(--step); }
+.wp-frame img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease); }
+.wp-tiles a:hover .wp-frame img, .wp-tiles a:focus-visible .wp-frame img { transform: scale(1.05); }
+.wp-name { display: block; margin-top: 10px; font: 700 15px/1.25 var(--text); transition: color .2s; }
+.wp-tiles a:hover .wp-name { color: var(--yellow); }
+.wp-meta { display: block; margin-top: 2px; font-size: 13px; color: var(--muted); }
+.wp-pending .wp-frame { display: flex; align-items: flex-end; padding: 14px; background: var(--blue); }
+.wp-pending .wp-frame span { font: 900 14px/1 var(--display); text-transform: uppercase; }
+
+@media (min-width: 768px) {
+  .wp {
+    --tile: calc((100dvh - var(--bar) - clamp(16px, 4vh, 48px) - var(--foot) - 168px) / 2);
+    display: flex; align-items: center; gap: clamp(32px, 4vw, 72px);
+  }
+  .wp-intro { width: clamp(300px, 26vw, 440px); flex: none; }
+  .wp .display { font-size: min(4.2vw, 7.4vh); }
+  .wp-group { margin: 0; flex: none; }
+  .wp-tiles { grid-template-columns: none; grid-auto-flow: column; grid-template-rows: repeat(2, auto); grid-auto-columns: var(--tile); gap: 24px 20px; }
+}
+
 /* ---------- Micro-interactions ---------- */
 :root { --fast: .2s; --mid: .35s; }
 

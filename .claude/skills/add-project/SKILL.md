@@ -46,11 +46,12 @@ Two pages share `style.css` and `main.js`:
 
 - **`projects.html` (the Work page) holds every project.** Always add the new panel there, just before
   `<!-- projects:end -->`, and add its row to that page's `.index-list` with `href="#p-<slug>"`.
-- **`index.html` (the homepage) features at most four projects**, between `<!-- featured:start -->` and
-  `<!-- featured:end -->`. Ask the owner whether the new project should be featured. If yes, copy the
-  same panel there and ask which featured project it replaces; remove that one from the homepage (it
-  stays on the Work page). Homepage index rows link to `#p-<slug>` when featured, otherwise to
-  `projects.html#p-<slug>`.
+- **`index.html` (the homepage) shows one picture per project** in the "Selected work." section,
+  split into Spaces and Brand identity. Add a tile to the right list, newest first: under
+  `<!-- tiles:brands (newest first) -->` or `<!-- tiles:spaces -->`. Copy an existing `<li>`: square
+  `.wp-frame` picture (pick the clearest one; a light or colourful picture, not a mark on black),
+  `.wp-name`, `.wp-meta` ("<city>, <year>"), linking to `projects.html#p-<slug>`. If the project was an
+  "In design" tile, replace that tile instead of adding one.
 
 Panel markup — `<section class="panel project p-<slug>" id="p-<slug>">`, copied from an existing panel:
   - mostly portrait pictures → `.strip` with `.tile.tall` (4:5)
@@ -62,8 +63,7 @@ Panel markup — `<section class="panel project p-<slug>" id="p-<slug>">`, copie
   contrast ≥ 4.5:1. Otherwise keep the black ground.
 - `data-discipline` on index rows: `branding` or `architecture`. If the project was already listed
   without pictures ("Photographs soon" / "In design"), turn that row into a link instead of adding one.
-- Update counts on both pages: homepage index heading ("Seven projects. Four cities. Three years."),
-  hero link ("See seven projects"), the Brand identity proof line, and the Work page `h1`.
+- Update counts: the Brand identity proof line on the homepage and the Work page `h1`.
 
 ## 5. Check it
 
