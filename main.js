@@ -93,7 +93,7 @@ const reveal = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 const parts = [
   '.services-head > *', '.service', '.index > h2', '.filter', '.index-list li', '.wp-intro > *', '.wp-group h3', '.wp-tiles li',
-  '.project-copy > *', '.tile', '.approach > h2', '.principles article', '.contact-copy > *', '.foot',
+  '.project-copy > *', '.tile', '.approach-head > *', '.principles article', '.contact-copy > *', '.foot',
 ].join(', ');
 document.querySelectorAll('.panel:not(.hero)').forEach((panel) => {
   panel.querySelectorAll(parts).forEach((el, i) => {
