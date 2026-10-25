@@ -229,7 +229,9 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
     padding: calc(var(--bar) + clamp(16px, 4vh, 48px)) var(--m) var(--foot);
   }
   /* Sections sit well apart: the margin plus a section gap before each one */
-  .panel + .panel { margin-left: clamp(56px, 6vw, 112px); }
+  /* Coloured panels butt edge to edge; black panels get their breathing room inside the black */
+  .panel + .panel:not(.approach):not(.contact):not(.p-trishakti):not(.p-archveda):not(.services) { padding-left: calc(var(--m) + clamp(56px, 6vw, 112px)); }
+  .panel + .services .services-head { padding-left: calc(var(--m) + clamp(56px, 6vw, 112px)); }
   .hint, .hint-desk { display: block; }
   .hint-phone { display: none; }
 
