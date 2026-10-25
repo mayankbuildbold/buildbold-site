@@ -88,7 +88,7 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
    Phone: one vertical column (default)
    ========================================================= */
 .track { padding-top: var(--bar); }
-.panel { padding: 72px var(--m); }
+.panel { padding: 56px var(--m); }
 .hint-desk { display: none; }
 
 .hero { display: grid; gap: 40px; padding-top: 40px; }
@@ -101,7 +101,7 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
 .services { display: grid; gap: 0; padding-left: 0; padding-right: 0; padding-bottom: 0; }
 .services-head { padding: 0 var(--m) 48px; }
 .services-head h2 { font-size: clamp(40px, 11vw, 64px); }
-.services-head p { margin-top: 20px; max-width: 32em; }
+.services-head p { margin-top: 24px; max-width: 32em; }
 .service { padding: 48px var(--m) 56px; display: flex; flex-direction: column; gap: 18px; }
 .service ul { display: grid; gap: 6px; font-weight: 700; }
 .service ul li::before { content: ''; display: inline-block; width: 10px; height: 10px; margin-right: 12px; background: currentColor; vertical-align: 1px; }
@@ -173,7 +173,7 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
 
 .contact { background: var(--red); display: flex; flex-direction: column; gap: 64px; padding-bottom: 32px; }
 .contact h2 { font-size: clamp(44px, 12vw, 72px); }
-.contact-copy p { margin-top: 20px; max-width: 30em; font-size: 19px; }
+.contact-copy p { margin-top: 24px; max-width: 30em; font-size: 19px; }
 .mail {
   display: inline-block; margin-top: 28px;
   font: 900 clamp(20px, 6.2vw, 44px)/1 var(--display); text-transform: uppercase; max-width: 100%; overflow-wrap: anywhere;
@@ -212,6 +212,8 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
     flex: none; height: 100dvh;
     padding: calc(var(--bar) + clamp(16px, 4vh, 48px)) var(--m) var(--foot);
   }
+  /* Sections sit well apart: the margin plus a section gap before each one */
+  .panel + .panel { padding-left: calc(var(--m) + clamp(56px, 6vw, 112px)); }
   .hint, .hint-desk { display: block; }
   .hint-phone { display: none; }
 
@@ -221,13 +223,13 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-rows: 1fr auto;
     column-gap: clamp(32px, 5vw, 96px); row-gap: 0;
-    padding-top: calc(var(--bar) + 8px);
+    padding-top: calc(var(--bar) + clamp(16px, 4vh, 48px));
   }
   .hero-copy { align-self: center; max-width: 60vw; }
   .hero h1 { font-size: min(6.2vw, 11.5vh); }
   .lede { font-size: clamp(17px, 1.4vw, 21px); max-width: 36em; }
   .hero-figure { grid-row: 1 / 3; grid-column: 2; height: 100%; display: flex; flex-direction: column; }
-  .hero-figure img { height: calc(100dvh - var(--bar) - 8px - var(--foot) - 72px); width: auto; aspect-ratio: 4 / 5; }
+  .hero-figure img { height: calc(100dvh - var(--bar) - clamp(16px, 4vh, 48px) - var(--foot) - 72px); width: auto; aspect-ratio: 4 / 5; }
   .hint { grid-row: 2; grid-column: 1; font-weight: 700; color: var(--yellow); }
   .hint span::after { content: ''; display: inline-block; width: 40px; height: 4px; margin-left: 14px; background: currentColor; vertical-align: middle; animation: nudge 1.6s var(--ease) infinite; }
 
@@ -336,7 +338,7 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
 
 /* ---------- Homepage work preview: one picture per project ---------- */
 .wp .display { font-size: clamp(40px, 11vw, 64px); }
-.wp-intro p { margin: 18px 0 24px; max-width: 32em; }
+.wp-intro p { margin: 24px 0 28px; max-width: 32em; }
 .wp-group { margin-top: 48px; }
 .wp-group h3 { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; font: 900 22px/1 var(--display); text-transform: uppercase; }
 .wp-mark { display: inline-block; width: 14px; height: 14px; }
