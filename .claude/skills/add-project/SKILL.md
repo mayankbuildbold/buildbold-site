@@ -42,15 +42,19 @@ real need, one idea per project, plain words, captions that work as tiny ads.
 
 ## 4. Build it into the site
 
-Two pages share `style.css` and `main.js`:
+Each project has its own full page, and the pages share `style.css` and `main.js`:
 
-- **`projects.html` (the Work page) holds every project.** Always add the new panel there, just before
-  `<!-- projects:end -->`, and add its row to that page's `.index-list` with `href="#p-<slug>"`.
+- **`project-<slug>.html` (one per project) holds the whole project.** Copy an existing project page
+  (for example `project-pacework.html`), change the `<title>`, the `skip` link, and the `section.panel
+  project` (its `id` is `p-<slug>`). Keep the header and the contact section. Every picture of the project goes in the panel.
+- **`projects.html` (the Work page) is the shelf of folders only.** Add one `<li class="fd fd-brand">`
+  to `ul.shelf` with every picture as an `<a class="fd-paper" href="project-<slug>.html">` (the
+  `style="--i:N"` counts from 0), then the `button.fd-toggle` with the name and place/year. Projects with no pictures yet use the `is-soon` shape.
 - **`index.html` (the homepage) shows one picture per project** in the "Selected work." section,
   split into Spaces and Brand identity. Add a tile to the right list, newest first: under
   `<!-- tiles:brands (newest first) -->` or `<!-- tiles:spaces -->`. Copy an existing `<li>`: square
   `.wp-frame` picture (pick the clearest one; a light or colourful picture, not a mark on black),
-  `.wp-name`, `.wp-meta` ("<city>, <year>"), linking to `projects.html#p-<slug>`. If the project was an
+  `.wp-name`, `.wp-meta` ("<city>, <year>"), linking to `project-<slug>.html`. If the project was an
   "In design" tile, replace that tile instead of adding one.
 
 Panel markup — `<section class="panel project p-<slug>" id="p-<slug>">`, copied from an existing panel:
@@ -61,8 +65,11 @@ Panel markup — `<section class="panel project p-<slug>" id="p-<slug>">`, copie
 - Every `img` has `alt`, `width`, `height` and `loading="lazy"`.
 - Optional panel ground from the project's own colours (as Trishakti uses its maroon); keep text
   contrast ≥ 4.5:1. Otherwise keep the black ground.
-- `data-discipline` on index rows: `branding` or `architecture`. If the project was already listed
-  without pictures ("Photographs soon" / "In design"), turn that row into a link instead of adding one.
+- Each project gets one `<li class="fd ...">` in the `ul.shelf` in projects.html, shaped like the
+  existing ones (branding gets `fd-brand`, architecture gets `fd-arch`), with all of its pictures as
+  `a.fd-paper` entries in `.fd-papers`, each linking to `project-<slug>.html`. Projects with no pictures
+  yet use the `is-soon` shape. If the project was already listed as `is-soon`, replace that `li` with
+  the full shape instead of adding one.
 - Update counts: the Brand identity proof line on the homepage and the Work page `h1`.
 
 ## 5. Check it

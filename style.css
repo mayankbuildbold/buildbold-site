@@ -124,16 +124,6 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
 .chip.is-on { background: var(--white); color: var(--black); }
 .chip-red.is-on { background: var(--red); color: var(--white); }
 .chip-blue.is-on { background: var(--blue); color: var(--white); }
-.index-list { display: grid; gap: 22px; }
-.index-list li { transition: opacity .3s var(--ease), transform .3s var(--ease); }
-.index-list li.is-dim { opacity: .18; }
-.index-list a { text-decoration: none; display: block; }
-.ix-name { display: block; font: 900 clamp(28px, 7.5vw, 40px)/1 var(--display); text-transform: uppercase; letter-spacing: 0; }
-.index-list a .ix-name { transition: color .2s; }
-.index-list a:hover .ix-name { color: var(--yellow); }
-.index-list a .ix-name::after { content: ''; display: inline-block; width: .32em; height: .32em; margin-left: .25em; background: var(--red); vertical-align: .1em; }
-.ix-meta { display: block; margin-top: 6px; color: var(--muted); font-size: 15px; }
-
 .project { display: grid; gap: 32px; }
 .project h2 { font-size: clamp(40px, 11vw, 64px); }
 .project-meta { font-weight: 700; margin: 14px 0 18px; }
@@ -272,9 +262,7 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
   .index { width: clamp(900px, 92vw, 1480px); display: flex; flex-direction: column; }
   .index .display { font-size: min(4vw, 7vh); max-width: 22ch; }
   .filter { margin: clamp(16px, 3.5vh, 36px) 0 clamp(16px, 3vh, 32px); }
-  .index-list { grid-template-columns: 1fr 1fr; gap: clamp(10px, 2vh, 22px) 4vw; align-content: start; }
   .work-all { margin-top: auto; padding-top: 12px; }
-  .ix-name { font-size: min(2.7vw, 4.6vh); }
 
   /* Chutneys By Neel: six landscape pictures in two rows */
   .p-neel .mosaic { display: grid; grid-auto-flow: column; grid-template-rows: repeat(2, auto); gap: 2.4vh clamp(12px, 1.4vw, 24px); height: auto; align-self: center; }
@@ -285,7 +273,6 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
   .p-kaafi .sequence { display: grid; grid-auto-flow: column; grid-template-rows: repeat(2, auto); gap: 2.4vh clamp(12px, 1.4vw, 24px); height: auto; align-self: center; }
   .p-kaafi .sequence li, .p-kaafi .tile { height: auto; }
   .p-kaafi .tile img { height: calc((100dvh - var(--bar) - clamp(16px, 4vh, 48px) - var(--foot) - 2.4vh) / 2 - 64px); }
-  .ix-meta { margin-top: 2px; }
 
   /* Project panels: copy column, then a strip of pictures at full height */
   .project { display: flex; gap: clamp(28px, 3vw, 56px); align-items: stretch; }
@@ -407,12 +394,6 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
 .service li:hover { transform: translateX(6px); }
 .service li:hover::before { transform: rotate(45deg); }
 
-/* Work index: names step right, the red square turns */
-.index-list a .ix-name { transition: color var(--fast), transform var(--mid) var(--ease); }
-.index-list a:hover .ix-name, .index-list a:focus-visible .ix-name { transform: translateX(10px); }
-.index-list a .ix-name::after { transition: transform var(--mid) var(--ease); }
-.index-list a:hover .ix-name::after { transform: rotate(90deg) scale(1.3); }
-
 /* Project pictures lift on hover, captions brighten */
 .tile { transition: transform .5s var(--ease); }
 .tile figcaption { transition: color var(--fast); }
@@ -503,4 +484,191 @@ figcaption { font-size: 15px; line-height: 1.4; margin-top: 10px; color: var(--m
   .scroll-motion .foot-word .l { translate: 0 calc(var(--p, 0) * (var(--l) + 1) * 0.1em); }
   .scroll-motion .panel .display, .scroll-motion .service h3, .scroll-motion .service ul, .scroll-motion .tile,
   .scroll-motion .pr-num, .scroll-motion .wp-frame img { will-change: translate; }
+}
+
+/* =========================================================
+   Work shelf: one flat folder per project. Opening one tips its flap, the papers slide down
+   into it, and the project view (.pview) opens below: info in one rectangle, all pictures in a grid.
+   The 6px corner on the folder body is the one deliberate exception to the square-corner rule.
+   ========================================================= */
+.shelf {
+  --cols: 1; --gap: 28px;
+  display: grid; grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  gap: 40px var(--gap); align-items: start;
+  overflow-x: clip; padding: 8px 8px 0; margin: -8px -8px 0;
+}
+@media (min-width: 600px) { .shelf { --cols: 2; } }
+
+.fd {
+  --c: var(--red);
+  --tab: 16px;       /* height of the folder tab */
+  --pw: 34%;         /* paper width, of the folder width */
+  --shut: .9;        /* paper scale inside the folder */
+  position: relative; isolation: isolate;
+  display: flex; flex-direction: column;
+  transition: opacity .3s var(--ease);
+}
+.fd-arch { --c: var(--blue); }
+.fd.is-dim { opacity: .18; }
+
+/* Tab and back panel, behind everything */
+.fd::before, .fd::after { content: ''; position: absolute; left: 0; z-index: -1; background: var(--c); pointer-events: none; }
+.fd::before { top: 0; width: 42%; height: calc(var(--tab) + 2px); clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 100%, 0 100%); }
+.fd::after { right: 0; top: var(--tab); aspect-ratio: 16 / 10; border-radius: 0 6px 6px 6px; }
+
+/* The toggle is the whole folder plus its label; its ::before is the front flap.
+   It clips sideways so the tipped flap, wider in perspective, stays inside the folder's box. */
+.fd-toggle {
+  position: relative; display: block; width: 100%;
+  margin: 0; padding: calc(var(--tab) + 62.5%) 0 0;
+  border: 0; background: none; color: inherit; font: inherit; text-align: left;
+  -webkit-appearance: none; appearance: none; cursor: pointer;
+  overflow-x: clip;
+  container-type: inline-size;
+}
+.fd-toggle::before {
+  content: ''; position: absolute; left: 0; right: 0; top: var(--tab); z-index: 2;
+  margin-top: 15%; aspect-ratio: 16 / 7.6;
+  background: color-mix(in srgb, var(--c) 85%, white); border-radius: 6px;
+  transform-origin: 50% 100%; transform: perspective(900px) rotateX(0deg);
+  transition: transform .4s var(--ease), opacity .3s var(--ease);
+  pointer-events: none;
+}
+.fd-name { display: block; margin-top: 14px; font: 900 clamp(22px, 6.4vw, 32px)/1 var(--display); text-transform: uppercase; letter-spacing: 0; transition: color var(--fast); }
+.fd-meta { display: block; margin-top: 6px; font: 400 15px/1.4 var(--text); color: var(--muted); }
+
+/* Papers: a stack inside the back, the top of it peeking over the flap. Never interactive (inert). */
+.fd-papers { position: absolute; left: 0; right: 0; top: var(--tab); aspect-ratio: 16 / 10; z-index: 1; pointer-events: none; }
+.fd-paper {
+  --d: calc(var(--i, 0) - var(--mid, 0));
+  position: absolute; top: 4%; left: 50%; width: var(--pw); margin: 0 0 0 calc(var(--pw) / -2);
+  display: block; aspect-ratio: 4 / 5; padding: 4px; background: var(--white);
+  opacity: .55; pointer-events: none;
+  transform-origin: 50% 0;
+  transform: translateY(6%) rotate(calc(var(--d) * 3deg)) scale(var(--shut));
+  transition: transform .4s var(--ease), opacity .4s var(--ease);
+}
+.fd-paper img { width: 100%; height: 100%; object-fit: cover; background: var(--step); }
+
+/* Open: one short tip of the flap. Nothing else in the folder moves. */
+.fd.is-open .fd-toggle::before { transform: perspective(900px) rotateX(-40deg); }
+.fd.is-open .fd-name { color: var(--yellow); }
+/* A small yellow sticker stuck on the folder's front face, bottom left */
+.fd-tag {
+  position: absolute; z-index: 2; left: 8cqw;
+  top: calc(var(--tab) + 62.5cqw - 34px);
+  padding: 3px 6px; background: var(--yellow); color: var(--black);
+  font: 700 10px/1.2 var(--text); transform: rotate(-2deg);
+  transition: opacity .3s var(--ease);
+}
+.shelf.is-compact .fd-tag { opacity: 0; }
+
+@media (hover: hover) and (pointer: fine) {
+  .fd:not(.is-soon):not(.is-open):hover .fd-toggle::before { transform: perspective(900px) rotateX(-14deg); }
+  .fd:not(.is-soon):not(.is-open):hover .fd-paper { opacity: .8; transform: translateY(-10%) rotate(calc(var(--d) * 4deg)) scale(calc(var(--shut) + .02)); }
+}
+
+/* Projects with no pictures yet: never open */
+.fd.is-soon .fd-toggle { cursor: default; }
+.has-cursor .fd.is-soon .fd-toggle { cursor: none; }
+
+/* ---------- Project view ---------- */
+/* It appears below the shelf; nothing above it moves or resizes. The flap tips (.4s), then the
+   view fades in and rises 12px (.5s) and its pictures fade in one by one (.is-in).
+   Closing fades it out (.3s), then main.js folds the flap back. (Entrance is now a plain fade, no rise.) */
+.pview { --g: 16px; --ar: 1; }
+/* Phones: info first, then the pictures in one or two equal columns, 16px gutters */
+.pview:not([hidden]) { display: grid; gap: var(--g); margin: 40px calc(16px - var(--m)) 0; scroll-margin-top: calc(var(--bar) + 12px); }
+.pv-info { position: relative; padding: 64px 16px 24px; background: var(--step); color: var(--white); }
+.pv-info.p-trishakti { background: #3a1e22; }
+.pv-info.p-archveda { background: var(--white); color: var(--black); }
+.pv-info .display { font-size: clamp(36px, 10vw, 56px); max-width: none; }
+.pv-info .project-copy p + p { margin-top: 14px; }
+.pv-close {
+  position: absolute; top: 10px; right: 10px;
+  width: 44px; height: 44px; padding: 0; border: 0;
+  background: var(--black); color: var(--white); font: 400 30px/1 var(--text);
+  cursor: pointer; transition: background var(--fast), color var(--fast);
+}
+.pv-close:hover { background: var(--yellow); color: var(--black); }
+/* One grid, one gap, equal cells: every picture is cropped to the project's main shape */
+.pv-grid { display: grid; grid-template-columns: repeat(var(--pcols, 2), minmax(0, 1fr)); gap: var(--g); align-items: start; }
+.pview .pv-grid .tile { width: auto; height: auto; }
+.pview .pv-grid .tile img { width: 100%; height: auto; aspect-ratio: var(--ar); object-fit: cover; }
+
+/* Entrance and exit */
+.pview { opacity: 0; transition: opacity .3s var(--ease); }
+.pview .pv-grid .tile { opacity: 0; transition: opacity .3s var(--ease); }
+.pview.is-in { opacity: 1; transition: opacity .4s var(--ease) .25s; }
+.pview.is-in .pv-grid .tile { opacity: 1; transition: opacity .4s var(--ease) calc(.35s + min(var(--k, 0), 6) * 40ms); }
+/* Pictures only fade: no lift on hover inside the view */
+.pview .pv-grid .tile:hover { transform: none; }
+
+/* Sideways walk: the panel keeps its width and the heading, chips and folders keep their size.
+   The folders sit in one compact row; the view fills the height under them and, when its
+   pictures need more room than the panel has, scrolls sideways inside itself. */
+@media (min-width: 768px) and (orientation: landscape) {
+  .shelf {
+    --cols: 7; --gap: clamp(16px, 1.8vw, 32px); --shelf-h: clamp(120px, 24vh, 230px);
+    flex: none; align-content: start;
+  }
+  .fd {
+    --pw: 78%; --shut: .5; --lab: 58px;
+    width: min(100%, calc((var(--shelf-h) - var(--tab) - var(--lab)) / .625));
+  }
+  .fd-name { margin-top: 10px; font-size: clamp(13px, 1.1vw, 18px); line-height: 1.05; overflow-wrap: break-word; }
+  .fd-meta { margin-top: 4px; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  /* When the view needs the room, the folders shrink to their names: a short, smooth change in size */
+  .fd-toggle { transition: padding-top .4s var(--ease); }
+  .fd::before, .fd::after, .fd-papers { transition: opacity .3s var(--ease); }
+  .fd-meta { max-height: 2em; transition: opacity .3s var(--ease), max-height .4s var(--ease), margin-top .4s var(--ease); }
+  .shelf.is-compact .fd-toggle { padding-top: 0; }
+  .shelf.is-compact .fd::before, .shelf.is-compact .fd::after, .shelf.is-compact .fd-toggle::before,
+  .shelf.is-compact .fd-papers { opacity: 0; }
+  .shelf.is-compact .fd-name { margin-top: 0; }
+  .shelf.is-compact .fd-meta { opacity: 0; max-height: 0; margin-top: 0; }
+  .shelf.no-anim .fd-toggle, .shelf.no-anim .fd-meta, .shelf.no-anim .fd-name,
+  .shelf.no-anim .fd::before, .shelf.no-anim .fd::after, .shelf.no-anim .fd-papers, .shelf.no-anim .fd-toggle::before { transition: none; }
+
+  .pview { --g: clamp(12px, 1.4vw, 24px); }
+  .pview:not([hidden]) {
+    flex: 1 1 0; min-height: 0; margin: 2vh 0 0;
+    display: flex; align-items: stretch; gap: var(--g);
+    overflow-x: auto; overflow-y: hidden; scrollbar-width: none; overscroll-behavior-x: contain;
+  }
+  .pview::-webkit-scrollbar { display: none; }
+  /* The info box never scrolls: main.js shrinks its type (--fit), then adds text columns, until the copy fits */
+  .pv-info { flex: none; width: clamp(300px, 28vw, 440px); padding: 56px clamp(20px, 2vw, 32px) 20px; font-size: calc(15px * var(--fit, 1)); line-height: 1.5; }
+  .pv-info .display { font-size: calc(min(3vw, 5.4vh, 48px) * var(--fit, 1)); }
+  .pv-info .project-meta { margin: calc(12px * var(--fit, 1)) 0 calc(14px * var(--fit, 1)); }
+  .pv-info .project-copy { width: auto; font-size: inherit; column-gap: 28px; }
+  .pv-info .project-copy p + p { margin-top: calc(14px * var(--fit, 1)); }
+  .pv-info .project-copy > .display, .pv-info .project-meta { column-span: all; }
+  .pv-grid {
+    --rows: 1; --cap: 76px;
+    --th: calc((var(--pvh, 400px) - (var(--rows) - 1) * var(--g)) / var(--rows) - var(--cap));
+    flex: none; display: grid; grid-auto-flow: column; grid-template-columns: none;
+    grid-template-rows: repeat(var(--rows), auto); grid-auto-columns: calc(var(--th) * var(--ar));
+    gap: var(--g); align-content: start;
+  }
+  /* Short screens: the pictures take the whole height; captions stay in the project's copy */
+  .pv-grid.no-cap { --cap: 0px; }
+  .pv-grid.no-cap figcaption { display: none; }
+  .pview .pv-grid .tile figcaption { max-width: none; }
+  .pview .pv-grid .tile img { width: 100%; height: var(--th); max-width: none; }
+}
+
+/* Focus: the toggle clips sideways, so its own ring would be cut off. Ring the whole folder instead. */
+@supports selector(:has(a)) {
+  .fd-toggle:focus-visible { outline: none; }
+  .fd:has(> .fd-toggle:focus-visible) { outline: 3px solid var(--yellow); outline-offset: 3px; }
+}
+/* Info box: the pale boxes get a dark ring, and Pacework's red meta line gets a lighter red (4.5:1 on #161616) */
+.pv-info.p-archveda :focus-visible { outline-color: var(--black); }
+.pv-info.p-pacework .project-meta { color: #FF5A5F; }
+
+/* Reduced motion: every state change is instant (the global rule drops transitions) */
+@media (prefers-reduced-motion: reduce) {
+  .pview, .pview .pv-grid .tile { opacity: 1; }
 }

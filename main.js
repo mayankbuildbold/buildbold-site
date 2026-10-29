@@ -39,6 +39,16 @@ const glide = (() => {
 // A mouse wheel moves the page sideways. Trackpads that already scroll sideways keep working.
 track.addEventListener('wheel', (e) => {
   if (!isSideways() || e.ctrlKey) return;
+  // Over an open project view that scrolls sideways, the wheel moves the view first
+  const view = e.target.closest && e.target.closest('.pview');
+  if (view && Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+    const max = view.scrollWidth - view.clientWidth;
+    if ((e.deltaY > 0 && view.scrollLeft < max - 1) || (e.deltaY < 0 && view.scrollLeft > 0)) {
+      e.preventDefault();
+      view.scrollLeft += e.deltaY * (e.deltaMode === 1 ? 40 : 1);
+      return;
+    }
+  }
   if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) { glide.stop(); return; }
   const unit = e.deltaMode === 1 ? 40 : e.deltaMode === 2 ? track.clientWidth : 1;
   e.preventDefault();
@@ -102,7 +112,7 @@ progress();
 
 // Work index: show one discipline at a time.
 const chips = document.querySelectorAll('.chip');
-const rows = document.querySelectorAll('.index-list li');
+const rows = document.querySelectorAll('.shelf > li.fd');
 chips.forEach((chip) => chip.addEventListener('click', () => {
   const pick = chip.dataset.filter;
   chips.forEach((c) => {
@@ -115,7 +125,7 @@ chips.forEach((chip) => chip.addEventListener('click', () => {
 
 // Parts that arrive as they come onto the screen (driven by the scroll loop at the end).
 const parts = [
-  '.services-head > *', '.service', '.index > h2', '.filter', '.index-list li', '.wp-intro > *', '.wp-group h3', '.wp-tiles li',
+  '.services-head > *', '.service', '.index > h2', '.filter', '.wp-intro > *', '.wp-group h3', '.wp-tiles li',
   '.project-copy > *', '.tile', '.approach-head > *', '.approach-foot', '.principles article', '.contact-copy > *', '.foot',
 ].join(', ');
 document.querySelectorAll('.panel:not(.hero)').forEach((panel) => {
@@ -130,6 +140,220 @@ document.querySelectorAll('img[loading="lazy"]').forEach((img) => {
   if (img.complete) img.classList.add('loaded');
   else img.addEventListener('load', () => img.classList.add('loaded'), { once: true });
 });
+
+// Work shelf: a folder opens into its project view (info plus every picture), in place.
+// The hash names the open project (#pacework); Back closes it.
+const shelf = document.querySelector('.shelf');
+const pview = document.querySelector('.pview');
+if (shelf && pview) {
+  const work = shelf.closest('.index');
+  const folders = [...shelf.querySelectorAll(':scope > li.fd')];
+  folders.forEach((f) => {
+    const box = f.querySelector('.fd-papers');
+    if (!box) return;
+    const papers = [...box.querySelectorAll('.fd-paper')];
+    box.style.setProperty('--mid', String((papers.length - 1) / 2));
+    papers.forEach((p, i) => p.style.setProperty('--i', String(i)));
+    box.inert = true; // the papers are decoration; the view holds the pictures
+  });
+  const bySlug = (slug) => folders.find((f) => f.dataset.project === slug && !f.classList.contains('is-soon')
+    && document.getElementById(`tpl-${slug}`));
+  const current = () => shelf.querySelector(':scope > li.fd.is-open');
+  let pushed = false; // whether the open view added its own history entry
+
+  // A clean copy of a template's panel: no scroll-motion classes, inline styles or ids; pictures shown
+  const cleanCopy = (node) => {
+    [node, ...node.querySelectorAll('*')].forEach((el) => {
+      el.classList.remove('rv');
+      el.removeAttribute('style');
+      el.removeAttribute('id');
+    });
+    node.querySelectorAll('img').forEach((img) => { img.loading = 'eager'; img.classList.add('loaded'); });
+    return node;
+  };
+
+  // Sideways, the info box never scrolls: shrink its type a little, then add columns of text
+  // (the box widens), then shrink a little more, until the copy fits
+  const fitInfo = () => {
+    const info = pview.querySelector('.pv-info');
+    const copy = info && info.querySelector('.project-copy');
+    if (!copy) return;
+    info.style.removeProperty('--fit');
+    info.style.width = '';
+    copy.style.columns = '';
+    if (!isSideways()) return;
+    const over = () => info.scrollHeight > info.clientHeight + 1;
+    const base = info.getBoundingClientRect().width;
+    let fit = 1;
+    const shrink = (to) => { while (over() && fit > to) { fit -= 0.03; info.style.setProperty('--fit', fit.toFixed(2)); } };
+    shrink(0.9);
+    for (let k = 2; over() && k <= 4; k++) { copy.style.columns = String(k); info.style.width = `${Math.round(base * k * 0.92)}px`; }
+    shrink(0.75);
+  };
+  const sizeView = () => {
+    if (pview.hidden) return;
+    const grid = pview.querySelector('.pv-grid');
+    if (!grid) return;
+    const h = pview.clientHeight;
+    pview.style.setProperty('--pvh', `${h}px`);
+    // Two rows only for an even count (no ragged row) of many pictures, with the height to keep them large
+    const n = grid.children.length;
+    grid.style.setProperty('--rows', n > 4 && n % 2 === 0 && h >= 600 ? '2' : '1');
+    // Short views: pictures take the whole height, without captions
+    grid.classList.toggle('no-cap', isSideways() && h < 380);
+    fitInfo();
+  };
+  // Folders shrink to their names only when the view would otherwise be too short.
+  // The shelf's final size is measured with its transitions off, then it animates there.
+  const MIN_VIEW = 380;
+  const settleShelf = (open) => {
+    shelf.classList.add('no-anim');
+    shelf.classList.remove('is-compact');
+    let compact = false;
+    if (open && isSideways()) {
+      compact = pview.clientHeight < MIN_VIEW;
+      shelf.classList.toggle('is-compact', compact);
+    }
+    sizeView();
+    if (compact && !calm.matches) {
+      shelf.classList.remove('is-compact');
+      void shelf.offsetHeight;
+      shelf.classList.remove('no-anim');
+      shelf.classList.add('is-compact');
+    } else shelf.classList.remove('no-anim');
+  };
+  // Only the page below the shelf changes height (phones), so the scroll motion re-measures.
+  // No resize event: the heading's fitting must not run again.
+  const announce = () => { if (window.__measure) window.__measure(); progress(); };
+
+  const SHAPES = { tall: 0.8, portrait: 0.8, wide: 1.5, sq: 1 };
+  const build = (slug) => {
+    const tpl = document.getElementById(`tpl-${slug}`);
+    const section = tpl.content.querySelector('section');
+    const copy = cleanCopy(section.querySelector('.project-copy').cloneNode(true));
+    const pics = section.querySelector('.strip, .mosaic, ol.sequence');
+    const info = document.createElement('div');
+    info.className = ['pv-info', ...[...section.classList].filter((c) => /^p-/.test(c))].join(' ');
+    const close = document.createElement('button');
+    close.type = 'button';
+    close.className = 'pv-close';
+    close.setAttribute('aria-label', 'Close project');
+    close.textContent = '×';
+    info.append(close, copy);
+    const grid = document.createElement('div');
+    grid.className = 'pv-grid';
+    const tiles = pics ? [...pics.querySelectorAll('figure.tile')] : [];
+    // Every cell takes the project's most common picture shape
+    const votes = {};
+    tiles.forEach((t, k) => {
+      const shape = Object.keys(SHAPES).find((c) => t.classList.contains(c)) || 'sq';
+      votes[shape] = (votes[shape] || 0) + 1;
+      const tile = cleanCopy(t.cloneNode(true));
+      tile.style.setProperty('--k', String(k));
+      grid.appendChild(tile);
+    });
+    const main = Object.keys(votes).sort((x, y) => votes[y] - votes[x])[0] || 'sq';
+    pview.style.setProperty('--ar', String(SHAPES[main]));
+    // Phones: two columns only when they fill evenly
+    grid.style.setProperty('--pcols', tiles.length % 2 === 0 ? '2' : '1');
+    const title = copy.querySelector('h2');
+    pview.setAttribute('role', 'region');
+    pview.setAttribute('aria-label', title ? title.textContent.trim() : slug);
+    pview.replaceChildren(info, grid);
+    close.addEventListener('click', () => closeView(true));
+  };
+
+  // A close fades the view out first, then folds the folder shut
+  let closing = null;
+  const finishClose = () => {
+    if (!closing) return;
+    clearTimeout(closing.timer);
+    const { f } = closing;
+    closing = null;
+    if (f) { f.classList.remove('is-open'); f.querySelector('button.fd-toggle').setAttribute('aria-expanded', 'false'); }
+    pview.hidden = true;
+    pview.replaceChildren();
+    shelf.classList.remove('is-compact');
+    announce();
+  };
+
+  const openView = (f, { focus = false, history: how = 'push' } = {}) => {
+    finishClose();
+    const slug = f.dataset.project;
+    const was = current();
+    if (was && was !== f) { was.classList.remove('is-open'); was.querySelector('button.fd-toggle').setAttribute('aria-expanded', 'false'); }
+    f.classList.add('is-open');
+    f.querySelector('button.fd-toggle').setAttribute('aria-expanded', 'true');
+    build(slug);
+    pview.classList.remove('is-in');
+    pview.hidden = false;
+    if (how === 'push' && !pushed) { history.pushState({ pview: slug }, '', `#${slug}`); pushed = true; }
+    else if (how !== 'none') history.replaceState({ pview: slug }, '', `#${slug}`);
+    settleShelf(true);
+    pview.scrollLeft = 0;
+    announce();
+    // Next frame, so the view and pictures have a start state to fade in from
+    requestAnimationFrame(() => requestAnimationFrame(() => pview.classList.add('is-in')));
+    if (!isSideways() && how !== 'none') {
+      pview.scrollIntoView({ behavior: calm.matches ? 'auto' : 'smooth', block: 'start' });
+    }
+    if (focus) pview.querySelector('.pv-close').focus({ preventScroll: true });
+  };
+
+  // fromUser: closed by the page (button, Esc, toggle, click outside) rather than by Back
+  function closeView(fromUser) {
+    const f = current();
+    if (closing || (!f && pview.hidden)) return;
+    const btn = f && f.querySelector('button.fd-toggle');
+    const hadFocus = pview.contains(document.activeElement) || (f && f.contains(document.activeElement));
+    pview.classList.remove('is-in');
+    if (fromUser) {
+      if (pushed) { pushed = false; history.back(); }
+      else history.replaceState(null, '', location.pathname + location.search);
+    } else pushed = false;
+    if (btn && (fromUser || hadFocus)) btn.focus({ preventScroll: true });
+    closing = { f, timer: 0 };
+    if (calm.matches) finishClose();
+    else closing.timer = setTimeout(finishClose, 300);
+  }
+
+  shelf.addEventListener('click', (e) => {
+    const btn = e.target.closest('button.fd-toggle');
+    if (!btn) return;
+    const f = btn.closest('li.fd');
+    if (!f || f.classList.contains('is-soon') || !bySlug(f.dataset.project)) return;
+    if (f.classList.contains('is-open')) { closeView(true); return; }
+    // detail 0 means Enter or Space, not a pointer
+    openView(f, { focus: e.detail === 0 });
+  });
+
+  // Esc and a click outside close the view
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && current()) closeView(true);
+  });
+  document.addEventListener('click', (e) => {
+    const f = current();
+    if (!f || !e.target.isConnected) return;
+    if (f.contains(e.target) || pview.contains(e.target) || e.target.closest('.filter, .fd-toggle')) return;
+    closeView(true);
+  });
+
+  // Back and Forward follow the hash
+  window.addEventListener('popstate', () => {
+    const f = bySlug(decodeURIComponent(location.hash.slice(1)));
+    if (f) { if (f !== current()) openView(f, { history: 'none' }); }
+    else if (current()) closeView(false);
+  });
+  window.addEventListener('resize', () => { if (!pview.hidden && !closing) settleShelf(true); });
+
+  // projects.html#pacework opens that project straight away
+  const start = bySlug(decodeURIComponent(location.hash.slice(1)));
+  if (start) {
+    openView(start, { history: 'replace' });
+    // Once the page has settled, bring the view on screen (phones scroll down to it)
+    addEventListener('load', () => { if (!isSideways() && !pview.hidden) pview.scrollIntoView({ block: 'start' }); }, { once: true });
+  }
+}
 
 // The nav marks the section in view.
 const navLinks = [...document.querySelectorAll('.bar-nav a[href^="#"]')];
@@ -373,6 +597,7 @@ if (!calm.matches) {
   track.addEventListener('scroll', queue, { passive: true });
   window.addEventListener('scroll', queue, { passive: true });
   window.addEventListener('resize', measure);
+  window.__measure = measure;
   window.addEventListener('load', measure);
   document.fonts.ready.then(measure);
   document.documentElement.classList.add('scroll-motion');
